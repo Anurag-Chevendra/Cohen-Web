@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mantis · open source npm dependency collector</title>
+<meta name="description" content="Mantis is an open source binary that reads a project directory, resolves every npm package you actually depend on, and checks each one against the Cohen behavioural database.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='20'%20fill='%23000'/%3E%3Crect%20x='36'%20y='36'%20width='28'%20height='28'%20rx='4'%20fill='%23FF2D1F'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+<div class="grid" aria-hidden="true"><div class="grid-in"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="aperture" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="42" fill="none" stroke="currentColor" stroke-width="6" opacity=".45"/>
+    <circle cx="50" cy="50" r="27" fill="none" stroke="currentColor" stroke-width="6" opacity=".75"/>
+    <circle cx="50" cy="50" r="9" fill="#FF2D1F"/>
+  </symbol>
+</svg>
+
+<div class="nav" id="nav">
+  <div class="w">
+    <a class="mark" href="index.html" aria-label="Cohen, home"><i aria-hidden="true"></i>Cohen</a>
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="navlinks" aria-label="Menu"><i></i><i></i><i></i></button>
+    <div class="nav-links" id="navlinks">
+      <a href="index.html" target="_blank" rel="noopener">Engine</a>
+
+      <div class="drop" id="dropW">
+        <button class="drop-t here" id="dropT" type="button" aria-expanded="false" aria-controls="dropM">Product</button>
+        <div class="drop-m" id="dropM">
+          <div class="drop-card">
+            <p class="drop-h">THREE PRODUCTS, ONE SANDBOX</p>
+            <div class="row">
+              <a class="api" href="api.html#package" target="_blank" rel="noopener">API</a>
+              <a class="rmain" href="mantis.html" target="_blank" rel="noopener">
+                <span class="dn">Mantis</span>
+                <span class="dd">Reads a project and resolves the whole dependency tree.</span>
+              </a>
+            </div>
+            <div class="row">
+              <a class="api" href="api.html#feed" target="_blank" rel="noopener">API</a>
+              <a class="rmain" href="observatory.html" target="_blank" rel="noopener">
+                <span class="dn">Observatory</span>
+                <span class="dd">The threat intel record, sold as data.</span>
+              </a>
+            </div>
+            <div class="row">
+              <a class="rmain" href="api.html#feed" target="_blank" rel="noopener">
+                <span class="dn">Feed API</span>
+                <span class="dd">Verdicts and indicators, straight into your workflow.</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a href="pricing.html" target="_blank" rel="noopener">Pricing</a>
+      <a class="nav-cta" href="pricing.html" target="_blank" rel="noopener">Start free</a>
+    </div>
+  </div>
+</div>
+
+<main id="main" class="sub">
+
+<!-- 1 · PRODUCT LOCKUP -->
+<section class="s rule" id="mantis">
+  <div class="w">
+   <div class="prod">
+    <p class="eyebrow">OPEN SOURCE COLLECTOR</p>
+    <div class="plock">
+      <svg aria-hidden="true"><use href="#aperture"/></svg>
+      <span class="pn">Mantis</span>
+      <span class="by">BY COHEN</span>
+    </div>
+    <h2 class="h2 wide">The collector, as its own product</h2>
+    <p class="lede">Mantis is a single binary you run inside a project. Give it a path and a
+      manifest and it resolves every package you actually pull in, checks each one against the
+      Cohen database, then hands whatever is unknown to the sandbox.</p>
+    <p class="lede">It reads, and only reads. It never installs, never triggers a lifecycle
+      script, and never runs anything it finds. It is open source, and it ships without a
+      scanner subscription.</p>
+    <div class="intel">
+      <div class="icard">
+        <div class="n">1</div>
+        <h4>One binary</h4>
+        <p>Static, with no Node runtime and nothing to install into the project it inspects.</p>
+      </div>
+      <div class="icard">
+        <div class="n">&Sigma;</div>
+        <h4>The whole tree</h4>
+        <p>Direct, transitive, and every version actually on disk. Read from the lockfile, not the manifest.</p>
+      </div>
+      <div class="icard">
+        <div class="n">&rarr;</div>
+        <h4>Names only</h4>
+        <p>It sends name, version and the integrity hash already in your lockfile. No source, no paths, no environment.</p>
+      </div>
+      <div class="icard">
+        <div class="n">&#9166;</div>
+        <h4>Exit codes</h4>
+        <p>A line per package, or the whole tree as JSON. Returns non zero when something needs a human.</p>
+      </div>
+    </div>
+    <div class="deliv" aria-label="Platforms and formats">
+      <span>MIT</span><span>RUST</span><span>DARWIN</span><span>LINUX</span>
+      <span>WINDOWS</span><span>JSON OUTPUT</span><span>NO TELEMETRY</span>
+    </div>
+    <div class="prodfoot">
+      <span class="status"><b></b>PRE RELEASE &middot; NOT YET DOWNLOADABLE</span>
+      <a class="b g" href="https://github.com/" target="_blank" rel="noopener">Read the source</a>
+      <a class="b g" href="mailto:contact@snappyfeet.org?subject=Mantis">Tell me when it ships</a>
+    </div>
+   </div>
+  </div>
+</section>
+
+<!-- 2 · HOW IT WORKS -->
+<section class="s rule" id="mantis-how">
+  <div class="w">
+    <p class="eyebrow">HOW IT WORKS</p>
+    <h2 class="h2">What is actually installed in here?</h2>
+    <p class="lede">A manifest lists what you asked for. It does not list what arrived. Mantis
+      walks the whole tree, including everything your dependencies brought with them, and gives
+      each package a name, a version and a verdict.</p>
+    <div class="spine">
+      <div class="spine-line"></div>
+      <div class="rail">
+        <div class="node"><div class="i">01</div><h3>Point</h3><p>You give it a project path. It locates the manifest and the lockfile itself.</p></div>
+        <div class="node"><div class="i">02</div><h3>Resolve</h3><p>The declared list is expanded into the real one, down to every transitive version on disk.</p></div>
+        <div class="node"><div class="i">03</div><h3>Query</h3><p>Each name and version goes to the Cohen database, alongside OSV and the npm security holdings.</p></div>
+        <div class="node"><div class="i">04</div><h3>Queue</h3><p>Anything with no verdict yet is submitted for a sandbox run, in dependency order.</p></div>
+        <div class="node"><div class="i">05</div><h3>Report</h3><p>One line per package to the terminal, or the whole tree as JSON for a build gate.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 · IN PRACTICE -->
+<section class="s rule" id="mantis-practice">
+  <div class="w">
+    <p class="eyebrow">IN PRACTICE</p>
+    <h2 class="h2 wide">Two questions, then it works unattended</h2>
+    <p class="lede">Mantis asks where the project is and which manifest to trust. Everything
+      after that happens without you.</p>
+    <div class="term" style="margin-top:20px">
+      <div class="th"><span>SESSION</span><span>MANTIS 0.1.0</span></div>
+<pre><span class="cmd">mantis</span>
+<span class="cm">  MANTIS 0.1.0 &middot; dependency collector</span>
+
+  <span class="k">? Project path</span>     <span class="v">~/work/checkout-service</span>
+  <span class="k">? Manifest</span>         <span class="v">package.json</span>
+
+  reading lockfile      <span class="v">package-lock.json (v3)</span>
+  resolving tree        <span class="v">1,284 packages</span> <span class="cm">&middot; 61 direct &middot; 1,223 transitive</span>
+  querying database     <span class="v">1,284 lookups</span> <span class="cm">&middot; 0.9s</span>
+
+    clean               <span class="v">1,271</span>
+    review              <span class="hot">2</span>
+    unknown             <span class="v">11</span>
+
+  queued for sandbox    <span class="v">11 packages</span>
+  waiting               <span class="cm">.......... done (3m 41s)</span>
+
+  <span class="hot">REVIEW</span>  polymarket-stake-mathss@3.5.2
+          <span class="cm">5 credential reads, 2 outbound connections, 10.5s</span>
+  <span class="hot">REVIEW</span>  fast-json-parse-native@0.4.1
+          <span class="cm">postinstall spawned curl, wrote outside its own tree</span>
+
+  wrote                 <span class="v">mantis-report.json</span>
+<span class="cm">  exit 1 &middot; 2 packages need a human</span></pre>
+      <div class="legend">
+        <span><i class="a"></i>needs review</span>
+        <span><i></i>clean or informational</span>
+      </div>
+    </div>
+    <div class="flags">
+      <div class="frow"><code>mantis --json</code><p>Skip the terminal report and write the whole tree to stdout, one object per package.</p></div>
+      <div class="frow"><code>mantis --fail-on review</code><p>Return a non zero exit code when any package comes back for review. Enough to gate most builds.</p></div>
+      <div class="frow"><code>mantis --no-wait</code><p>Submit the unknown packages and exit immediately. Collect the finished report later.</p></div>
+      <div class="frow"><code>mantis --public-only</code><p>Never send a private or scoped name to the lookup service. Those packages are reported as skipped.</p></div>
+      <div class="frow"><code>mantis --depth direct</code><p>Only the packages you declared yourself. Faster, and much less honest.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · PRICING -->
+<section class="s rule" id="mantis-pricing">
+  <div class="w center">
+    <p class="eyebrow">MANTIS PRICING</p>
+    <div class="plock" style="justify-content:center">
+      <svg aria-hidden="true"><use href="#aperture"/></svg>
+      <span class="pn">Mantis</span>
+    </div>
+    <h2 class="h2">The binary is free. The lookups are metered.</h2>
+    <p class="lede">Mantis itself costs nothing and always will. What it queries is the Cohen
+      database, and that is the part any plan meters.</p>
+  </div>
+  <div class="w">
+    <div class="unit">
+      <div class="ucell">
+        <div class="t">WHAT THE BINARY COSTS</div>
+        <p><b>Nothing, on every platform.</b> MIT licensed, no account needed to read or build it, and no telemetry to turn off.</p>
+      </div>
+      <div class="ucell">
+        <div class="t">WHAT NEEDS A KEY</div>
+        <p><b>Verdict lookups.</b> A free key covers 100 a day, which is enough for one project. Lookups are unlimited on every paid plan.</p>
+      </div>
+      <div class="ucell">
+        <div class="t">WHAT IS METERED</div>
+        <p><b>Sandbox runs, and only for packages nobody has analysed yet.</b> A project built entirely of known packages costs nothing to check.</p>
+      </div>
+    </div>
+    <div class="btns" style="justify-content:center;margin-top:30px">
+      <a class="b f" href="pricing.html" target="_blank" rel="noopener">See scanner pricing</a>
+      <a class="b g" href="api.html" target="_blank" rel="noopener">The API it talks to</a>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · QUESTIONS -->
+<section class="s rule" id="mantis-faq">
+  <div class="w">
+    <p class="eyebrow">QUESTIONS</p>
+    <h2 class="h2">Before you run it</h2>
+    <div class="faq">
+      <details><summary>Does it want the manifest, or the lockfile?</summary>
+        <p>Both, when both exist. The manifest says what you asked for. The lockfile says what you
+          got, which is the list that actually matters. With no lockfile present, Mantis resolves
+          the tree itself and tells you it did.</p></details>
+      <details><summary>Will it install or execute anything?</summary>
+        <p>No. Mantis only reads. It never runs an install, never triggers a lifecycle script, and
+          never touches node_modules except to see what is sitting there. Execution happens in the
+          sandbox, on our hardware, never on yours.</p></details>
+      <details><summary>What actually leaves my machine?</summary>
+        <p>One string per package, of the form <code>name@version</code>, plus the integrity hash
+          already published in your lockfile. No source, no file paths, no environment variables,
+          no manifest, no repository name. The client is open, so you can confirm that rather than
+          take it on trust.</p></details>
+      <details><summary>What happens to a package with no verdict?</summary>
+        <p>It goes into the sandbox queue. Mantis can wait for the result, or exit straight away
+          with <code>--no-wait</code> and let you collect the finished report later.</p></details>
+      <details><summary>Can it gate a build?</summary>
+        <p>Yes. <code>mantis --fail-on review</code> returns a non zero exit code, which is all most
+          pipelines need. Pair it with <code>--json</code> to keep the artefact.</p></details>
+      <details><summary>Does it handle pnpm and yarn?</summary>
+        <p>npm and pnpm lockfiles at first release, with yarn next. Anything it cannot parse is
+          reported as unresolved rather than quietly dropped.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · CLOSE -->
+<section class="s cta rule">
+  <div class="w">
+    <h2 class="h2" style="max-width:21ch">Want it the day the first binary is signed?</h2>
+    <div class="btns">
+      <a class="b f" href="mailto:contact@snappyfeet.org?subject=Mantis">Tell me when it ships</a>
+      <a class="b g" href="observatory.html" target="_blank" rel="noopener">See Observatory</a>
+    </div>
+    <a class="mail" href="mailto:contact@snappyfeet.org">contact@snappyfeet.org</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="w">
+    <div class="fgrid">
+      <div>
+        <a class="mark" href="index.html" target="_blank" rel="noopener" style="font-size:16px" aria-label="Cohen, home"><i aria-hidden="true"></i>Cohen</a>
+        <p style="color:var(--ash2);font-size:13.5px;margin:16px 0 0;max-width:32ch">Behavioural package analysis. Named for Fred Cohen, who defined the problem in 1983 and proved it unsolvable in 1984.</p>
+      </div>
+      <div>
+        <h5>PRODUCTS</h5>
+        <ul>
+          <li><a href="index.html#evidence" target="_blank" rel="noopener">Cohen scanner</a></li>
+          <li><a href="mantis.html" target="_blank" rel="noopener">Mantis collector</a></li>
+          <li><a href="api.html" target="_blank" rel="noopener">Scanner API</a></li>
+          <li><a href="pricing.html" target="_blank" rel="noopener">Scanner pricing</a></li>
+          <li><a href="observatory.html" target="_blank" rel="noopener">Observatory</a></li>
+          <li><a href="observatory.html#observatory-pricing" target="_blank" rel="noopener">Observatory pricing</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>METHOD</h5>
+        <ul>
+          <li><a href="method.html" target="_blank" rel="noopener">How it works</a></li>
+          <li><a href="index.html#attribution" target="_blank" rel="noopener">Attribution</a></li>
+          <li><a href="index.html#verdicts" target="_blank" rel="noopener">Verdicts</a></li>
+          <li><a href="method.html#sandbox" target="_blank" rel="noopener">Sandbox</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>CONTACT</h5>
+        <ul>
+          <li><a href="blog.html" target="_blank" rel="noopener">Blog</a></li>
+          <li><a href="mailto:contact@snappyfeet.org">contact@snappyfeet.org</a></li>
+          <li><a href="pricing.html#faq" target="_blank" rel="noopener">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="fbar">
+      <span>COHEN · BEHAVIOURAL PACKAGE ANALYSIS</span>
+      <span>OBSERVATORY · THREAT INTEL</span>
+      <span>SB V1.3</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Method · Cohen</title>
+<meta name="description" content="How a Cohen run works, how the two engines differ, and what the sandbox does and does not cover.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='20'%20fill='%23000'/%3E%3Crect%20x='36'%20y='36'%20width='28'%20height='28'%20rx='4'%20fill='%23FF2D1F'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+<div class="grid" aria-hidden="true"><div class="grid-in"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="aperture" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="42" fill="none" stroke="currentColor" stroke-width="6" opacity=".45"/>
+    <circle cx="50" cy="50" r="27" fill="none" stroke="currentColor" stroke-width="6" opacity=".75"/>
+    <circle cx="50" cy="50" r="9" fill="#FF2D1F"/>
+  </symbol>
+</svg>
+
+<div class="nav" id="nav">
+  <div class="w">
+    <a class="mark" href="index.html" aria-label="Cohen, home"><i aria-hidden="true"></i>Cohen</a>
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="navlinks" aria-label="Menu"><i></i><i></i><i></i></button>
+    <div class="nav-links" id="navlinks">
+      <a href="index.html" target="_blank" rel="noopener">Engine</a>
+
+      <div class="drop" id="dropW">
+        <button class="drop-t" id="dropT" type="button" aria-expanded="false" aria-controls="dropM">Product</button>
+        <div class="drop-m" id="dropM">
+          <div class="drop-card">
+            <p class="drop-h">THREE PRODUCTS, ONE SANDBOX</p>
+            <div class="row">
+              <a class="api" href="api.html#package" target="_blank" rel="noopener">API</a>
+              <a class="rmain" href="mantis.html" target="_blank" rel="noopener">
+                <span class="dn">Mantis</span>
+                <span class="dd">Reads a project and resolves the whole dependency tree.</span>
+              </a>
+            </div>
+            <div class="row">
+              <a class="api" href="api.html#feed" target="_blank" rel="noopener">API</a>
+              <a class="rmain" href="observatory.html" target="_blank" rel="noopener">
+                <span class="dn">Observatory</span>
+                <span class="dd">The threat intel record, sold as data.</span>
+              </a>
+            </div>
+            <div class="row">
+              <a class="rmain" href="api.html#feed" target="_blank" rel="noopener">
+                <span class="dn">Feed API</span>
+                <span class="dd">Verdicts and indicators, straight into your workflow.</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a href="pricing.html" target="_blank" rel="noopener">Pricing</a>
+      <a class="nav-cta" href="pricing.html" target="_blank" rel="noopener">Start free</a>
+    </div>
+  </div>
+</div>
+
+<main id="main" class="sub">
+
+<!-- METHOD -->
+<section class="s rule" id="method">
+  <div class="w">
+    <p class="eyebrow">METHOD</p>
+    <h2 class="h2">How a package moves through it</h2>
+    <p class="lede">Five stages, the same order every time. Nothing carries over between runs.</p>
+    <div class="spine">
+      <div class="spine-line"></div>
+      <div class="rail">
+        <div class="node"><div class="i">01</div><h3>Fresh sandbox</h3><p>Every package starts from an identical, pristine container image.</p></div>
+        <div class="node"><div class="i">02</div><h3>Instrumented install</h3><p>Scripts enabled, under full system call tracing, isolated from anything real.</p></div>
+        <div class="node"><div class="i">03</div><h3>Import</h3><p>Loaded as a consumer would, traced separately, so payloads that wait for import get no free pass.</p></div>
+        <div class="node"><div class="i">04</div><h3>Attribution</h3><p>Each action tied to the process tree that produced it.</p></div>
+        <div class="node"><div class="i">05</div><h3>Correlation</h3><p>Events that mean little apart are joined into findings that mean something together.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENGINES -->
+<section class="s rule">
+  <div class="w">
+    <p class="eyebrow">TWO ENGINES</p>
+    <h2 class="h2">One watches it run. One reads what shipped.</h2>
+    <p class="lede">Cohen is a triage tool rather than a classifier. Its job is to surface behaviour worth a human's attention, not to pass final judgment.</p>
+    <p class="lede">That is not modesty. Fred Cohen proved in 1984 that deciding in general whether a program is a virus is undecidable. No detector can be both complete and correct. What remains is observation, and what you do with it.</p>
+    <div class="two">
+      <div class="eng">
+        <p class="cap">DYNAMIC</p>
+        <h3>Behaviour in a sandbox</h3>
+        <p>Installed and imported inside an isolated container while its system calls are traced. Files read and written, processes spawned, permissions changed, sockets opened.</p>
+        <p>A secret read and then compressed into an archive named after it means something neither event means alone.</p>
+        <p class="chartcap">CORRELATED EVENT PAIRS · ONE RUN</p>
+        <svg id="pairs" viewBox="0 0 420 66" role="img" aria-label="Diagram of paired events joined into findings"></svg>
+        <div class="seal a">Sets the verdict</div>
+      </div>
+      <div class="eng">
+        <p class="cap">STATIC</p>
+        <h3>Contents of the tarball</h3>
+        <p>The published archive is examined without being run. Rule matches against the source, the capabilities the code holds, and the metadata as the registry reports it.</p>
+        <p>Every file gets a SHA256 and an entropy score, which reveals packed or encrypted content sitting inside an otherwise readable package.</p>
+        <p class="chartcap">SHANNON ENTROPY PER FILE · BITS/BYTE</p>
+        <svg id="entropy" viewBox="0 0 420 64" role="img" aria-label="Per file entropy plot with one high entropy outlier"></svg>
+        <div class="seal">Adds context, sets nothing</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SANDBOX -->
+<section class="s rule" id="sandbox">
+  <div class="w">
+    <p class="eyebrow">SANDBOX</p>
+    <h2 class="h2 wide">A sandbox is table stakes. Detection strategy is the open problem.</h2>
+    <p class="lede">Worked on across two branches in parallel. The latest stable release runs the feed above.</p>
+    <div class="rm">
+      <div class="rmrow">
+        <div class="ver">sb v1.3 · live</div>
+        <div><h4>Evasion resistance</h4><p>Sandbox realism, against payloads that go quiet the moment they sense they are being watched.</p></div>
+      </div>
+      <div class="rmrow">
+        <div class="ver next">next</div>
+        <div><h4>Heuristics on dropped binaries</h4><p>Run heuristics against the binaries a package drops, and make them available for download alongside the verdict.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta rule">
+  <div class="w">
+    <h2 class="h2" style="max-width:21ch">The feed is open. Read what the registry shipped today.</h2>
+    <div class="btns">
+      <a class="b f" href="pricing.html" target="_blank" rel="noopener">Start free</a>
+      <a class="b g" href="mailto:contact@snappyfeet.org">Talk to us</a>
+    </div>
+    <a class="mail" href="mailto:contact@snappyfeet.org">contact@snappyfeet.org</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="w">
+    <div class="fgrid">
+      <div>
+        <a class="mark" href="index.html" target="_blank" rel="noopener" style="font-size:16px" aria-label="Cohen, home"><i aria-hidden="true"></i>Cohen</a>
+        <p style="color:var(--ash2);font-size:13.5px;margin:16px 0 0;max-width:32ch">Behavioural package analysis. Named for Fred Cohen, who defined the problem in 1983 and proved it unsolvable in 1984.</p>
+      </div>
+      <div>
+        <h5>PRODUCTS</h5>
+        <ul>
+          <li><a href="index.html#evidence" target="_blank" rel="noopener">Cohen scanner</a></li>
+          <li><a href="mantis.html" target="_blank" rel="noopener">Mantis collector</a></li>
+          <li><a href="api.html" target="_blank" rel="noopener">Scanner API</a></li>
+          <li><a href="pricing.html" target="_blank" rel="noopener">Scanner pricing</a></li>
+          <li><a href="observatory.html" target="_blank" rel="noopener">Observatory</a></li>
+          <li><a href="observatory.html#observatory-pricing" target="_blank" rel="noopener">Observatory pricing</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>METHOD</h5>
+        <ul>
+          <li><a href="method.html" target="_blank" rel="noopener">How it works</a></li>
+          <li><a href="index.html#attribution" target="_blank" rel="noopener">Attribution</a></li>
+          <li><a href="index.html#verdicts" target="_blank" rel="noopener">Verdicts</a></li>
+          <li><a href="method.html#sandbox" target="_blank" rel="noopener">Sandbox</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>CONTACT</h5>
+        <ul>
+          <li><a href="blog.html" target="_blank" rel="noopener">Blog</a></li>
+          <li><a href="mailto:contact@snappyfeet.org">contact@snappyfeet.org</a></li>
+          <li><a href="pricing.html#faq" target="_blank" rel="noopener">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="fbar">
+      <span>COHEN · BEHAVIOURAL PACKAGE ANALYSIS</span>
+      <span>OBSERVATORY · THREAT INTEL</span>
+      <span>SB V1.3</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>

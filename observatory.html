@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Observatory · threat intel by Cohen</title>
+<meta name="description" content="The Cohen threat intel feed as a standalone product: command and control addresses, hashes, filesystem artifacts, in real time.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='20'%20fill='%23000'/%3E%3Crect%20x='36'%20y='36'%20width='28'%20height='28'%20rx='4'%20fill='%23FF2D1F'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+<div class="grid" aria-hidden="true"><div class="grid-in"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="aperture" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="42" fill="none" stroke="currentColor" stroke-width="6" opacity=".45"/>
+    <circle cx="50" cy="50" r="27" fill="none" stroke="currentColor" stroke-width="6" opacity=".75"/>
+    <circle cx="50" cy="50" r="9" fill="#FF2D1F"/>
+  </symbol>
+</svg>
+
+<div class="nav" id="nav">
+  <div class="w">
+    <a class="mark" href="index.html" aria-label="Cohen, home"><i aria-hidden="true"></i>Cohen</a>
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="navlinks" aria-label="Menu"><i></i><i></i><i></i></button>
+    <div class="nav-links" id="navlinks">
+      <a href="index.html" target="_blank" rel="noopener">Engine</a>
+
+      <div class="drop" id="dropW">
+        <button class="drop-t here" id="dropT" type="button" aria-expanded="false" aria-controls="dropM">Product</button>
+        <div class="drop-m" id="dropM">
+          <div class="drop-card">
+            <p class="drop-h">THREE PRODUCTS, ONE SANDBOX</p>
+            <div class="row">
+              <a class="api" href="api.html#package" target="_blank" rel="noopener">API</a>
+              <a class="rmain" href="mantis.html" target="_blank" rel="noopener">
+                <span class="dn">Mantis</span>
+                <span class="dd">Reads a project and resolves the whole dependency tree.</span>
+              </a>
+            </div>
+            <div class="row">
+              <a class="api" href="api.html#feed" target="_blank" rel="noopener">API</a>
+              <a class="rmain" href="observatory.html" target="_blank" rel="noopener">
+                <span class="dn">Observatory</span>
+                <span class="dd">The threat intel record, sold as data.</span>
+              </a>
+            </div>
+            <div class="row">
+              <a class="rmain" href="api.html#feed" target="_blank" rel="noopener">
+                <span class="dn">Feed API</span>
+                <span class="dd">Verdicts and indicators, straight into your workflow.</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a href="pricing.html" target="_blank" rel="noopener">Pricing</a>
+      <a class="nav-cta" href="pricing.html" target="_blank" rel="noopener">Start free</a>
+    </div>
+  </div>
+</div>
+
+<main id="main" class="sub">
+
+<!-- 1 · PRODUCT LOCKUP -->
+<span id="intel" aria-hidden="true"></span>
+<section class="s rule" id="observatory">
+  <div class="w">
+   <div class="prod">
+    <p class="eyebrow">THREAT INTEL FEED</p>
+    <div class="plock">
+      <svg aria-hidden="true"><use href="#aperture"/></svg>
+      <span class="pn">Observatory</span>
+      <span class="by">BY COHEN</span>
+    </div>
+    <h2 class="h2 wide">The threat intel feed, as its own product</h2>
+    <p class="lede">Every package published to npm passes through the sandbox, so the byproduct
+      of running Cohen is a long, dense record of what malicious packages actually did, not just
+      that they were bad. Observatory is that record, sold as data.</p>
+    <p class="lede">It reads, and only reads, from work already done. It ships without the
+      scanner and stands on its own: real time, with the full history behind it.</p>
+    <div class="intel">
+      <div class="icard">
+        <div class="n">C2</div>
+        <h4>Command and control</h4>
+        <p>Every IP and domain a package opened a connection to, with the package and version that reached for it.</p>
+      </div>
+      <div class="icard">
+        <div class="n">#</div>
+        <h4>Hashes</h4>
+        <p>SHA256 for every file in every analysed tarball, including dropped binaries that never appeared in the repository.</p>
+      </div>
+      <div class="icard">
+        <div class="n">/</div>
+        <h4>Filesystem artifacts</h4>
+        <p>Paths read, written and made executable. The credential files targeted, the temporary directories used, the archive names chosen.</p>
+      </div>
+      <div class="icard">
+        <div class="n">&#10199;</div>
+        <h4>Real time</h4>
+        <p>Verdicts land as the registry publishes, not after an advisory is written. Historical archive included.</p>
+      </div>
+    </div>
+    <div class="deliv" aria-label="Delivery formats">
+      <span>REST API</span><span>WEBHOOK PUSH</span><span>STIX / TAXII</span>
+      <span>SIEM CONNECTORS</span><span>BULK SYNC</span><span>FULL ARCHIVE</span>
+    </div>
+    <div class="prodfoot">
+      <span class="status"><b></b>LIVE &middot; PUBLISHING NOW</span>
+      <a class="b g" href="#observatory-pricing">See pricing</a>
+      <a class="b g" href="mailto:contact@snappyfeet.org?subject=Observatory">Request a sample</a>
+    </div>
+   </div>
+  </div>
+</section>
+
+<!-- 2 · HOW IT WORKS -->
+<section class="s rule" id="observatory-how">
+  <div class="w">
+    <p class="eyebrow">HOW IT WORKS</p>
+    <h2 class="h2">Where the records come from</h2>
+    <p class="lede">Observatory is not a separate pipeline. It is the same sandbox the scanner
+      uses, with its output kept rather than discarded once a verdict is issued.</p>
+    <div class="spine">
+      <div class="spine-line"></div>
+      <div class="rail">
+        <div class="node"><div class="i">01</div><h3>Publish</h3><p>A version lands on npm. The registry firehose reaches the queue within seconds.</p></div>
+        <div class="node"><div class="i">02</div><h3>Run</h3><p>It is installed and imported in a fresh sandbox under full system call tracing.</p></div>
+        <div class="node"><div class="i">03</div><h3>Extract</h3><p>Connections, hashes, paths and process trees are lifted out of the trace as structured fields.</p></div>
+        <div class="node"><div class="i">04</div><h3>Correlate</h3><p>Records are joined across packages, so one C2 address surfaces every version that reached for it.</p></div>
+        <div class="node"><div class="i">05</div><h3>Deliver</h3><p>The record hits the API, the webhook and the bulk sync at the same moment.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 · IN PRACTICE -->
+<section class="s rule" id="observatory-practice">
+  <div class="w">
+    <p class="eyebrow">IN PRACTICE</p>
+    <h2 class="h2 wide">One record, exactly as it arrives</h2>
+    <p class="lede">Every field is attributed. A connection is never reported without the process
+      that opened it, which is the part an advisory cannot give you.</p>
+    <div class="term" style="margin-top:20px">
+      <div class="th"><span>GET /v1/observatory/records?since=2026-08-31T09:00:00Z</span><span>200 OK</span></div>
+<pre>{
+  <span class="k">"package"</span>:      <span class="v">"polymarket-stake-mathss"</span>,
+  <span class="k">"version"</span>:      <span class="v">"3.5.2"</span>,
+  <span class="k">"verdict"</span>:      <span class="hot">"review"</span>,
+  <span class="k">"first_seen"</span>:   <span class="v">"2026-08-31T09:14:22Z"</span>,
+  <span class="k">"connections"</span>: [
+    { <span class="k">"host"</span>: <span class="hot">"45.61.136.12"</span>, <span class="k">"port"</span>: <span class="v">443</span>, <span class="k">"by"</span>: <span class="v">"node postinstall.js"</span> },
+    { <span class="k">"host"</span>: <span class="hot">"api.telemetry-cdn.link"</span>, <span class="k">"port"</span>: <span class="v">443</span>, <span class="k">"by"</span>: <span class="v">"curl"</span> }
+  ],
+  <span class="k">"files_read"</span>: [
+    <span class="hot">"~/.aws/credentials"</span>, <span class="hot">"~/.npmrc"</span>, <span class="hot">"~/.ssh/id_ed25519"</span>
+  ],
+  <span class="k">"processes"</span>:    [ <span class="v">"node"</span>, <span class="v">"sh"</span>, <span class="v">"curl"</span>, <span class="v">"tar"</span> ],
+  <span class="k">"hashes"</span>: [
+    { <span class="k">"path"</span>: <span class="v">"lib/index.js"</span>, <span class="k">"sha256"</span>: <span class="v">"9f2c1e...a load of hex"</span> },
+    { <span class="k">"path"</span>: <span class="v">"bin/.helper"</span>, <span class="k">"sha256"</span>: <span class="v">"41ab77...a load of hex"</span>, <span class="k">"dropped"</span>: <span class="hot">true</span> }
+  ],
+  <span class="k">"elapsed_ms"</span>:   <span class="v">10500</span>
+}
+<span class="cm">// 1 of 3,412 records in this window</span></pre>
+      <div class="legend">
+        <span><i class="a"></i>malicious indicator</span>
+        <span><i></i>context and attribution</span>
+      </div>
+    </div>
+    <div class="flags">
+      <div class="frow"><code>verdict</code><p>Either <code>review</code> or <code>clean</code>. Every analysed version carries one, which is what makes the feed usable as a baseline rather than only a blocklist.</p></div>
+      <div class="frow"><code>connections[]</code><p>Host, port and the process that opened it. The attribution is the point: you get the code that reached out, not just the address.</p></div>
+      <div class="frow"><code>files_read[]</code><p>Paths touched during install and import, with the credential locations flagged separately.</p></div>
+      <div class="frow"><code>hashes[]</code><p>SHA256 per file, with <code>dropped</code> set on anything that was never in the published repository.</p></div>
+      <div class="frow"><code>first_seen</code><p>When the sandbox finished, not when an advisory was published. Usually the earlier of the two by a wide margin.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · PRICING -->
+<section class="s rule" id="observatory-pricing">
+  <div class="w center">
+    <p class="eyebrow">OBSERVATORY PRICING</p>
+    <div class="plock" style="justify-content:center">
+      <svg aria-hidden="true"><use href="#aperture"/></svg>
+      <span class="pn">Observatory</span>
+    </div>
+    <h2 class="h2">Priced separately, sold on its own</h2>
+    <p class="lede">Observatory does not require a Cohen scanner subscription. Attach it to any
+      plan, or take it alone.</p>
+  </div>
+  <div class="w">
+    <div class="tiers" id="intelTiers"></div>
+  </div>
+</section>
+
+<!-- 5 · QUESTIONS -->
+<section class="s rule" id="observatory-faq">
+  <div class="w">
+    <p class="eyebrow">QUESTIONS</p>
+    <h2 class="h2">Before you wire it in</h2>
+    <div class="faq">
+      <details><summary>Do I need the scanner to buy the feed?</summary>
+        <p>No. Observatory is sold on its own and bills on its own. If you already pay for the
+          scanner it attaches to that account, but nothing requires it.</p></details>
+      <details><summary>How real is real time?</summary>
+        <p>The run starts within seconds of publication. A record lands when the sandbox finishes,
+          which is minutes rather than the days an advisory takes.</p></details>
+      <details><summary>Does it carry clean packages too?</summary>
+        <p>Yes, and that is deliberate. A feed of only the bad ones tells you nothing about the
+          98 percent, so every analysed version is published with its verdict.</p></details>
+      <details><summary>Live feed only, or the history as well?</summary>
+        <p>Both. Bulk sync ships the archive in one pass, the webhook carries whatever is new
+          from that point on.</p></details>
+      <details><summary>What formats does it deliver in?</summary>
+        <p>REST and webhook push as standard. STIX and TAXII for anything that has to land in a
+          SIEM without a translation layer in between.</p></details>
+      <details><summary>Can I attribute an indicator back to the code?</summary>
+        <p>Every field carries the package, the version and the process that produced it. That is
+          the whole reason the record is worth more than the verdict.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · CLOSE -->
+<section class="s cta rule">
+  <div class="w">
+    <h2 class="h2" style="max-width:21ch">The feed is open. Read what the registry shipped today.</h2>
+    <div class="btns">
+      <a class="b f" href="pricing.html" target="_blank" rel="noopener">Start free</a>
+      <a class="b g" href="mantis.html" target="_blank" rel="noopener">See Mantis</a>
+    </div>
+    <a class="mail" href="mailto:contact@snappyfeet.org">contact@snappyfeet.org</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="w">
+    <div class="fgrid">
+      <div>
+        <a class="mark" href="index.html" target="_blank" rel="noopener" style="font-size:16px" aria-label="Cohen, home"><i aria-hidden="true"></i>Cohen</a>
+        <p style="color:var(--ash2);font-size:13.5px;margin:16px 0 0;max-width:32ch">Behavioural package analysis. Named for Fred Cohen, who defined the problem in 1983 and proved it unsolvable in 1984.</p>
+      </div>
+      <div>
+        <h5>PRODUCTS</h5>
+        <ul>
+          <li><a href="index.html#evidence" target="_blank" rel="noopener">Cohen scanner</a></li>
+          <li><a href="mantis.html" target="_blank" rel="noopener">Mantis collector</a></li>
+          <li><a href="api.html" target="_blank" rel="noopener">Scanner API</a></li>
+          <li><a href="pricing.html" target="_blank" rel="noopener">Scanner pricing</a></li>
+          <li><a href="observatory.html" target="_blank" rel="noopener">Observatory</a></li>
+          <li><a href="observatory.html#observatory-pricing" target="_blank" rel="noopener">Observatory pricing</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>METHOD</h5>
+        <ul>
+          <li><a href="method.html" target="_blank" rel="noopener">How it works</a></li>
+          <li><a href="index.html#attribution" target="_blank" rel="noopener">Attribution</a></li>
+          <li><a href="index.html#verdicts" target="_blank" rel="noopener">Verdicts</a></li>
+          <li><a href="method.html#sandbox" target="_blank" rel="noopener">Sandbox</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>CONTACT</h5>
+        <ul>
+          <li><a href="blog.html" target="_blank" rel="noopener">Blog</a></li>
+          <li><a href="mailto:contact@snappyfeet.org">contact@snappyfeet.org</a></li>
+          <li><a href="pricing.html#faq" target="_blank" rel="noopener">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="fbar">
+      <span>COHEN · BEHAVIOURAL PACKAGE ANALYSIS</span>
+      <span>OBSERVATORY · THREAT INTEL</span>
+      <span>SB V1.3</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>

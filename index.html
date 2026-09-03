@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cohen · behavioural package analysis</title>
+<meta name="description" content="Cohen installs npm packages in a disposable sandbox and records what they actually do: every file, connection and process, attributed to the code that caused it.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='20'%20fill='%23000'/%3E%3Crect%20x='36'%20y='36'%20width='28'%20height='28'%20rx='4'%20fill='%23FF2D1F'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+<div class="grid" aria-hidden="true"><div class="grid-in"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="aperture" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="42" fill="none" stroke="currentColor" stroke-width="6" opacity=".45"/>
+    <circle cx="50" cy="50" r="27" fill="none" stroke="currentColor" stroke-width="6" opacity=".75"/>
+    <circle cx="50" cy="50" r="9" fill="#FF2D1F"/>
+  </symbol>
+</svg>
+
+<div class="nav" id="nav">
+  <div class="w">
+    <a class="mark" href="index.html" aria-label="Cohen, home"><i aria-hidden="true"></i>Cohen</a>
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="navlinks" aria-label="Menu"><i></i><i></i><i></i></button>
+    <div class="nav-links" id="navlinks">
+      <a class="here" href="index.html" target="_blank" rel="noopener">Engine</a>
+
+      <div class="drop" id="dropW">
+        <button class="drop-t" id="dropT" type="button" aria-expanded="false" aria-controls="dropM">Product</button>
+        <div class="drop-m" id="dropM">
+          <div class="drop-card">
+            <p class="drop-h">THREE PRODUCTS, ONE SANDBOX</p>
+            <div class="row">
+              <a class="api" href="api.html#package" target="_blank" rel="noopener">API</a>
+              <a class="rmain" href="mantis.html" target="_blank" rel="noopener">
+                <span class="dn">Mantis</span>
+                <span class="dd">Reads a project and resolves the whole dependency tree.</span>
+              </a>
+            </div>
+            <div class="row">
+              <a class="api" href="api.html#feed" target="_blank" rel="noopener">API</a>
+              <a class="rmain" href="observatory.html" target="_blank" rel="noopener">
+                <span class="dn">Observatory</span>
+                <span class="dd">The threat intel record, sold as data.</span>
+              </a>
+            </div>
+            <div class="row">
+              <a class="rmain" href="api.html#feed" target="_blank" rel="noopener">
+                <span class="dn">Feed API</span>
+                <span class="dd">Verdicts and indicators, straight into your workflow.</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a href="pricing.html" target="_blank" rel="noopener">Pricing</a>
+      <a class="nav-cta" href="pricing.html" target="_blank" rel="noopener">Start free</a>
+    </div>
+  </div>
+</div>
+
+<header class="hero">
+  <canvas id="radar" aria-hidden="true"></canvas>
+  <div class="w">
+    <p class="kicker">BEHAVIOURAL PACKAGE ANALYSIS</p>
+    <h1 class="title">Every package, watched while it runs</h1>
+    <p class="dek">Cohen installs npm packages in a disposable sandbox and records what they actually do: every file, connection and process, attributed to the code that caused it.</p>
+    <div class="btns">
+      <a class="b f" href="pricing.html" target="_blank" rel="noopener">Start free</a>
+      <a class="b g" href="api.html" target="_blank" rel="noopener">Read the API docs</a>
+    </div>
+  </div>
+  <div class="hud">
+    <span class="live"><b></b>SANDBOX ONLINE · SB V1.3</span>
+    <span id="hudpkg">OBSERVING</span>
+  </div>
+</header>
+
+
+<main id="main">
+
+<!-- EVIDENCE -->
+<section class="s" id="evidence">
+  <div class="w">
+    <p class="eyebrow">ONE FINDING, PLOTTED</p>
+    <h2 class="h2">Read one row at a time, nothing here is unusual.</h2>
+    <p class="lede">Packages read files. Build tools run gzip. Installers write to temporary directories. What makes this a finding is the order the actions happened in, visible only while the code is running.</p>
+    <div class="plotwrap">
+      <div class="plothead">
+        <span>polymarket-stake-mathss@3.5.2 · 2 KB · ONE POSTINSTALL HOOK</span>
+        <span class="rv">REVIEW</span>
+      </div>
+      <div class="plotscroll"><svg id="plot" viewBox="0 0 1000 186" role="img" aria-label="Timeline of file, process and network activity over 10.5 seconds"></svg></div>
+      <div class="pfoot">Nothing was taken. The container holds nothing real and is destroyed moments later, so what the package collected was a set of files that exist nowhere else.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ATTRIBUTION -->
+<section class="s rule" id="attribution">
+  <div class="w">
+    <p class="eyebrow">ATTRIBUTION</p>
+    <h2 class="h2">An install is noisy. Only some of the noise is the package.</h2>
+    <p class="lede">Every recorded action is tied back to the process that produced it. npm reads your <code>.npmrc</code> on every install; that is npm doing its job, not a finding.</p>
+    <div class="tree">
+      <div class="th"><span>PROCESS TREE · SINGLE RUN</span><span>PID</span></div>
+<pre><span class="n">npm install                                            <span class="tag">1</span>
+├── npm                                                <span class="tag">12</span>
+│   ├── openat    /root/.npmrc
+│   ├── stat      /usr/lib/node_modules
+│   ├── write     ./node_modules/.package-lock.json
+│   └── connect   registry.npmjs.org:443</span>
+<span class="pkgb">└── <span class="h">postinstall → node</span>                              <span class="tag">31</span>
+    ├── openat    /root/.ssh/id_rsa
+    ├── openat    /root/.aws/credentials
+    ├── openat    /root/.electrum/wallets/default_wallet
+    ├── execve    /usr/bin/tar
+    ├── execve    /usr/bin/gzip
+    ├── write     /tmp/.x/ssh.gz
+    └── <span class="h">connect   216.198.79.1:443</span></span></pre>
+      <div class="legend">
+        <span><i></i>npm and build tooling, expected, discarded</span>
+        <span><i class="a"></i>package code, kept, then correlated</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VERDICTS -->
+<section class="s rule" id="verdicts">
+  <div class="w">
+    <p class="eyebrow">READING THE FEED</p>
+    <h2 class="h2">Two verdicts, deliberately</h2>
+    <p class="lede">A third tier invites arguments about which shade something is instead of whether to look at it. Where a run was cut short, the result is review, because no coverage is not the same as nothing found.</p>
+    <div class="verd">
+      <div class="r"><div class="lab">REVIEW</div><p>Behaviour a human should look at. A lead, not a conviction.</p></div>
+      <div class="c"><div class="lab">CLEAN</div><p>Nothing notable observed. Behaviour outside the observation window is out of scope.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta rule">
+  <div class="w">
+    <h2 class="h2" style="max-width:21ch">The feed is open. Read what the registry shipped today.</h2>
+    <div class="btns">
+      <a class="b f" href="pricing.html" target="_blank" rel="noopener">Start free</a>
+      <a class="b g" href="mailto:contact@snappyfeet.org">Talk to us</a>
+    </div>
+    <a class="mail" href="mailto:contact@snappyfeet.org">contact@snappyfeet.org</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="w">
+    <div class="fgrid">
+      <div>
+        <a class="mark" href="index.html" target="_blank" rel="noopener" style="font-size:16px" aria-label="Cohen, home"><i aria-hidden="true"></i>Cohen</a>
+        <p style="color:var(--ash2);font-size:13.5px;margin:16px 0 0;max-width:32ch">Behavioural package analysis. Named for Fred Cohen, who defined the problem in 1983 and proved it unsolvable in 1984.</p>
+      </div>
+      <div>
+        <h5>PRODUCTS</h5>
+        <ul>
+          <li><a href="index.html#evidence" target="_blank" rel="noopener">Cohen scanner</a></li>
+          <li><a href="mantis.html" target="_blank" rel="noopener">Mantis collector</a></li>
+          <li><a href="api.html" target="_blank" rel="noopener">Scanner API</a></li>
+          <li><a href="pricing.html" target="_blank" rel="noopener">Scanner pricing</a></li>
+          <li><a href="observatory.html" target="_blank" rel="noopener">Observatory</a></li>
+          <li><a href="observatory.html#observatory-pricing" target="_blank" rel="noopener">Observatory pricing</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>METHOD</h5>
+        <ul>
+          <li><a href="method.html" target="_blank" rel="noopener">How it works</a></li>
+          <li><a href="index.html#attribution" target="_blank" rel="noopener">Attribution</a></li>
+          <li><a href="index.html#verdicts" target="_blank" rel="noopener">Verdicts</a></li>
+          <li><a href="method.html#sandbox" target="_blank" rel="noopener">Sandbox</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>CONTACT</h5>
+        <ul>
+          <li><a href="blog.html" target="_blank" rel="noopener">Blog</a></li>
+          <li><a href="mailto:contact@snappyfeet.org">contact@snappyfeet.org</a></li>
+          <li><a href="pricing.html#faq" target="_blank" rel="noopener">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="fbar">
+      <span>COHEN · BEHAVIOURAL PACKAGE ANALYSIS</span>
+      <span>OBSERVATORY · THREAT INTEL</span>
+      <span>SB V1.3</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>

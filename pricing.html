@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pricing · Cohen</title>
+<meta name="description" content="Pay for what you run, not who you hire. Deep analysis pricing, flat rate teams, and unlimited verdict lookups.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='20'%20fill='%23000'/%3E%3Crect%20x='36'%20y='36'%20width='28'%20height='28'%20rx='4'%20fill='%23FF2D1F'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+<div class="grid" aria-hidden="true"><div class="grid-in"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="aperture" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="42" fill="none" stroke="currentColor" stroke-width="6" opacity=".45"/>
+    <circle cx="50" cy="50" r="27" fill="none" stroke="currentColor" stroke-width="6" opacity=".75"/>
+    <circle cx="50" cy="50" r="9" fill="#FF2D1F"/>
+  </symbol>
+</svg>
+
+<div class="nav" id="nav">
+  <div class="w">
+    <a class="mark" href="index.html" aria-label="Cohen, home"><i aria-hidden="true"></i>Cohen</a>
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="navlinks" aria-label="Menu"><i></i><i></i><i></i></button>
+    <div class="nav-links" id="navlinks">
+      <a href="index.html" target="_blank" rel="noopener">Engine</a>
+
+      <div class="drop" id="dropW">
+        <button class="drop-t" id="dropT" type="button" aria-expanded="false" aria-controls="dropM">Product</button>
+        <div class="drop-m" id="dropM">
+          <div class="drop-card">
+            <p class="drop-h">THREE PRODUCTS, ONE SANDBOX</p>
+            <div class="row">
+              <a class="api" href="api.html#package" target="_blank" rel="noopener">API</a>
+              <a class="rmain" href="mantis.html" target="_blank" rel="noopener">
+                <span class="dn">Mantis</span>
+                <span class="dd">Reads a project and resolves the whole dependency tree.</span>
+              </a>
+            </div>
+            <div class="row">
+              <a class="api" href="api.html#feed" target="_blank" rel="noopener">API</a>
+              <a class="rmain" href="observatory.html" target="_blank" rel="noopener">
+                <span class="dn">Observatory</span>
+                <span class="dd">The threat intel record, sold as data.</span>
+              </a>
+            </div>
+            <div class="row">
+              <a class="rmain" href="api.html#feed" target="_blank" rel="noopener">
+                <span class="dn">Feed API</span>
+                <span class="dd">Verdicts and indicators, straight into your workflow.</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a class="here" href="pricing.html" target="_blank" rel="noopener">Pricing</a>
+      <a class="nav-cta" href="pricing.html" target="_blank" rel="noopener">Start free</a>
+    </div>
+  </div>
+</div>
+
+<main id="main" class="sub">
+
+<!-- 1 · DEEP ANALYSIS PLANS -->
+<section class="s rule" id="pricing">
+  <div class="w center">
+    <p class="eyebrow">DEEP ANALYSIS PLANS</p>
+    <h2 class="h2">Pay for what you run, not who you hire</h2>
+    <p class="lede">One meter runs the whole product: the deep analysis. A deep analysis is one
+      package version, installed and imported in a fresh sandbox and traced end to end.
+      Everything else, Mantis included, costs nothing.</p>
+    <div class="toggle" role="group" aria-label="Billing period">
+      <button id="tMonthly" class="on" type="button">Monthly</button>
+      <button id="tAnnual" type="button">Annual <span class="save">save up to 17%</span></button>
+    </div>
+  </div>
+  <div class="w">
+    <div class="tiers" id="tiers"></div>
+  </div>
+</section>
+
+<!-- 2 · THE ALLOWANCE -->
+<section class="s rule" id="allowance">
+  <div class="w">
+    <p class="eyebrow">THE ALLOWANCE</p>
+    <h2 class="h2">One number decides your bill</h2>
+    <p class="lede">Every plan differs in exactly one way that matters: how many packages nobody
+      has analysed yet you can send to the sandbox in a month. Here it is, without the grid.</p>
+    <div class="flags">
+      <div class="frow"><code>FREE &middot; $0</code>
+        <p>No deep analyses. Verdict lookups only, capped at 100 a day. Mantis still runs and
+          still tells you which of your packages have no verdict yet.</p></div>
+      <div class="frow"><code>INDIVIDUAL &middot; $14 / month</code>
+        <p><b>150 deep analyses a month, for one user.</b> The plan stops at the limit instead of
+          billing you for going over.</p></div>
+      <div class="frow"><code>TEAM &middot; $349 / month</code>
+        <p><b>2,000 deep analyses a month, pooled across up to 10 users.</b> Flat rate, so the
+          eleventh dependency costs the same as the first and nobody is billed per head.
+          Overage runs at $0.02 an analysis.</p></div>
+      <div class="frow"><code>ENTERPRISE</code>
+        <p>More than 10 users, negotiated volume, and the option to run the sandbox inside your
+          own network.</p></div>
+    </div>
+    <div class="unit">
+      <div class="ucell">
+        <div class="t">WHAT COUNTS AS AN ANALYSIS</div>
+        <p>One package at one version, run once. <b>A lockfile of 400 dependencies is at most 400
+          analyses the first time and zero after that</b>, because results are cached across every
+          customer. In practice most of your tree is already known.</p>
+      </div>
+      <div class="ucell">
+        <div class="t">WHAT IS NEVER METERED</div>
+        <p><b>Verdict lookups, and Mantis itself.</b> Asking whether a package is already known bad
+          costs nothing on any paid plan. You only spend an analysis when you ask for a package
+          nobody has run yet.</p>
+      </div>
+      <div class="ucell">
+        <div class="t">GOING OVER</div>
+        <p>Team overage is <b>$0.02 per analysis</b>, and you are told before you get there.
+          Individual stops at 150 rather than billing you by surprise. Nothing auto upgrades.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 · MANTIS -->
+<section class="s rule" id="mantis-cost">
+  <div class="w center">
+    <p class="eyebrow">MANTIS</p>
+    <div class="plock" style="justify-content:center">
+      <svg aria-hidden="true"><use href="#aperture"/></svg>
+      <span class="pn">Mantis</span>
+    </div>
+    <h2 class="h2">Free on every plan, including the free one</h2>
+    <p class="lede">Mantis is the binary you run inside a project to collect its dependency tree.
+      It is open source and it is not a line item. Team gets it on every machine because that is
+      how a team uses it, not because it is gated.</p>
+  </div>
+  <div class="w">
+    <div class="unit">
+      <div class="ucell">
+        <div class="t">THE BINARY</div>
+        <p><b>$0, MIT licensed.</b> No account needed to read or build it, no telemetry to turn off, no seat count.</p>
+      </div>
+      <div class="ucell">
+        <div class="t">WHAT IT QUERIES</div>
+        <p><b>The lookups, which are free on paid plans</b> and capped at 100 a day on Free. That cap is the only reason Free feels like a trial.</p>
+      </div>
+      <div class="ucell">
+        <div class="t">WHAT IT CAN COST YOU</div>
+        <p><b>Only the packages it finds that nobody has analysed.</b> Those go to the sandbox and come off your monthly allowance.</p>
+      </div>
+    </div>
+    <div class="btns" style="justify-content:center;margin-top:30px">
+      <a class="b g" href="mantis.html" target="_blank" rel="noopener">See Mantis</a>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · OBSERVATORY FEED -->
+<section class="s rule" id="feed-api">
+  <div class="w center">
+    <p class="eyebrow">OBSERVATORY FEED API</p>
+    <div class="plock" style="justify-content:center">
+      <svg aria-hidden="true"><use href="#aperture"/></svg>
+      <span class="pn">Observatory</span>
+    </div>
+    <h2 class="h2">Priced separately, sold on its own</h2>
+    <p class="lede">The feed is a different product with a different meter: requests, not
+      analyses. It does not require a scanner plan, and a scanner plan does not include it.</p>
+  </div>
+  <div class="w">
+    <div class="tiers" id="intelTiers"></div>
+    <div class="btns" style="justify-content:center;margin-top:30px">
+      <a class="b g" href="observatory.html" target="_blank" rel="noopener">See Observatory</a>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · QUESTIONS -->
+<section class="s rule" id="faq">
+  <div class="w">
+    <p class="eyebrow">QUESTIONS</p>
+    <h2 class="h2">Before you pick one</h2>
+    <div class="faq">
+      <details><summary>What exactly is a deep analysis?</summary>
+        <p>One package at one version, installed and imported in a fresh sandbox with its system
+          calls traced. It is the expensive thing, so it is the only thing metered. A verdict
+          that already exists is a lookup, and lookups are free on every paid plan.</p></details>
+      <details><summary>Is the Team allowance per person or per team?</summary>
+        <p>Per team. All 2,000 sit in one pool that up to 10 users draw from, so a quiet month
+          for one developer subsidises a busy month for another. Nobody is billed per head.</p></details>
+      <details><summary>What happens at the eleventh user?</summary>
+        <p>Team covers up to 10. Beyond that it moves to Enterprise, where both the user count
+          and the analysis volume are negotiated rather than fixed.</p></details>
+      <details><summary>Will 150 a month be enough on Individual?</summary>
+        <p>Usually, and not because 150 is generous. Results are cached across every customer, so
+          you only spend an analysis on a package version nobody has ever run. On a mature project
+          most of the tree is already known and the first scan costs far less than the dependency
+          count suggests.</p></details>
+      <details><summary>Do I pay for Mantis?</summary>
+        <p>No. It is open source and free on every plan, Free included. It is the client, not a
+          feature. What can cost you is what it finds: unanalysed packages go to the sandbox and
+          come off your allowance.</p></details>
+      <details><summary>What happens if I run out?</summary>
+        <p>Team keeps going at $0.02 an analysis and warns you first. Individual stops at 150 and
+          asks. Neither plan upgrades you without being asked.</p></details>
+      <details><summary>Does a scanner plan include the Observatory feed?</summary>
+        <p>No, and the feed does not include a scanner. They are separate products with separate
+          meters, and either can be bought alone.</p></details>
+      <details><summary>What is the annual price?</summary>
+        <p>Two months free, so $12 a month on Individual and $291 a month on Team, billed yearly.
+          Enterprise is quoted.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · CLOSE -->
+<section class="s cta rule">
+  <div class="w">
+    <h2 class="h2" style="max-width:21ch">Start on the free key. Upgrade when the sandbox costs you something.</h2>
+    <div class="btns">
+      <a class="b f" href="mailto:contact@snappyfeet.org?subject=Free%20key">Get a free key</a>
+      <a class="b g" href="mailto:contact@snappyfeet.org">Talk to us</a>
+    </div>
+    <a class="mail" href="mailto:contact@snappyfeet.org">contact@snappyfeet.org</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="w">
+    <div class="fgrid">
+      <div>
+        <a class="mark" href="index.html" target="_blank" rel="noopener" style="font-size:16px" aria-label="Cohen, home"><i aria-hidden="true"></i>Cohen</a>
+        <p style="color:var(--ash2);font-size:13.5px;margin:16px 0 0;max-width:32ch">Behavioural package analysis. Named for Fred Cohen, who defined the problem in 1983 and proved it unsolvable in 1984.</p>
+      </div>
+      <div>
+        <h5>PRODUCTS</h5>
+        <ul>
+          <li><a href="index.html#evidence" target="_blank" rel="noopener">Cohen scanner</a></li>
+          <li><a href="mantis.html" target="_blank" rel="noopener">Mantis collector</a></li>
+          <li><a href="api.html" target="_blank" rel="noopener">Scanner API</a></li>
+          <li><a href="pricing.html" target="_blank" rel="noopener">Scanner pricing</a></li>
+          <li><a href="observatory.html" target="_blank" rel="noopener">Observatory</a></li>
+          <li><a href="observatory.html#observatory-pricing" target="_blank" rel="noopener">Observatory pricing</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>METHOD</h5>
+        <ul>
+          <li><a href="method.html" target="_blank" rel="noopener">How it works</a></li>
+          <li><a href="index.html#attribution" target="_blank" rel="noopener">Attribution</a></li>
+          <li><a href="index.html#verdicts" target="_blank" rel="noopener">Verdicts</a></li>
+          <li><a href="method.html#sandbox" target="_blank" rel="noopener">Sandbox</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>CONTACT</h5>
+        <ul>
+          <li><a href="blog.html" target="_blank" rel="noopener">Blog</a></li>
+          <li><a href="mailto:contact@snappyfeet.org">contact@snappyfeet.org</a></li>
+          <li><a href="pricing.html#faq" target="_blank" rel="noopener">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="fbar">
+      <span>COHEN · BEHAVIOURAL PACKAGE ANALYSIS</span>
+      <span>OBSERVATORY · THREAT INTEL</span>
+      <span>SB V1.3</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>
