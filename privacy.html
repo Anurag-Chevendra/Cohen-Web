@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy · Cohen</title>
+<meta name="description" content="What Cohen collects, why, how long it is kept, and how to have it deleted.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='20'%20fill='%23000'/%3E%3Crect%20x='36'%20y='36'%20width='28'%20height='28'%20rx='4'%20fill='%23FF2D1F'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .legal h3{font-size:17px;margin:32px 0 10px;letter-spacing:-.01em}
+  .legal p,.legal li{max-width:68ch}
+  .legal ul{padding-left:20px}
+  .legal li{margin:0 0 8px}
+  .legal table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14.5px}
+  .legal th{text-align:left;font-weight:500;padding:0 14px 10px 0;color:var(--ash2,#63635e)}
+  .legal td{padding:12px 14px 12px 0;border-top:1px solid var(--line,#1f1f1f);vertical-align:top}
+  .stamp{font-size:13.5px;color:var(--ash2,#63635e)}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="grid" aria-hidden="true"><div class="grid-in"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="aperture" viewBox="0 0 100 100">
+<circle cx="50" cy="50" r="42" fill="none" stroke="currentColor" stroke-width="6" opacity=".45"/>
+<circle cx="50" cy="50" r="27" fill="none" stroke="currentColor" stroke-width="6" opacity=".75"/>
+<circle cx="50" cy="50" r="9" fill="#FF2D1F"/>
+</symbol>
+</svg>
+
+<div class="nav" id="nav">
+  <div class="w">
+    <a class="mark" href="index.html" aria-label="Cohen, home"><i aria-hidden="true"></i>Cohen</a>
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="navlinks" aria-label="Menu"><i></i><i></i><i></i></button>
+    <div class="nav-links" id="navlinks">
+      <a href="index.html">Engine</a>
+      <a href="api.html">API</a>
+      <a href="pricing.html">Pricing</a>
+      <a class="nav-cta" href="https://console.snappyfeet.org/">Start free</a>
+    </div>
+  </div>
+</div>
+
+<main id="main" class="sub legal">
+
+<section class="s rule">
+  <div class="w">
+    <p class="eyebrow">PRIVACY</p>
+    <h2 class="h2 wide">What we collect, and what we do not</h2>
+    <p class="lede">
+      Cohen analyses public software packages. It is not a product that needs to
+      know much about you, so it does not ask for much. This page describes every
+      category of personal data the service handles, why it is handled, how long
+      it is kept and how to have it removed.
+    </p>
+    <p class="stamp">
+      Last updated 4 September 2026. Operated by [LEGAL ENTITY NAME], [REGISTERED ADDRESS], India.
+    </p>
+  </div>
+</section>
+
+<section class="s rule">
+  <div class="w">
+    <p class="eyebrow">WHAT WE HOLD</p>
+    <h2 class="h2">Four categories, and nothing else</h2>
+
+    <table>
+      <thead>
+        <tr><th>Data</th><th>Why we have it</th><th>How long we keep it</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Your Google account identifier, email address, display name and profile picture URL</td>
+          <td>To identify your account and to contact you about your API keys. Received from Google when you sign in.</td>
+          <td>Until you delete your account</td>
+        </tr>
+        <tr>
+          <td>API key records: a cryptographic hash of each key, its display prefix, name, scopes, expiry and last-used time</td>
+          <td>To authenticate your API requests and to show you your own keys</td>
+          <td>Until you delete your account</td>
+        </tr>
+        <tr>
+          <td>Usage records: counts of lookups and analyses, the package names and versions you queried, and timestamps</td>
+          <td>To apply your plan's allowance, to prevent abuse, and to show usage in your dashboard</td>
+          <td>13 months, then aggregated</td>
+        </tr>
+        <tr>
+          <td>Technical logs: IP address, user agent and request path</td>
+          <td>Security, rate limiting and diagnosing faults</td>
+          <td>30 days</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>What we do not do</h3>
+    <ul>
+      <li>We do not sell personal data, and we do not share it for advertising.</li>
+      <li>We do not run advertising, analytics or tracking scripts on this site.</li>
+      <li>We do not read your source code. Mantis resolves your dependency tree
+        locally and sends only package names and versions.</li>
+      <li>We never store your API key itself, only a keyed hash of it. If you lose
+        a key we cannot recover it, and neither can anyone who steals our database.</li>
+      <li>We do not ask Google for access to your Gmail, Drive, contacts or calendar.
+        The only permissions we request are your basic profile and email address.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="s rule">
+  <div class="w">
+    <p class="eyebrow">PRIVATE PACKAGES</p>
+    <h2 class="h2">Names leave your machine, code does not</h2>
+    <p class="lede">
+      When you submit a dependency tree, we receive package names and version
+      numbers. If your project depends on private or internal packages, those
+      names reach us unless you set <code>skip_private</code>, which drops names
+      that do not resolve on the public registry before they leave your side of
+      the wire. Package names can themselves be sensitive in some organisations,
+      so this is worth setting deliberately rather than by default.
+    </p>
+  </div>
+</section>
+
+<section class="s rule">
+  <div class="w">
+    <p class="eyebrow">COOKIES</p>
+    <h2 class="h2">Three cookies, none of them for tracking</h2>
+    <div class="flags">
+      <div class="frow wide"><code>__Host-cohen_session</code>
+        <p>Set on the console after you sign in, so we know it is still you. Removed
+        when you sign out or after 14 days. Strictly necessary.</p></div>
+      <div class="frow wide"><code>cohen_oauth_tx</code>
+        <p>A ten-minute cookie that carries the security parameters of a sign-in
+        that is in progress. Deleted the moment sign-in completes.</p></div>
+      <div class="frow wide"><code>cohen_signed_in</code>
+        <p>Contains the single character <code>1</code> and nothing else. It lets
+        this site show a link to your dashboard rather than a sign-up prompt. It
+        identifies nobody and grants no access.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="s rule">
+  <div class="w">
+    <p class="eyebrow">WHO ELSE TOUCHES IT</p>
+    <h2 class="h2">Two processors, named</h2>
+    <div class="flags">
+      <div class="frow wide"><code>Google LLC</code>
+        <p>Handles sign-in. Google tells us your identifier, email address, name and
+        profile picture. We never see your Google password. Google's own handling of
+        your data is governed by its privacy policy, not this one.</p></div>
+      <div class="frow wide"><code>Cloudflare, Inc.</code>
+        <p>Carries traffic between you and our servers, and filters abuse. It
+        processes IP addresses and request metadata in transit.</p></div>
+    </div>
+    <p>
+      Our application servers and database are operated by us on our own hardware
+      in India. We will name any further processor here before adding it. We may
+      disclose data where a law that binds us requires it.
+    </p>
+  </div>
+</section>
+
+<section class="s rule">
+  <div class="w">
+    <p class="eyebrow">YOUR RIGHTS</p>
+    <h2 class="h2">Access, correction, erasure</h2>
+    <p class="lede">
+      Whichever law applies to you, the practical answer is the same: write to us
+      and we will do it. Under India's Digital Personal Data Protection Act 2023
+      you may access a summary of your data, have it corrected or completed, have
+      it erased, nominate someone to act for you, and raise a grievance. If you are
+      in the UK or EEA, the UK GDPR and GDPR give you comparable rights including
+      portability and objection.
+    </p>
+    <p>
+      We answer requests within 30 days. To verify a request we will ask you to
+      send it from the email address on the account.
+    </p>
+
+    <h3>Deleting your account</h3>
+    <p>
+      Email <a href="mailto:contact@snappyfeet.org?subject=Delete%20my%20account">contact@snappyfeet.org</a>
+      from your account address. We revoke every key immediately and erase your
+      account, keys and personal identifiers. Usage counts survive in aggregate
+      form with no link to you, and anything we are legally required to retain is
+      kept only for as long as that requirement lasts.
+    </p>
+
+    <h3>Grievances</h3>
+    <p>
+      If you are unhappy with how we have handled your data, contact our Grievance
+      Officer: [NAME], [EMAIL]. If we do not resolve it, you may complain to the
+      Data Protection Board of India, or to your local supervisory authority if you
+      are in the UK or EEA.
+    </p>
+  </div>
+</section>
+
+<section class="s rule">
+  <div class="w">
+    <p class="eyebrow">SECURITY</p>
+    <h2 class="h2">What we actually do about it</h2>
+    <ul>
+      <li>All traffic is encrypted in transit. Requests to the API over plain HTTP
+        are refused rather than redirected.</li>
+      <li>API keys are stored as keyed hashes, never in a recoverable form.</li>
+      <li>The sandbox that executes untrusted packages runs on separate
+        infrastructure and holds no credentials for the account database.</li>
+      <li>Keys expire on a fixed schedule and can be revoked instantly from your
+        dashboard.</li>
+    </ul>
+    <p>
+      No system is perfectly secure. If you find a vulnerability, please report it
+      to <a href="mailto:contact@snappyfeet.org?subject=Security">contact@snappyfeet.org</a>
+      before disclosing it publicly, and we will work with you. If a breach is
+      likely to affect you, we will notify you and the relevant authority as the
+      law requires.
+    </p>
+  </div>
+</section>
+
+<section class="s rule">
+  <div class="w">
+    <p class="eyebrow">CHANGES AND CHILDREN</p>
+    <h2 class="h2">Two short notes</h2>
+    <p>
+      Cohen is a developer tool and is not directed at children. We do not knowingly
+      collect data from anyone under 18. If you believe a child has an account,
+      tell us and we will remove it.
+    </p>
+    <p>
+      If we change this policy in a way that materially affects you, we will email
+      the address on your account before it takes effect. The date at the top always
+      reflects the current version.
+    </p>
+  </div>
+</section>
+
+<section class="s cta rule">
+  <div class="w">
+    <h2 class="h2" style="max-width:22ch">Questions about any of this</h2>
+    <a class="mail" href="mailto:contact@snappyfeet.org">contact@snappyfeet.org</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="w">
+    <div class="fbar">
+      <span>COHEN · BEHAVIOURAL PACKAGE ANALYSIS</span>
+      <span><a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a></span>
+      <span>SB V1.3</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>
