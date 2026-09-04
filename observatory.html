@@ -26,7 +26,7 @@
     <a class="mark" href="index.html" aria-label="Cohen, home"><i aria-hidden="true"></i>Cohen</a>
     <button class="burger" id="burger" aria-expanded="false" aria-controls="navlinks" aria-label="Menu"><i></i><i></i><i></i></button>
     <div class="nav-links" id="navlinks">
-      <a href="index.html" target="_blank" rel="noopener">Engine</a>
+      <a href="index.html">Engine</a>
 
       <div class="drop" id="dropW">
         <button class="drop-t here" id="dropT" type="button" aria-expanded="false" aria-controls="dropM">Product</button>
@@ -34,21 +34,21 @@
           <div class="drop-card">
             <p class="drop-h">THREE PRODUCTS, ONE SANDBOX</p>
             <div class="row">
-              <a class="api" href="api.html#package" target="_blank" rel="noopener">API</a>
-              <a class="rmain" href="mantis.html" target="_blank" rel="noopener">
+              <a class="api" href="api.html#package">API</a>
+              <a class="rmain" href="mantis.html">
                 <span class="dn">Mantis</span>
                 <span class="dd">Reads a project and resolves the whole dependency tree.</span>
               </a>
             </div>
             <div class="row">
-              <a class="api" href="api.html#feed" target="_blank" rel="noopener">API</a>
-              <a class="rmain" href="observatory.html" target="_blank" rel="noopener">
+              <a class="api" href="api.html#feed">API</a>
+              <a class="rmain" href="observatory.html">
                 <span class="dn">Observatory</span>
                 <span class="dd">The threat intel record, sold as data.</span>
               </a>
             </div>
             <div class="row">
-              <a class="rmain" href="api.html#feed" target="_blank" rel="noopener">
+              <a class="rmain" href="api.html#feed">
                 <span class="dn">Feed API</span>
                 <span class="dd">Verdicts and indicators, straight into your workflow.</span>
               </a>
@@ -57,8 +57,8 @@
         </div>
       </div>
 
-      <a href="pricing.html" target="_blank" rel="noopener">Pricing</a>
-      <a class="nav-cta" href="pricing.html" target="_blank" rel="noopener">Start free</a>
+      <a href="pricing.html">Pricing</a>
+      <a class="nav-cta" href="pricing.html">Start free</a>
     </div>
   </div>
 </div>
@@ -82,6 +82,9 @@
       that they were bad. Observatory is that record, sold as data.</p>
     <p class="lede">It reads, and only reads, from work already done. It ships without the
       scanner and stands on its own: real time, with the full history behind it.</p>
+    <p class="lede">The public window onto it is
+      <a class="ext" href="https://trail.snappyfeet.org">trail.snappyfeet.org</a> &mdash; the same
+      records this API serves, rendered a page at a time. Read it before you buy it.</p>
     <div class="intel">
       <div class="icard">
         <div class="n">C2</div>
@@ -110,6 +113,7 @@
     </div>
     <div class="prodfoot">
       <span class="status"><b></b>LIVE &middot; PUBLISHING NOW</span>
+      <a class="b f" href="https://trail.snappyfeet.org">Read the live feed</a>
       <a class="b g" href="#observatory-pricing">See pricing</a>
       <a class="b g" href="mailto:contact@snappyfeet.org?subject=Observatory">Request a sample</a>
     </div>
@@ -131,7 +135,7 @@
         <div class="node"><div class="i">02</div><h3>Run</h3><p>It is installed and imported in a fresh sandbox under full system call tracing.</p></div>
         <div class="node"><div class="i">03</div><h3>Extract</h3><p>Connections, hashes, paths and process trees are lifted out of the trace as structured fields.</p></div>
         <div class="node"><div class="i">04</div><h3>Correlate</h3><p>Records are joined across packages, so one C2 address surfaces every version that reached for it.</p></div>
-        <div class="node"><div class="i">05</div><h3>Deliver</h3><p>The record hits the API, the webhook and the bulk sync at the same moment.</p></div>
+        <div class="node"><div class="i">05</div><h3>Deliver</h3><p>The record hits the API, the webhook, the bulk sync and <a class="ext" href="https://trail.snappyfeet.org">the public feed</a> at the same moment.</p></div>
       </div>
     </div>
   </div>
@@ -144,6 +148,9 @@
     <h2 class="h2 wide">One record, exactly as it arrives</h2>
     <p class="lede">Every field is attributed. A connection is never reported without the process
       that opened it, which is the part an advisory cannot give you.</p>
+    <p class="lede">This is one record from the same store that backs
+      <a class="ext" href="https://trail.snappyfeet.org">trail.snappyfeet.org</a>. Open any package
+      there and you are looking at these fields, rendered.</p>
     <div class="term" style="margin-top:20px">
       <div class="th"><span>GET /v1/observatory/records?since=2026-08-31T09:00:00Z</span><span>200 OK</span></div>
 <pre>{
@@ -231,8 +238,9 @@
   <div class="w">
     <h2 class="h2" style="max-width:21ch">The feed is open. Read what the registry shipped today.</h2>
     <div class="btns">
-      <a class="b f" href="pricing.html" target="_blank" rel="noopener">Start free</a>
-      <a class="b g" href="mantis.html" target="_blank" rel="noopener">See Mantis</a>
+      <a class="b f" href="https://trail.snappyfeet.org">Open the feed</a>
+      <a class="b g" href="pricing.html">Start free</a>
+      <a class="b g" href="mantis.html">See Mantis</a>
     </div>
     <a class="mail" href="mailto:contact@snappyfeet.org">contact@snappyfeet.org</a>
   </div>
@@ -244,35 +252,36 @@
   <div class="w">
     <div class="fgrid">
       <div>
-        <a class="mark" href="index.html" target="_blank" rel="noopener" style="font-size:16px" aria-label="Cohen, home"><i aria-hidden="true"></i>Cohen</a>
+        <a class="mark" href="index.html" style="font-size:16px" aria-label="Cohen, home"><i aria-hidden="true"></i>Cohen</a>
         <p style="color:var(--ash2);font-size:13.5px;margin:16px 0 0;max-width:32ch">Behavioural package analysis. Named for Fred Cohen, who defined the problem in 1983 and proved it unsolvable in 1984.</p>
       </div>
       <div>
         <h5>PRODUCTS</h5>
         <ul>
-          <li><a href="index.html#evidence" target="_blank" rel="noopener">Cohen scanner</a></li>
-          <li><a href="mantis.html" target="_blank" rel="noopener">Mantis collector</a></li>
-          <li><a href="api.html" target="_blank" rel="noopener">Scanner API</a></li>
-          <li><a href="pricing.html" target="_blank" rel="noopener">Scanner pricing</a></li>
-          <li><a href="observatory.html" target="_blank" rel="noopener">Observatory</a></li>
-          <li><a href="observatory.html#observatory-pricing" target="_blank" rel="noopener">Observatory pricing</a></li>
+          <li><a href="index.html#evidence">Cohen scanner</a></li>
+          <li><a href="mantis.html">Mantis collector</a></li>
+          <li><a href="api.html">Scanner API</a></li>
+          <li><a href="pricing.html">Scanner pricing</a></li>
+          <li><a href="observatory.html">Observatory</a></li>
+          <li><a href="observatory.html#observatory-pricing">Observatory pricing</a></li>
+          <li><a href="https://trail.snappyfeet.org">Live feed &#8599;</a></li>
         </ul>
       </div>
       <div>
         <h5>METHOD</h5>
         <ul>
-          <li><a href="method.html" target="_blank" rel="noopener">How it works</a></li>
-          <li><a href="index.html#attribution" target="_blank" rel="noopener">Attribution</a></li>
-          <li><a href="index.html#verdicts" target="_blank" rel="noopener">Verdicts</a></li>
-          <li><a href="method.html#sandbox" target="_blank" rel="noopener">Sandbox</a></li>
+          <li><a href="method.html">How it works</a></li>
+          <li><a href="index.html#attribution">Attribution</a></li>
+          <li><a href="index.html#verdicts">Verdicts</a></li>
+          <li><a href="method.html#sandbox">Sandbox</a></li>
         </ul>
       </div>
       <div>
         <h5>CONTACT</h5>
         <ul>
-          <li><a href="blog.html" target="_blank" rel="noopener">Blog</a></li>
+          <li><a href="blog.html">Blog</a></li>
           <li><a href="mailto:contact@snappyfeet.org">contact@snappyfeet.org</a></li>
-          <li><a href="pricing.html#faq" target="_blank" rel="noopener">FAQ</a></li>
+          <li><a href="pricing.html#faq">FAQ</a></li>
         </ul>
       </div>
     </div>

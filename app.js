@@ -152,7 +152,7 @@ function renderTiers(target, list){
       <p class="who">${t.who}</p>
       ${priceBlock}
       <p class="price-sub">${sub}</p>
-      <a class="cta" href="index.html" target="_blank" rel="noopener">${t.cta}</a>
+      <a class="cta" href="index.html">${t.cta}</a>
       ${t.inherits?`<p class="inh">${t.inherits}</p>`:''}
       <ul>${t.items.map(i=>`<li class="${i.key?'key':''}">${i.t}</li>`).join('')}</ul>
     </div>`;

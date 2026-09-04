@@ -507,3 +507,75 @@ main.sub > section:first-of-type{border-top:0;padding-top:30px}
 @media(max-width:560px){.ep{grid-template-columns:1fr}.ep .d{grid-column:1}}
 .frow.wide{grid-template-columns:290px 1fr}
 @media(max-width:700px){.frow.wide{grid-template-columns:1fr}}
+
+/* ══════════════════════════════════════════════════════════════
+   ENGINE PAGE · added for the technical sections on index.html
+   ══════════════════════════════════════════════════════════════ */
+
+/* inline link, used wherever prose points at the live feed */
+.ext{color:var(--white);text-decoration:none;border-bottom:1px solid rgba(255,45,31,.55);
+  padding-bottom:1px;transition:border-color .18s,color .18s}
+.ext:hover{color:var(--alarm);border-bottom-color:var(--alarm)}
+
+/* hero sub-line under the buttons */
+.feedline{margin:26px auto 0;max-width:52ch;font-family:var(--mono);font-size:12px;
+  letter-spacing:.03em;color:var(--ash2);line-height:1.7}
+
+/* small caption paragraph that sits under a figure */
+.undercap{margin:20px 0 0;color:var(--ash2);font-size:14px;line-height:1.6;max-width:70ch}
+.undercap code{color:var(--ash)}
+.undercap b{color:var(--ash)}
+
+.pairwrap{max-width:520px;margin:38px 0 0}
+.h3{font-size:24px;font-weight:600;letter-spacing:-.025em;margin:52px 0 14px}
+
+/* comment line inside a .term block */
+.term .cm{color:var(--ash3)}
+.term .v{color:var(--ash)}
+
+/* three-up variant of the existing four-up .intel grid */
+.intel.three{grid-template-columns:repeat(3,1fr)}
+.icard h4 code{font-size:.92em;color:var(--white)}
+
+/* one static-engine rule match, shown in full */
+.entry{border:1px solid var(--hair);background:var(--panel);border-radius:3px;padding:20px 22px}
+.entry .etop{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.entry .ename{font-family:var(--mono);font-size:13.5px;color:var(--white)}
+.entry .sev{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  border:1px solid var(--hair2);border-radius:999px;padding:3px 10px;color:var(--ash2)}
+.entry .sev.high{color:var(--alarm);border-color:rgba(255,45,31,.42);background:var(--alarm-dim)}
+.entry .tac{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--ash2);
+  border:1px solid var(--hair);border-radius:999px;padding:3px 10px}
+.entry .emsg{margin-top:12px;color:var(--ash);font-size:14.5px;line-height:1.55}
+.entry .eloc{margin-top:12px;font-family:var(--mono);font-size:11.5px;color:var(--ash2);
+  word-break:break-all}
+.entry .ecode{margin-top:10px;font-family:var(--mono);font-size:12px;line-height:1.7;color:var(--ash);
+  background:var(--black);border:1px solid var(--hair);border-radius:3px;padding:12px 14px;
+  white-space:pre-wrap;word-break:break-word}
+.entry .ematch{margin-top:10px;font-family:var(--mono);font-size:11.5px;color:var(--ash2)}
+.entry .ematch code{color:var(--alarm)}
+
+/* per-file entropy table */
+.ent{margin-top:26px;border:1px solid var(--hair);background:var(--panel);border-radius:3px;
+  overflow:hidden}
+.ent .enthead{display:flex;justify-content:space-between;gap:10px;padding:12px 18px;
+  border-bottom:1px solid var(--hair);font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.16em;color:var(--ash2)}
+.entrow{display:grid;grid-template-columns:1fr 220px 54px;gap:18px;align-items:center;
+  padding:12px 18px;border-bottom:1px solid var(--hair)}
+.entrow .ep{font-family:var(--mono);font-size:12px;color:var(--ash);word-break:break-all}
+.entrow .ebar{display:block;height:6px;background:rgba(255,255,255,.06);border-radius:999px;
+  overflow:hidden}
+.entrow .ebar i{display:block;height:100%;background:var(--ash3);border-radius:999px}
+.entrow .ev{font-family:var(--mono);font-size:12px;color:var(--ash2);text-align:right}
+.entrow.hi .ep,.entrow.hi .ev{color:var(--alarm)}
+.entrow.hi .ebar i{background:var(--alarm)}
+.ent .entfoot{padding:14px 18px;color:var(--ash2);font-size:13px;line-height:1.6}
+.ent .entfoot code{color:var(--ash)}
+
+@media(max-width:900px){
+  .intel.three{grid-template-columns:1fr}
+  .entrow{grid-template-columns:1fr;gap:8px}
+  .entrow .ev{text-align:left}
+  .frow.wide{grid-template-columns:1fr;gap:8px}
+}
