@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terms · Cohen</title>
+<meta name="description" content="The terms you agree to when you use Cohen: keys, allowances, acceptable use, and what a verdict does and does not mean.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='20'%20fill='%23000'/%3E%3Crect%20x='36'%20y='36'%20width='28'%20height='28'%20rx='4'%20fill='%23FF2D1F'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .legal h3{font-size:17px;margin:32px 0 10px;letter-spacing:-.01em}
+  .legal p,.legal li{max-width:68ch}
+  .legal ul{padding-left:20px}
+  .legal li{margin:0 0 8px}
+  .stamp{font-size:13.5px;color:var(--ash2,#63635e)}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="grid" aria-hidden="true"><div class="grid-in"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="aperture" viewBox="0 0 100 100">
+<circle cx="50" cy="50" r="42" fill="none" stroke="currentColor" stroke-width="6" opacity=".45"/>
+<circle cx="50" cy="50" r="27" fill="none" stroke="currentColor" stroke-width="6" opacity=".75"/>
+<circle cx="50" cy="50" r="9" fill="#FF2D1F"/>
+</symbol>
+</svg>
+
+<div class="nav" id="nav">
+  <div class="w">
+    <a class="mark" href="index.html" aria-label="Cohen, home"><i aria-hidden="true"></i>Cohen</a>
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="navlinks" aria-label="Menu"><i></i><i></i><i></i></button>
+    <div class="nav-links" id="navlinks">
+      <a href="index.html">Engine</a>
+      <a href="api.html">API</a>
+      <a href="pricing.html">Pricing</a>
+      <a class="nav-cta" href="https://console.snappyfeet.org/">Start free</a>
+    </div>
+  </div>
+</div>
+
+<main id="main" class="sub legal">
+
+<section class="s rule">
+  <div class="w">
+    <p class="eyebrow">TERMS OF SERVICE</p>
+    <h2 class="h2 wide">The agreement, in plain terms</h2>
+    <p class="lede">
+      These terms apply when you create an account, hold an API key, or call the
+      Cohen API. If you are agreeing on behalf of a company, you are confirming you
+      have the authority to bind it. If you do not accept these terms, do not use
+      the service.
+    </p>
+    <p class="stamp">
+      Last updated 4 September 2026. Provided by [LEGAL ENTITY NAME], [REGISTERED ADDRESS], India.
+    </p>
+  </div>
+</section>
+
+<section class="s rule">
+  <div class="w">
+    <p class="eyebrow">THE MOST IMPORTANT CLAUSE</p>
+    <h2 class="h2 wide">A verdict is evidence, not a judgement</h2>
+    <p class="lede">
+      Cohen reports what a package did when it ran in a sandbox. That is all it
+      reports. A <code>review</code> verdict means the sandbox observed behaviour a
+      person should look at, and it is never an assertion that a package or its
+      author is malicious. A <code>clean</code> verdict means nothing correlated on
+      the run we did, at the time we did it, and is not a guarantee that a package
+      is safe.
+    </p>
+    <p>
+      You are responsible for what you do with a verdict. Do not treat Cohen as the
+      sole basis for blocking a deployment, removing a package, or making any
+      accusation about a person or organisation. Fred Cohen proved in 1984 that the
+      general problem is undecidable; we do not claim to have solved it.
+    </p>
+  </div>
+</section>
+
+<section class="s rule">
+  <div class="w">
+    <p class="eyebrow">ACCOUNTS AND KEYS</p>
+    <h2 class="h2">Your key is your responsibility</h2>
+    <div class="flags">
+      <div class="frow wide"><code>One account per person</code>
+        <p>Do not create multiple accounts to obtain additional free allowance. We
+        may suspend accounts that do.</p></div>
+      <div class="frow wide"><code>Keys are secrets</code>
+        <p>Keep them out of public repositories, client-side code and shared logs.
+        Requests made with your key are treated as made by you. Revoke a key from
+        your dashboard the moment you suspect it has leaked.</p></div>
+      <div class="frow wide"><code>Keys expire</code>
+        <p>Free keys are valid for seven days and can be extended from the dashboard
+        at any time. Paid keys run for ninety days. After expiry a key keeps reading
+        verdicts for a short grace period and then stops entirely.</p></div>
+      <div class="frow wide"><code>Accuracy</code>
+        <p>Keep the email address on your account current. It is how we warn you
+        before a key expires.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="s rule">
+  <div class="w">
+    <p class="eyebrow">ACCEPTABLE USE</p>
+    <h2 class="h2">What you must not do</h2>
+    <ul>
+      <li>Attempt to escape, subvert or attack the analysis sandbox, or use it to
+        execute code for any purpose other than analysing a published package.</li>
+      <li>Submit packages you have created for the purpose of testing our detection,
+        without telling us first. Security research is welcome; coordinate with us.</li>
+      <li>Resell, redistribute or expose the API as a competing service, or scrape
+        the verdict database in bulk outside the Observatory feed.</li>
+      <li>Circumvent rate limits or allowances, including by rotating accounts.</li>
+      <li>Use the service to harass, defame or make unfounded public accusations
+        against a package author.</li>
+      <li>Use the service in breach of any law that applies to you, including export
+        controls and sanctions.</li>
+    </ul>
+    <p>
+      We may suspend an account that breaches these terms. Where it is reasonable to
+      do so we will tell you first and give you a chance to put it right.
+    </p>
+  </div>
+</section>
+
+<section class="s rule">
+  <div class="w">
+    <p class="eyebrow">PLANS AND BILLING</p>
+    <h2 class="h2">One meter, no surprises</h2>
+    <div class="flags">
+      <div class="frow wide"><code>What is metered</code>
+        <p>Only a deep analysis: one package version, run once. Verdict lookups and
+        Mantis are never metered on a paid plan, and are capped at 100 a day on Free.</p></div>
+      <div class="frow wide"><code>Going over</code>
+        <p>Individual stops at its limit rather than billing you for going over.
+        Team continues at the published overage rate and warns you first. Nothing
+        upgrades without being asked.</p></div>
+      <div class="frow wide"><code>Changes in price</code>
+        <p>We will give at least 30 days' notice by email before a price change
+        affects you, and you may cancel before it takes effect.</p></div>
+      <div class="frow wide"><code>Cancellation</code>
+        <p>Cancel at any time. Access continues to the end of the paid period.
+        Unused allowance does not carry over and is not refunded.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="s rule">
+  <div class="w">
+    <p class="eyebrow">AVAILABILITY</p>
+    <h2 class="h2">No uptime promise on the free plan</h2>
+    <p class="lede">
+      The service is provided as it is. We do not commit to an availability target
+      except where a separate written agreement says otherwise. We may change,
+      suspend or discontinue any part of the service, and we will give reasonable
+      notice before removing something you depend on.
+    </p>
+    <p>
+      When the sandbox is saturated, reads keep working and queueing does not, and
+      nothing is charged for a request we could not accept.
+    </p>
+  </div>
+</section>
+
+<section class="s rule">
+  <div class="w">
+    <p class="eyebrow">OWNERSHIP</p>
+    <h2 class="h2">Who owns what</h2>
+    <p>
+      We own the service, the analysis engine and the verdict database. You are
+      granted a non-exclusive, revocable right to use the API and its output inside
+      your own organisation and products for the term of your plan.
+    </p>
+    <p>
+      Mantis is separately licensed under the MIT licence, and nothing here limits
+      the rights that licence gives you.
+    </p>
+    <p>
+      You keep everything you send us. You grant us only the licence needed to run
+      the service: to process the package names and versions you submit, and to
+      store the resulting analysis. Because results are cached across all customers,
+      an analysis you trigger for a public package becomes part of the shared
+      verdict database.
+    </p>
+  </div>
+</section>
+
+<section class="s rule">
+  <div class="w">
+    <p class="eyebrow">WARRANTIES AND LIABILITY</p>
+    <h2 class="h2">The limits</h2>
+    <p>
+      To the fullest extent the law allows, the service is provided without
+      warranties of any kind, express or implied, including fitness for a particular
+      purpose and non-infringement. We do not warrant that verdicts are complete or
+      accurate, or that the service will be uninterrupted or error free.
+    </p>
+    <p>
+      To the fullest extent the law allows, we are not liable for indirect or
+      consequential loss, lost profits, lost data, or loss arising from a security
+      incident in a package we did not flag. Our total liability for any claim
+      relating to the service is limited to the greater of the fees you paid us in
+      the twelve months before the claim, or ten thousand rupees.
+    </p>
+    <p>
+      Nothing here excludes liability that cannot lawfully be excluded, including
+      for fraud or for death or personal injury caused by negligence. Some
+      jurisdictions do not allow certain exclusions, in which case they apply to you
+      only to the extent permitted.
+    </p>
+  </div>
+</section>
+
+<section class="s rule">
+  <div class="w">
+    <p class="eyebrow">GENERAL</p>
+    <h2 class="h2">The rest</h2>
+    <div class="flags">
+      <div class="frow wide"><code>Governing law</code>
+        <p>These terms are governed by the laws of India, and the courts of
+        [CITY] have exclusive jurisdiction.</p></div>
+      <div class="frow wide"><code>Changes</code>
+        <p>We may update these terms. For material changes we will email the address
+        on your account at least 30 days before they take effect. Continuing to use
+        the service after that means you accept them.</p></div>
+      <div class="frow wide"><code>Severability</code>
+        <p>If any clause is found unenforceable, the rest continues to apply.</p></div>
+      <div class="frow wide"><code>Privacy</code>
+        <p>Our handling of personal data is described in the
+        <a href="privacy.html">privacy policy</a>, which forms part of these terms.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="s cta rule">
+  <div class="w">
+    <h2 class="h2" style="max-width:22ch">Anything unclear, ask before you sign up</h2>
+    <a class="mail" href="mailto:contact@snappyfeet.org">contact@snappyfeet.org</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="w">
+    <div class="fbar">
+      <span>COHEN · BEHAVIOURAL PACKAGE ANALYSIS</span>
+      <span><a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a></span>
+      <span>SB V1.3</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>
