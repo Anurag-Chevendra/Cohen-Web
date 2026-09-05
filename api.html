@@ -4,21 +4,67 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cohen · API reference</title>
-<meta name="description" content="Cohen API reference. One path per package version: GET reads the verdict and evidence, POST queues a deep analysis in the sandbox.">
+<meta name="description" content="Cohen API reference. Read verdicts, queue deep analyses, and stream the Observatory feed.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='20'%20fill='%23000'/%3E%3Crect%20x='36'%20y='36'%20width='28'%20height='28'%20rx='4'%20fill='%23FF2D1F'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="styles.css">
+<style>
+  .doc{display:grid;grid-template-columns:210px minmax(0,1fr);gap:52px;align-items:start}
+  .toc{position:sticky;top:96px;font-size:13.5px;line-height:1.55}
+  .toc h6{font-size:10.5px;letter-spacing:.14em;color:var(--ash2,#63635e);
+          margin:0 0 10px;font-weight:500}
+  .toc a{display:block;padding:5px 0 5px 12px;color:var(--ash,#8b8b85);
+         text-decoration:none;border-left:1px solid var(--line,#1f1f1f)}
+  .toc a:hover{color:var(--paper,#edebe7);border-left-color:var(--ash2,#63635e)}
+  .toc a.on{color:var(--paper,#edebe7);border-left-color:#FF2D1F}
+  .toc .gap{height:14px}
+  @media(max-width:900px){.doc{grid-template-columns:1fr;gap:0}.toc{display:none}}
+
+  .doc h3{font-size:19px;letter-spacing:-.02em;margin:52px 0 6px;scroll-margin-top:96px}
+  .doc h3:first-of-type{margin-top:0}
+  .doc h4{font-size:15px;margin:30px 0 8px;font-weight:600;scroll-margin-top:96px}
+  .doc p{max-width:70ch}
+  .anchor{color:var(--ash2,#63635e);text-decoration:none;opacity:0;margin-left:8px;font-weight:400}
+  h3:hover .anchor,h4:hover .anchor{opacity:1}
+
+  .sig{display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+       background:#101010;border:1px solid var(--line,#1f1f1f);
+       border-radius:8px;padding:11px 14px;margin:16px 0 12px}
+  .verb{font:600 11px/1 var(--mono,ui-monospace,monospace);letter-spacing:.09em;
+        padding:5px 8px;border-radius:5px;flex:none}
+  .verb.get{background:#0e2119;color:#4ADE80;border:1px solid #1d4331}
+  .verb.post{background:#2a1c08;color:#F5A524;border:1px solid #5c3a12}
+  .sig code{font-size:13.5px;flex:1;min-width:200px;word-break:break-all}
+  .tag{font-size:11px;padding:3px 9px;border-radius:20px;flex:none;
+       border:1px solid var(--line,#1f1f1f);color:var(--ash2,#63635e)}
+  .tag.free{color:#4ADE80;border-color:#1d4331}
+  .tag.paid{color:#F5A524;border-color:#5c3a12}
+
+  table.ref{width:100%;border-collapse:collapse;font-size:13.5px;margin:16px 0}
+  table.ref th{text-align:left;font-weight:500;font-size:11px;letter-spacing:.09em;
+               color:var(--ash2,#63635e);padding:0 16px 9px 0;white-space:nowrap}
+  table.ref td{padding:11px 16px 11px 0;border-top:1px solid var(--line,#1f1f1f);
+               vertical-align:top}
+  table.ref td:first-child{white-space:nowrap;font-family:var(--mono,monospace);font-size:12.5px}
+  table.ref td p{margin:0}
+  .st{font-family:var(--mono,monospace);font-size:12px;padding:2px 7px;border-radius:5px;
+      background:#151515;border:1px solid var(--line,#1f1f1f);color:var(--ash,#8b8b85)}
+  .st.ok{color:#4ADE80;border-color:#1d4331}
+  .st.err{color:#FF6B5F;border-color:#5c2320}
+  .note{border-left:2px solid #FF2D1F;padding:2px 0 2px 16px;margin:20px 0;
+        color:var(--ash,#8b8b85);font-size:14px}
+  .note b{color:var(--paper,#edebe7);font-weight:500}
+</style>
 </head>
 <body>
-
 <a class="skip" href="#main">Skip to content</a>
 <div class="grid" aria-hidden="true"><div class="grid-in"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="aperture" viewBox="0 0 100 100">
-    <circle cx="50" cy="50" r="42" fill="none" stroke="currentColor" stroke-width="6" opacity=".45"/>
-    <circle cx="50" cy="50" r="27" fill="none" stroke="currentColor" stroke-width="6" opacity=".75"/>
-    <circle cx="50" cy="50" r="9" fill="#FF2D1F"/>
-  </symbol>
+<symbol id="aperture" viewBox="0 0 100 100">
+<circle cx="50" cy="50" r="42" fill="none" stroke="currentColor" stroke-width="6" opacity=".45"/>
+<circle cx="50" cy="50" r="27" fill="none" stroke="currentColor" stroke-width="6" opacity=".75"/>
+<circle cx="50" cy="50" r="9" fill="#FF2D1F"/>
+</symbol>
 </svg>
 
 <div class="nav" id="nav">
@@ -27,28 +73,27 @@
     <button class="burger" id="burger" aria-expanded="false" aria-controls="navlinks" aria-label="Menu"><i></i><i></i><i></i></button>
     <div class="nav-links" id="navlinks">
       <a href="index.html">Engine</a>
-
       <div class="drop" id="dropW">
         <button class="drop-t" id="dropT" type="button" aria-expanded="false" aria-controls="dropM">Product</button>
         <div class="drop-m" id="dropM">
           <div class="drop-card">
             <p class="drop-h">THREE PRODUCTS, ONE SANDBOX</p>
             <div class="row">
-              <a class="api" href="api.html#package">API</a>
+              <a class="api" href="api.html#packages">API</a>
               <a class="rmain" href="mantis.html">
                 <span class="dn">Mantis</span>
                 <span class="dd">Reads a project and resolves the whole dependency tree.</span>
               </a>
             </div>
             <div class="row">
-              <a class="api" href="api.html#feed">API</a>
+              <a class="api" href="api.html#observatory">API</a>
               <a class="rmain" href="observatory.html">
                 <span class="dn">Observatory</span>
                 <span class="dd">The threat intel record, sold as data.</span>
               </a>
             </div>
             <div class="row">
-              <a class="rmain" href="api.html#feed">
+              <a class="rmain" href="api.html#observatory">
                 <span class="dn">Feed API</span>
                 <span class="dd">Verdicts and indicators, straight into your workflow.</span>
               </a>
@@ -56,214 +101,294 @@
           </div>
         </div>
       </div>
-
       <a href="pricing.html">Pricing</a>
-      <a class="nav-cta" href="pricing.html">Start free</a>
+      <a class="nav-cta" href="https://console.snappyfeet.org/">Start free</a>
     </div>
   </div>
 </div>
 
 <main id="main" class="sub">
 
-<!-- 1 · OVERVIEW -->
-<section class="s rule" id="api">
+<section class="s rule">
   <div class="w">
     <p class="eyebrow">API REFERENCE</p>
     <h2 class="h2 wide">One path per package version</h2>
-    <p class="lede">Every package version on npm has exactly one address in this API. Read it
-      with <code>GET</code> to get whatever is known. Write to it with <code>POST</code> to put it
-      in the sandbox queue. Same path, both directions, so nothing has to be looked up twice.</p>
-    <div class="flags">
-      <div class="frow wide"><code>https://api.snappyfeet.org</code><p>Base URL. Every path below hangs off it. HTTPS only, and requests over plain HTTP are refused rather than redirected.</p></div>
-      <div class="frow wide"><code>Authorization: Bearer &lt;key&gt;</code><p>Required on every request. A free key reads verdicts. A paid key can also queue analyses.</p></div>
-      <div class="frow wide"><code>Content-Type: application/json</code><p>On any request with a body. Responses are always JSON, including errors.</p></div>
+    <p class="lede">
+      Every version on npm has one address. <code>GET</code> reads whatever is
+      known. <code>POST</code> puts it in the sandbox queue. Same path, both
+      directions.
+    </p>
+    <div class="btns" style="margin-top:26px">
+      <a class="b f" href="https://console.snappyfeet.org/">Get a key</a>
+      <a class="b g" href="#quickstart">Quickstart</a>
     </div>
   </div>
 </section>
 
-<!-- 2 · THE PACKAGE PATH -->
-<section class="s rule" id="package">
-  <div class="w">
-    <p class="eyebrow">THE PACKAGE PATH</p>
-    <h2 class="h2 wide">GET reads it, POST queues it</h2>
-    <p class="lede">A <code>GET</code> never costs you an analysis. If the version has been through
-      the sandbox you get the verdict and the evidence immediately. If nobody has ever run it you
-      get <code>404</code> with <code>"verdict": "unknown"</code>, and it is then up to you whether
-      to spend an analysis on it.</p>
+<section class="s rule">
+  <div class="w doc">
 
-    <div class="term" style="margin-top:20px">
-      <div class="th"><span>GET /api/package/npm/{name}/{version}</span><span>200 OK</span></div>
+    <nav class="toc" aria-label="On this page">
+      <h6>ON THIS PAGE</h6>
+      <a href="#quickstart">Quickstart</a>
+      <a href="#auth">Authentication</a>
+      <a href="#conventions">Conventions</a>
+      <a href="#limits">Plans and limits</a>
+      <div class="gap"></div>
+      <a href="#packages">Packages</a>
+      <a href="#bulk">Bulk submit</a>
+      <a href="#jobs">Jobs</a>
+      <a href="#observatory">Observatory</a>
+      <a href="#webhooks">Webhooks</a>
+      <a href="#account">Account</a>
+      <div class="gap"></div>
+      <a href="#verdict">Verdict object</a>
+      <a href="#errors">Errors</a>
+      <a href="#status">Status</a>
+    </nav>
+
+    <div>
+
+<h3 id="quickstart">Quickstart<a class="anchor" href="#quickstart">#</a></h3>
+<p class="lede" style="margin-bottom:18px">
+  Sign in with Google, create a key, read a verdict. No card, no waiting.
+</p>
+
+<div class="term">
+<div class="th"><span>THREE STEPS</span><span>60 SECONDS</span></div>
+<pre><span class="cm"># 1. Get a key at https://console.snappyfeet.org</span>
+<span class="cmd">export COHEN_KEY=cohen_live_...</span>
+
+<span class="cm"># 2. Check it works. This endpoint is free and never metered.</span>
+<span class="cmd">curl -H "Authorization: Bearer $COHEN_KEY" \
+  https://api.snappyfeet.org/api/key</span>
+
+<span class="cm"># 3. Read a verdict.</span>
+<span class="cmd">curl -H "Authorization: Bearer $COHEN_KEY" \
+  https://api.snappyfeet.org/api/package/npm/left-pad/1.3.0</span></pre>
+</div>
+
+<h3 id="auth">Authentication<a class="anchor" href="#auth">#</a></h3>
+<p>Every request carries a key. Keys begin <code>cohen_live_</code>.</p>
+
+<div class="term">
+<div class="th"><span>HEADER</span><span>REQUIRED</span></div>
+<pre>Authorization: Bearer cohen_live_1WbwMTf2vx0t2NUWuZYSS3oQP26mU4JL...
+
+<span class="cm"># the scheme is optional, so this also works</span>
+Authorization: cohen_live_1WbwMTf2vx0t2NUWuZYSS3oQP26mU4JL...</pre>
+</div>
+
+<table class="ref">
+<thead><tr><th>Property</th><th>Behaviour</th></tr></thead>
+<tbody>
+<tr><td>Lifetime</td><td>Seven days on Free, ninety on Individual. Extend at any time from the console.</td></tr>
+<tr><td>Grace</td><td>After expiry a key keeps reading verdicts for 48 hours, then stops. Queueing stops immediately.</td></tr>
+<tr><td>Storage</td><td>Shown once, stored as a hash. Lost keys cannot be recovered, only revoked and replaced.</td></tr>
+<tr><td>Revocation</td><td>Takes effect within one minute.</td></tr>
+</tbody>
+</table>
+
+<div class="note">
+  <b>Keys are secrets.</b> Keep them out of public repositories and client side
+  code. Give CI its own key so it can be revoked alone.
+</div>
+
+<h3 id="conventions">Conventions<a class="anchor" href="#conventions">#</a></h3>
+<table class="ref">
+<thead><tr><th>Item</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Base URL</td><td><code>https://api.snappyfeet.org</code>. HTTPS only. Plain HTTP is refused rather than redirected.</td></tr>
+<tr><td>Content type</td><td><code>application/json</code> on any request with a body. Every response is JSON, errors included.</td></tr>
+<tr><td>Timestamps</td><td><code>analyzed_at</code> is epoch seconds.</td></tr>
+<tr><td>Scoped names</td><td>Both spellings work. <code>@types/node</code> and <code>@types%2Fnode</code> resolve to the same package.</td></tr>
+<tr><td>Ecosystems</td><td><code>npm</code> today. The path carries the ecosystem so others can be added without a new shape.</td></tr>
+</tbody>
+</table>
+
+<h3 id="limits">Plans and limits<a class="anchor" href="#limits">#</a></h3>
+<table class="ref">
+<thead><tr><th>Plan</th><th>Scopes</th><th>Lookups</th><th>Analyses</th><th>Keys</th></tr></thead>
+<tbody>
+<tr><td>Free</td><td><code>read</code></td><td>100 per day</td><td>none</td><td>1</td></tr>
+<tr><td>Demo</td><td><code>read queue evidence feed</code></td><td>unmetered</td><td>250 per month</td><td>3</td></tr>
+<tr><td>Individual</td><td><code>read queue evidence</code></td><td>unmetered</td><td>150 per month</td><td>5</td></tr>
+</tbody>
+</table>
+<p style="font-size:14px;color:var(--ash,#8b8b85)">
+  Reading is free. Only a version nobody has analysed costs an analysis. Demo
+  access is by invitation; redeem a code at
+  <a href="https://console.snappyfeet.org/demo">console.snappyfeet.org/demo</a>.
+</p>
+
+<h3 id="packages">Packages<a class="anchor" href="#packages">#</a></h3>
+
+<div class="sig">
+  <span class="verb get">GET</span>
+  <code>/api/package/npm/{name}/{version}</code>
+  <span class="tag free">free</span>
+</div>
+<p>One verdict. Never costs an analysis.</p>
+
+<div class="term">
+<div class="th"><span>REQUEST</span><span>200 OK</span></div>
 <pre><span class="cmd">curl -H "Authorization: Bearer $COHEN_KEY" \
-  https://api.snappyfeet.org/api/package/npm/left-pad/1.3.0</span>
+  https://api.snappyfeet.org/api/package/npm/@agimon-ai/doompi-help/0.0.1-alpha.26</span>
 
 {
-  <span class="k">"ecosystem"</span>:     <span class="v">"npm"</span>,
-  <span class="k">"name"</span>:          <span class="v">"left-pad"</span>,
-  <span class="k">"version"</span>:       <span class="v">"1.3.0"</span>,
-  <span class="k">"verdict"</span>:       <span class="v">"clean"</span>,
-  <span class="k">"analysed_at"</span>:   <span class="v">"2026-08-31T09:14:02Z"</span>,
-  <span class="k">"engines"</span>:       [ <span class="v">"dynamic"</span>, <span class="v">"static"</span> ],
-  <span class="k">"sources"</span>:       [ <span class="v">"cohen"</span>, <span class="v">"osv"</span>, <span class="v">"npm-advisory"</span> ],
-  <span class="k">"integrity"</span>:     <span class="v">"sha512-nbE1WxOT..."</span>,
-  <span class="k">"findings"</span>:      [],
-  <span class="k">"evidence"</span>:      <span class="v">"/api/package/npm/left-pad/1.3.0/evidence"</span>
-}</pre>
-    </div>
-
-    <div class="term" style="margin-top:20px">
-      <div class="th"><span>POST /api/package/npm/{name}/{version}</span><span>202 ACCEPTED</span></div>
-<pre><span class="cmd">curl -X POST -H "Authorization: Bearer $COHEN_KEY" \
-  https://api.snappyfeet.org/api/package/npm/polymarket-stake-mathss/3.5.2</span>
-
-<span class="cm">// queued. one deep analysis has come off your monthly allowance.</span>
-{
-  <span class="k">"job"</span>:           <span class="v">"job_01HXY5K9PNQE3"</span>,
-  <span class="k">"state"</span>:         <span class="v">"queued"</span>,
-  <span class="k">"queue_position"</span>: <span class="v">4</span>,
-  <span class="k">"eta_seconds"</span>:   <span class="v">180</span>,
-  <span class="k">"poll"</span>:          <span class="v">"/api/job/job_01HXY5K9PNQE3"</span>,
-  <span class="k">"allowance"</span>: { <span class="k">"used"</span>: <span class="v">137</span>, <span class="k">"limit"</span>: <span class="v">150</span>, <span class="k">"resets"</span>: <span class="v">"2026-10-01T00:00:00Z"</span> }
+  <span class="k">"ecosystem"</span>: <span class="v">"npm"</span>,
+  <span class="k">"name"</span>: <span class="v">"@agimon-ai/doompi-help"</span>,
+  <span class="k">"version"</span>: <span class="v">"0.0.1-alpha.26"</span>,
+  <span class="k">"verdict"</span>: <span class="v">"clean"</span>,
+  <span class="k">"analyzed_at"</span>: <span class="v">1788180250</span>
 }
 
-<span class="cm">// the same POST once the run has finished, 200 OK, no charge</span>
+<span class="cm">// 404 when nobody has run it. Yours to decide whether to spend an analysis.</span>
+{ <span class="k">"verdict"</span>: <span class="v">"unknown"</span>, <span class="k">"name"</span>: <span class="v">"left-pad"</span>, <span class="k">"version"</span>: <span class="v">"1.3.0"</span> }</pre>
+</div>
+
+<div class="sig">
+  <span class="verb get">GET</span>
+  <code>/api/package/npm/{name}</code>
+  <span class="tag free">free</span>
+</div>
+<p>Every analysed version of a package, newest first.</p>
+
+<div class="sig">
+  <span class="verb get">GET</span>
+  <code>/api/package/npm/{name}/{version}/evidence</code>
+  <span class="tag paid">evidence scope</span>
+</div>
+<p>
+  The full trace: syscalls, process tree, connections, file hashes, entropy.
+  Large, so it is a second request rather than a bloated first one.
+</p>
+
+<div class="sig">
+  <span class="verb post">POST</span>
+  <code>/api/package/npm/{name}/{version}</code>
+  <span class="tag paid">queue scope</span>
+</div>
+<p>
+  Queue a deep analysis. Charged only when the version is genuinely unknown.
+  Posting something already analysed returns <code>200</code> and the cached
+  verdict. Posting something already queued returns the existing job. You cannot
+  pay twice for the same version.
+</p>
+
+<div class="term">
+<div class="th"><span>REQUEST</span><span>202 ACCEPTED</span></div>
+<pre><span class="cmd">curl -X POST -H "Authorization: Bearer $COHEN_KEY" \
+  https://api.snappyfeet.org/api/package/npm/tiny-parse/0.2.1</span>
+
 {
-  <span class="k">"verdict"</span>:  <span class="hot">"review"</span>,
-  <span class="k">"cached"</span>:   <span class="v">true</span>,
-  <span class="k">"findings"</span>: [ <span class="hot">"credentials_read_then_archived"</span>, <span class="hot">"outbound_outside_registry"</span> ]
+  <span class="k">"job"</span>: <span class="v">"job_01HXY5K9PNQE3"</span>,
+  <span class="k">"state"</span>: <span class="v">"queued"</span>,
+  <span class="k">"queue_position"</span>: <span class="v">4</span>,
+  <span class="k">"eta_seconds"</span>: <span class="v">180</span>,
+  <span class="k">"poll"</span>: <span class="v">"/api/job/job_01HXY5K9PNQE3"</span>,
+  <span class="k">"allowance"</span>: { <span class="k">"used"</span>: <span class="v">137</span>, <span class="k">"limit"</span>: <span class="v">150</span> }
 }</pre>
-    </div>
+</div>
 
-    <p class="lede" style="margin-top:20px">Posting a version that is already known returns
-      <code>200</code> with the cached verdict and charges nothing. Posting one that is already in
-      the queue returns the existing job rather than creating a second. You cannot accidentally pay
-      twice for the same version.</p>
-  </div>
-</section>
+<h3 id="bulk">Bulk submit<a class="anchor" href="#bulk">#</a></h3>
 
-<!-- 3 · SCOPED NAMES -->
-<section class="s rule" id="scoped">
-  <div class="w">
-    <p class="eyebrow">SCOPED NAMES</p>
-    <h2 class="h2 wide">A scope contains a slash, so encode it</h2>
-    <p class="lede">This is the one place the path shape bites. An npm scoped name such as
-      <code>@types/node</code> has a slash in it, which would otherwise read as another path
-      segment. Percent encode it as <code>%2F</code>. The leading <code>@</code> is safe either
-      raw or as <code>%40</code>.</p>
-    <div class="flags">
-      <div class="frow wide"><code>/api/package/npm/@types%2Fnode/20.11.5</code><p>Correct. One name, one version, two segments.</p></div>
-      <div class="frow wide"><code>/api/package/npm/@types/node/20.11.5</code><p>Rejected with <code>400</code>. Three segments, so the version is ambiguous. The error names the fix rather than guessing.</p></div>
-      <div class="frow wide"><code>/api/package/npm/%40types%2Fnode/20.11.5</code><p>Also correct, if your client encodes aggressively.</p></div>
-    </div>
-  </div>
-</section>
+<div class="sig">
+  <span class="verb post">POST</span>
+  <code>/api/package/npm</code>
+  <span class="tag paid">queue scope</span>
+</div>
+<p>
+  Send a whole dependency tree in one call. The response splits it into what is
+  already known and what had to be queued, so you can act on the known part
+  immediately. This is what Mantis uses.
+</p>
 
-<!-- 4 · ENDPOINTS -->
-<section class="s rule" id="endpoints">
-  <div class="w">
-    <p class="eyebrow">ENDPOINTS</p>
-    <h2 class="h2">Everything, in one list</h2>
-    <div class="eplist" style="margin-top:32px">
-      <div class="ep"><span class="m get">GET</span><span class="p">/api/package/npm/{name}/{version}</span>
-        <span class="d">Whatever is known about one version. Free, never metered.</span></div>
-      <div class="ep"><span class="m post">POST</span><span class="p">/api/package/npm/{name}/{version}</span>
-        <span class="d">Queue that version for a deep analysis. Costs one analysis, unless it is already known or already queued.</span></div>
-      <div class="ep"><span class="m get">GET</span><span class="p">/api/package/npm/{name}/{version}/evidence</span>
-        <span class="d">The full trace behind a verdict: syscalls, process tree, connections, file hashes, entropy. Paid keys only.</span></div>
-      <div class="ep"><span class="m get">GET</span><span class="p">/api/package/npm/{name}</span>
-        <span class="d">Every analysed version of a package, newest first. Paginated.</span></div>
-      <div class="ep"><span class="m post">POST</span><span class="p">/api/package/npm</span>
-        <span class="d">Bulk submit. Send a whole dependency tree in one call. This is what Mantis uses.</span></div>
-      <div class="ep"><span class="m get">GET</span><span class="p">/api/job/{job}</span>
-        <span class="d">State of one queued analysis: queued, running, done or failed.</span></div>
-      <div class="ep"><span class="m get">GET</span><span class="p">/api/observatory/records</span>
-        <span class="d">The Observatory feed. Every analysed version with its verdict, from a cursor.</span></div>
-      <div class="ep"><span class="m get">GET</span><span class="p">/api/observatory/indicator/{type}/{value}</span>
-        <span class="d">Reverse lookup. Give it a C2 host or a file hash, get every package version that touched it.</span></div>
-      <div class="ep"><span class="m post">POST</span><span class="p">/api/webhook</span>
-        <span class="d">Register a callback for when a package you watch flips to review.</span></div>
-      <div class="ep"><span class="m get">GET</span><span class="p">/api/key</span>
-        <span class="d">Your allowance, usage and reset date. Never counted against anything.</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- 5 · BULK SUBMIT -->
-<section class="s rule" id="bulk">
-  <div class="w">
-    <p class="eyebrow">BULK SUBMIT</p>
-    <h2 class="h2 wide">A whole tree in one request</h2>
-    <p class="lede">Posting 1,284 packages one at a time works, and it is a waste of everybody's
-      time. Send the tree instead. The response splits it into what is already known and what had
-      to be queued, so you can act on the known part immediately.</p>
-    <div class="term" style="margin-top:20px">
-      <div class="th"><span>POST /api/package/npm</span><span>207 MULTI STATUS</span></div>
+<div class="term">
+<div class="th"><span>REQUEST</span><span>207 MULTI STATUS</span></div>
 <pre><span class="cmd">curl -X POST -H "Authorization: Bearer $COHEN_KEY" \
   -H "Content-Type: application/json" \
+  -H "Idempotency-Key: build-4471" \
+  -H "X-Project: checkout-api" \
   -d @tree.json https://api.snappyfeet.org/api/package/npm</span>
 
-<span class="cm">// request body</span>
+<span class="cm">// body</span>
 {
-  <span class="k">"versions"</span>: [ <span class="v">"left-pad@1.3.0"</span>, <span class="v">"@types%2Fnode@20.11.5"</span>, <span class="v">"slugify-fast@2.1.0"</span> ],
+  <span class="k">"versions"</span>: [ <span class="v">"left-pad@1.3.0"</span>, <span class="v">"@types/node@20.11.5"</span> ],
   <span class="k">"queue_unknown"</span>: <span class="v">true</span>,
-  <span class="k">"skip_private"</span>:  <span class="v">true</span>
+  <span class="k">"skip_private"</span>: <span class="v">true</span>
 }
 
 <span class="cm">// response</span>
 {
+  <span class="k">"scan"</span>: <span class="v">"1f9c0a2e..."</span>,
   <span class="k">"counts"</span>: { <span class="k">"clean"</span>: <span class="v">1271</span>, <span class="k">"review"</span>: <span class="hot">2</span>, <span class="k">"queued"</span>: <span class="v">11</span>, <span class="k">"skipped"</span>: <span class="v">0</span> },
-  <span class="k">"review"</span>: [
-    { <span class="k">"name"</span>: <span class="hot">"polymarket-stake-mathss"</span>, <span class="k">"version"</span>: <span class="v">"3.5.2"</span>,
-      <span class="k">"findings"</span>: [ <span class="hot">"credentials_read_then_archived"</span> ] }
-  ],
-  <span class="k">"queued"</span>:    [ { <span class="k">"name"</span>: <span class="v">"tiny-parse"</span>, <span class="k">"version"</span>: <span class="v">"0.2.1"</span>, <span class="k">"job"</span>: <span class="v">"job_01HXY..."</span> } ],
+  <span class="k">"review"</span>: [ { <span class="k">"name"</span>: <span class="hot">"polymarket-stake-mathss"</span>, <span class="k">"version"</span>: <span class="v">"3.5.2"</span> } ],
+  <span class="k">"queued"</span>: [ { <span class="k">"name"</span>: <span class="v">"tiny-parse"</span>, <span class="k">"version"</span>: <span class="v">"0.2.1"</span>, <span class="k">"job"</span>: <span class="v">"job_01HXY..."</span> } ],
   <span class="k">"allowance"</span>: { <span class="k">"used"</span>: <span class="v">148</span>, <span class="k">"limit"</span>: <span class="v">150</span> }
 }</pre>
-    </div>
-    <p class="lede" style="margin-top:20px">Set <code>queue_unknown</code> to <code>false</code>
-      to get a pure read: you are told what is unknown without spending anything on it. With
-      <code>skip_private</code> set, names that do not resolve on the public registry are counted
-      as skipped and never leave your side of the wire.</p>
-  </div>
-</section>
+</div>
 
-<!-- 6 · THE VERDICT OBJECT -->
-<section class="s rule" id="verdict">
-  <div class="w">
-    <p class="eyebrow">THE VERDICT OBJECT</p>
-    <h2 class="h2">Three states, and only three</h2>
-    <div class="verd">
-      <div class="r">
-        <div class="lab">REVIEW</div>
-        <p>The sandbox saw behaviour a human should look at. Never a claim of malice, always a
-          pointer to evidence. <code>findings[]</code> is populated and <code>evidence</code> is
-          fetchable.</p>
-      </div>
-      <div class="c">
-        <div class="lab">CLEAN</div>
-        <p>It ran, and nothing correlated. Recorded with a timestamp, because clean in August is
-          not clean in October if the version was republished.</p>
-      </div>
-    </div>
-    <div class="flags">
-      <div class="frow"><code>verdict</code><p>One of <code>clean</code>, <code>review</code> or <code>unknown</code>. Never a score, never a percentage. A number would imply a confidence nobody can honestly give.</p></div>
-      <div class="frow"><code>findings[]</code><p>Stable string identifiers, not prose, so you can match on them. Empty on a clean verdict.</p></div>
-      <div class="frow"><code>engines[]</code><p>Which engines produced the answer. A database only hit returns an empty array and a <code>sources</code> list instead.</p></div>
-      <div class="frow"><code>analysed_at</code><p>When the sandbox ran, not when you asked. Compare it against the version publish date if freshness matters to you.</p></div>
-      <div class="frow"><code>integrity</code><p>The published integrity hash of the tarball that was actually analysed. If it differs from your lockfile, you and the sandbox looked at different bytes.</p></div>
-      <div class="frow"><code>evidence</code><p>A path, not an object. The trace is large, so it is a second request rather than a bloated first one.</p></div>
-    </div>
-  </div>
-</section>
+<table class="ref">
+<thead><tr><th>Field or header</th><th>Effect</th></tr></thead>
+<tbody>
+<tr><td>versions[]</td><td>Up to 5,000 per request, as <code>name@version</code>.</td></tr>
+<tr><td>queue_unknown</td><td><code>false</code> gives a pure read. You are told what is unknown and charged nothing.</td></tr>
+<tr><td>skip_private</td><td>Names that do not resolve on the public registry are counted as skipped and never leave your side of the wire.</td></tr>
+<tr><td>Idempotency&#8209;Key</td><td>A retried request reuses the original reservation instead of charging twice.</td></tr>
+<tr><td>X&#8209;Project</td><td>Labels the run in your console history.</td></tr>
+<tr><td>X&#8209;Client</td><td>Set to <code>mantis</code> to mark the source.</td></tr>
+</tbody>
+</table>
 
-<!-- 7 · OBSERVATORY -->
-<section class="s rule" id="feed">
-  <div class="w">
-    <p class="eyebrow">OBSERVATORY FEED</p>
-    <h2 class="h2 wide">Cursor forward, or ask an indicator backward</h2>
-    <p class="lede">The feed is a different product on a different meter: requests, not analyses.
-      It reads the same records the scanner writes, so nothing is recomputed for it.</p>
-    <div class="term" style="margin-top:20px">
-      <div class="th"><span>GET /api/observatory/indicator/host/45.61.136.12</span><span>200 OK</span></div>
+<p style="font-size:14px;color:var(--ash,#8b8b85)">
+  Every bulk submit becomes one scan in
+  <a href="https://console.snappyfeet.org/scans">your history</a>, with its counts
+  and findings kept.
+</p>
+
+<h3 id="jobs">Jobs<a class="anchor" href="#jobs">#</a></h3>
+<div class="sig">
+  <span class="verb get">GET</span>
+  <code>/api/job/{job}</code>
+  <span class="tag free">free</span>
+</div>
+<p>State of one queued analysis: queued, running, done or failed. Polling is free.</p>
+
+<h3 id="observatory">Observatory<a class="anchor" href="#observatory">#</a></h3>
+<p>
+  A different product on a different meter: requests, not analyses. It reads the
+  same records the scanner writes, so nothing is recomputed for it. Access needs
+  the <code>feed</code> scope, which is sold separately.
+</p>
+
+<div class="sig">
+  <span class="verb get">GET</span>
+  <code>/api/observatory/records</code>
+  <span class="tag paid">feed scope</span>
+</div>
+<table class="ref">
+<thead><tr><th>Query</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td>?since=</td><td>Opaque cursor from the previous page. Stable across reruns and will not skip a record written out of order.</td></tr>
+<tr><td>?verdict=</td><td><code>clean</code>, <code>review</code> or <code>unknown</code>. Omit to get everything, which is what makes the feed usable as a baseline.</td></tr>
+<tr><td>?limit=</td><td>1 to 1,000. Defaults to 100.</td></tr>
+</tbody>
+</table>
+
+<div class="sig">
+  <span class="verb get">GET</span>
+  <code>/api/observatory/indicator/{type}/{value}</code>
+  <span class="tag paid">feed scope</span>
+</div>
+<p>
+  Reverse lookup. Give it a C2 host or a file hash, get every package version
+  that touched it. Types are <code>host</code>, <code>domain</code>,
+  <code>sha256</code> and <code>path</code>.
+</p>
+
+<div class="term">
+<div class="th"><span>REQUEST</span><span>200 OK</span></div>
 <pre><span class="cmd">curl -H "Authorization: Bearer $COHEN_KEY" \
   "https://api.snappyfeet.org/api/observatory/indicator/host/45.61.136.12"</span>
 
@@ -271,46 +396,158 @@
   <span class="k">"indicator"</span>: { <span class="k">"type"</span>: <span class="v">"host"</span>, <span class="k">"value"</span>: <span class="hot">"45.61.136.12"</span> },
   <span class="k">"first_seen"</span>: <span class="v">"2026-08-31T09:14:22Z"</span>,
   <span class="k">"packages"</span>: [
-    { <span class="k">"name"</span>: <span class="hot">"polymarket-stake-mathss"</span>, <span class="k">"version"</span>: <span class="v">"3.5.2"</span>, <span class="k">"by"</span>: <span class="v">"node postinstall.js"</span> },
-    { <span class="k">"name"</span>: <span class="hot">"fast-json-parse-native"</span>,  <span class="k">"version"</span>: <span class="v">"0.4.1"</span>, <span class="k">"by"</span>: <span class="v">"curl"</span> }
+    { <span class="k">"name"</span>: <span class="hot">"polymarket-stake-mathss"</span>, <span class="k">"version"</span>: <span class="v">"3.5.2"</span>, <span class="k">"by"</span>: <span class="v">"node postinstall.js"</span> }
   ]
 }</pre>
-    </div>
-    <div class="flags">
-      <div class="frow wide"><code>?since={cursor}</code><p>Opaque cursor from the previous page. Use this rather than a timestamp: it is stable across reruns and will not skip a record written out of order.</p></div>
-      <div class="frow wide"><code>?verdict=review</code><p>Filter the feed. Omit it to get clean versions too, which is what makes the feed usable as a baseline.</p></div>
-      <div class="frow wide"><code>indicator/{type}</code><p><code>host</code>, <code>domain</code>, <code>sha256</code> or <code>path</code>. Every one resolves back to the package and the process that produced it.</p></div>
+</div>
+
+<h3 id="webhooks">Webhooks<a class="anchor" href="#webhooks">#</a></h3>
+<div class="sig">
+  <span class="verb post">POST</span>
+  <code>/api/webhook</code>
+  <span class="tag paid">queue scope</span>
+</div>
+<p>
+  Register a callback for when a package you watch flips to review. The response
+  carries a signing secret, shown once. HTTPS URLs only.
+</p>
+
+<div class="term">
+<div class="th"><span>REQUEST</span><span>201 CREATED</span></div>
+<pre><span class="cmd">curl -X POST -H "Authorization: Bearer $COHEN_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"url":"https://example.com/hooks/cohen"}' \
+  https://api.snappyfeet.org/api/webhook</span>
+
+{
+  <span class="k">"id"</span>: <span class="v">"9f2c..."</span>,
+  <span class="k">"url"</span>: <span class="v">"https://example.com/hooks/cohen"</span>,
+  <span class="k">"events"</span>: [ <span class="v">"verdict.review"</span> ],
+  <span class="k">"secret"</span>: <span class="v">"whsec_..."</span>
+}</pre>
+</div>
+
+<h3 id="account">Account<a class="anchor" href="#account">#</a></h3>
+<div class="sig">
+  <span class="verb get">GET</span>
+  <code>/api/key</code>
+  <span class="tag free">free</span>
+</div>
+<p>
+  Your plan, usage and reset date. Never counted against anything, so it is safe
+  as a health check in scripts.
+</p>
+
+<div class="term">
+<div class="th"><span>REQUEST</span><span>200 OK</span></div>
+<pre><span class="cmd">curl -H "Authorization: Bearer $COHEN_KEY" https://api.snappyfeet.org/api/key</span>
+
+{
+  <span class="k">"tier"</span>: <span class="v">"individual"</span>,
+  <span class="k">"analyses"</span>: { <span class="k">"used"</span>: <span class="v">137</span>, <span class="k">"limit"</span>: <span class="v">150</span>, <span class="k">"resets"</span>: <span class="v">"2026-10-01"</span> },
+  <span class="k">"lookups_today"</span>: { <span class="k">"used"</span>: <span class="v">42</span>, <span class="k">"limit"</span>: <span class="v">null</span> },
+  <span class="k">"key"</span>: { <span class="k">"scopes"</span>: [<span class="v">"read"</span>,<span class="v">"queue"</span>,<span class="v">"evidence"</span>], <span class="k">"in_grace"</span>: <span class="v">false</span> }
+}</pre>
+</div>
+
+<div class="sig">
+  <span class="verb get">GET</span>
+  <code>/api/plans</code>
+  <span class="tag free">no key</span>
+</div>
+<p>The current price list. Unauthenticated, because it is public information.</p>
+
+<h3 id="verdict">Verdict object<a class="anchor" href="#verdict">#</a></h3>
+<div class="verd">
+  <div class="r">
+    <div class="lab">REVIEW</div>
+    <p>The sandbox saw behaviour a human should look at. Never a claim of
+    malice, always a pointer to evidence.</p>
+  </div>
+  <div class="c">
+    <div class="lab">CLEAN</div>
+    <p>It ran, and nothing correlated. Recorded with a timestamp, because clean
+    in August is not clean in October if the version was republished.</p>
+  </div>
+</div>
+<table class="ref">
+<thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td>verdict</td><td><code>clean</code>, <code>review</code> or <code>unknown</code>. Never a score. A number would imply a confidence nobody can honestly give.</td></tr>
+<tr><td>analyzed_at</td><td>Epoch seconds. When the sandbox ran, not when you asked.</td></tr>
+<tr><td>ecosystem</td><td><code>npm</code>.</td></tr>
+<tr><td>name, version</td><td>As analysed. A scoped name comes back with its slash decoded.</td></tr>
+</tbody>
+</table>
+
+<h3 id="errors">Errors<a class="anchor" href="#errors">#</a></h3>
+<p>
+  Every error is JSON with a stable <code>error</code> code and a message written
+  for a person. Branch on the code, never the message.
+</p>
+
+<div class="term">
+<div class="th"><span>SHAPE</span><span>ALL ERRORS</span></div>
+<pre>{ <span class="k">"error"</span>: <span class="hot">"scope_required"</span>,
+  <span class="k">"message"</span>: <span class="v">"This endpoint needs the 'queue' scope."</span> }</pre>
+</div>
+
+<table class="ref">
+<thead><tr><th>Code</th><th>Status</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td>missing_key</td><td><span class="st err">401</span></td><td>No <code>Authorization</code> header.</td></tr>
+<tr><td>invalid_key</td><td><span class="st err">401</span></td><td>Malformed or unrecognised. Checked before any lookup, so a typo never reaches the database.</td></tr>
+<tr><td>key_expired</td><td><span class="st err">401</span></td><td>Past its grace window. Extend it in the console.</td></tr>
+<tr><td>key_expired_grace</td><td><span class="st err">403</span></td><td>Expired but still reading. Queueing is refused.</td></tr>
+<tr><td>account_suspended</td><td><span class="st err">403</span></td><td>Contact support.</td></tr>
+<tr><td>scope_required</td><td><span class="st err">403</span></td><td>Your key cannot do this. Free keys read only.</td></tr>
+<tr><td>paid_key_required</td><td><span class="st err">403</span></td><td>Evidence traces need a paid plan.</td></tr>
+<tr><td>allowance_spent</td><td><span class="st err">403</span></td><td>Monthly analyses used. Nothing auto upgrades.</td></tr>
+<tr><td>bad_path</td><td><span class="st err">400</span></td><td>The path is not a name and a version.</td></tr>
+<tr><td>bad_json</td><td><span class="st err">400</span></td><td>Body is not valid JSON.</td></tr>
+<tr><td>empty_body</td><td><span class="st err">400</span></td><td><code>versions</code> is missing or empty.</td></tr>
+<tr><td>too_many</td><td><span class="st err">400</span></td><td>Over 5,000 versions in one request.</td></tr>
+<tr><td>bad_url</td><td><span class="st err">400</span></td><td>Webhook URL is not HTTPS.</td></tr>
+<tr><td>bad_indicator</td><td><span class="st err">400</span></td><td>Type is not host, domain, sha256 or path.</td></tr>
+<tr><td>unknown</td><td><span class="st err">404</span></td><td>Not an error code but a verdict. Nobody has analysed it.</td></tr>
+<tr><td>not_in_registry</td><td><span class="st err">404</span></td><td>npm has never heard of it either.</td></tr>
+<tr><td>no_such_job</td><td><span class="st err">404</span></td><td>No job with that id.</td></tr>
+<tr><td>daily_cap</td><td><span class="st err">429</span></td><td>Free keys read 100 verdicts a day. <code>Retry&#8209;After</code> is set.</td></tr>
+<tr><td>rate_limited</td><td><span class="st err">429</span></td><td>Too many requests. Back off rather than retrying tightly.</td></tr>
+<tr><td>sandbox_saturated</td><td><span class="st err">503</span></td><td>Queueing is unavailable. Reads keep working and nothing is charged.</td></tr>
+<tr><td>verdict_store_unavailable</td><td><span class="st err">503</span></td><td>We could not reach the verdict store. This is not a statement about the package.</td></tr>
+</tbody>
+</table>
+
+<div class="note">
+  <b>Do not treat 503 as clean.</b> <code>verdict_store_unavailable</code> means
+  we could not check, which is different from checking and finding nothing.
+  Caching it as a pass is the wrong way to fail.
+</div>
+
+<h3 id="status">Status<a class="anchor" href="#status">#</a></h3>
+<table class="ref">
+<thead><tr><th>Surface</th><th>State</th></tr></thead>
+<tbody>
+<tr><td>Reading verdicts</td><td><span class="st ok">live</span> Free and paid keys.</td></tr>
+<tr><td>Bulk submit, read only</td><td><span class="st ok">live</span> With <code>queue_unknown: false</code>.</td></tr>
+<tr><td>Account and plans</td><td><span class="st ok">live</span></td></tr>
+<tr><td>Queueing analyses</td><td><span class="st">soon</span> Returns <code>503</code> until the sandbox queue is connected.</td></tr>
+<tr><td>Evidence traces</td><td><span class="st">soon</span></td></tr>
+<tr><td>Observatory feed</td><td><span class="st">soon</span></td></tr>
+<tr><td>Webhooks</td><td><span class="st">soon</span> Registration works, delivery does not.</td></tr>
+</tbody>
+</table>
+
     </div>
   </div>
 </section>
 
-<!-- 8 · ERRORS -->
-<section class="s rule" id="errors">
-  <div class="w">
-    <p class="eyebrow">ERRORS AND LIMITS</p>
-    <h2 class="h2">What each status actually means</h2>
-    <p class="lede">Errors are JSON with a stable <code>error</code> code and a message written for
-      a person. The code is what you should branch on.</p>
-    <div class="flags">
-      <div class="frow"><code>200</code><p>Known. On a <code>POST</code> this means it was already analysed and you were not charged.</p></div>
-      <div class="frow"><code>202</code><p>Queued. An analysis has come off your allowance. Poll the <code>poll</code> path.</p></div>
-      <div class="frow"><code>207</code><p>Bulk submit succeeded with a mixed outcome. Read <code>counts</code>, not the status line.</p></div>
-      <div class="frow"><code>400</code><p>Malformed path or body. Most often an unencoded scope. The message names the segment at fault.</p></div>
-      <div class="frow"><code>401</code><p>Missing or invalid key.</p></div>
-      <div class="frow"><code>403</code><p>Your key cannot do this. Either the allowance is spent, or the endpoint needs a paid key.</p></div>
-      <div class="frow"><code>404</code><p>Two different situations, distinguished by the body: <code>verdict: "unknown"</code> means we have never analysed it, <code>error: "not_in_registry"</code> means npm has never heard of it either.</p></div>
-      <div class="frow"><code>429</code><p>Rate limited. <code>Retry-After</code> is always set. Back off rather than retrying tightly.</p></div>
-      <div class="frow"><code>503</code><p>The sandbox is saturated. Reads keep working, queueing does not, and nothing is charged.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- 9 · CLOSE -->
 <section class="s cta rule">
   <div class="w">
     <h2 class="h2" style="max-width:21ch">A free key reads every verdict in the database</h2>
     <div class="btns">
-      <a class="b f" href="mailto:contact@snappyfeet.org?subject=API%20key">Get a free key</a>
+      <a class="b f" href="https://console.snappyfeet.org/">Get a free key</a>
       <a class="b g" href="pricing.html">See pricing</a>
     </div>
     <a class="mail" href="mailto:contact@snappyfeet.org">contact@snappyfeet.org</a>
@@ -339,20 +576,24 @@
         </ul>
       </div>
       <div>
-        <h5>METHOD</h5>
+        <h5>ACCOUNT</h5>
         <ul>
-          <li><a href="method.html">How it works</a></li>
-          <li><a href="index.html#attribution">Attribution</a></li>
-          <li><a href="index.html#verdicts">Verdicts</a></li>
-          <li><a href="method.html#sandbox">Sandbox</a></li>
+          <li><a href="https://console.snappyfeet.org/">Console</a></li>
+          <li><a href="https://console.snappyfeet.org/">Get a key</a></li>
+          <li><a href="https://console.snappyfeet.org/demo">Redeem a demo code</a></li>
+          <li><a href="https://console.snappyfeet.org/download">Download Mantis</a></li>
+          <li><a href="api.html#quickstart">Quickstart</a></li>
         </ul>
       </div>
       <div>
-        <h5>CONTACT</h5>
+        <h5>MORE</h5>
         <ul>
+          <li><a href="method.html">How it works</a></li>
           <li><a href="blog.html">Blog</a></li>
-          <li><a href="mailto:contact@snappyfeet.org">contact@snappyfeet.org</a></li>
           <li><a href="pricing.html#faq">FAQ</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="mailto:contact@snappyfeet.org">contact@snappyfeet.org</a></li>
         </ul>
       </div>
     </div>
@@ -365,5 +606,23 @@
 </footer>
 
 <script src="app.js" defer></script>
+<script>
+// Highlight the section currently in view. Purely decorative, so it degrades
+// to a plain list of links wherever IntersectionObserver is missing.
+(function () {
+  var links = [].slice.call(document.querySelectorAll(".toc a"));
+  if (!links.length || !("IntersectionObserver" in window)) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute("href").slice(1)] = a; });
+  var seen = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      links.forEach(function (a) { a.classList.remove("on"); });
+      if (map[e.target.id]) map[e.target.id].classList.add("on");
+    });
+  }, { rootMargin: "-90px 0px -70% 0px" });
+  document.querySelectorAll("h3[id]").forEach(function (h) { seen.observe(h); });
+})();
+</script>
 </body>
 </html>

@@ -12,7 +12,7 @@ const PRICING = {
   scanner: [
     { name:'FREE', who:'Gate an install without running anything.',
       monthly:0, annual:0, per:'forever', sub:'no card, no expiry',
-      cta:'Get a key', feat:false, inherits:null,
+      cta:'Get a key', href:'https://console.snappyfeet.org/', feat:false, inherits:null,
       items:[
         {t:'Binary verdicts: review or clean', key:true},
         {t:'Cohen database, OSV and npm security holdings'},
@@ -22,7 +22,7 @@ const PRICING = {
       ]},
     { name:'INDIVIDUAL', who:'For one developer who wants to see the trace, not just the answer.',
       monthly:14, annual:12, per:'per month', sub:'one user',
-      cta:'Start free trial', feat:false, inherits:'Everything in Free, plus',
+      cta:'Start free', href:'https://console.snappyfeet.org/', feat:false, inherits:'Everything in Free, plus',
       items:[
         {t:'150 deep analyses per month', key:true},
         {t:'Mantis, with unlimited verdict lookups'},
@@ -33,7 +33,7 @@ const PRICING = {
       ]},
     { name:'TEAM', who:'For a team of up to ten, billed flat rather than per head.',
       monthly:349, annual:291, per:'per month', sub:'flat rate, up to 10 users',
-      cta:'Start 14 day trial', feat:true, inherits:'Everything in Individual, plus',
+      cta:'Join the waitlist', href:'mailto:contact@snappyfeet.org?subject=Team', feat:true, inherits:'Everything in Individual, plus',
       items:[
         {t:'2,000 deep analyses per month, pooled', key:true},
         {t:'Up to 10 users included', key:true},
@@ -46,7 +46,7 @@ const PRICING = {
       ]},
     { name:'ENTERPRISE', who:'For scale, compliance, or a sandbox that has to run inside your own network.',
       monthly:null, annual:null, per:'', sub:'negotiated volume',
-      cta:'Talk to us', feat:false, inherits:'Everything in Team, plus',
+      cta:'Talk to us', href:'mailto:contact@snappyfeet.org?subject=Enterprise', feat:false, inherits:'Everything in Team, plus',
       items:[
         {t:'Self hosted sandbox or VPC deployment', key:true},
         {t:'More than 10 users, negotiated analysis volume', key:true},
@@ -60,7 +60,7 @@ const PRICING = {
   intel: [
     { name:'RESEARCH', who:'For academics, journalists and open source maintainers.',
       monthly:0, annual:0, per:'forever', sub:'noncommercial use only',
-      cta:'Apply', feat:false, inherits:null,
+      cta:'Apply', href:'mailto:contact@snappyfeet.org?subject=Research%20access', feat:false, inherits:null,
       items:[
         {t:'Full feed, delayed 30 days', key:true},
         {t:'1,000 requests per month'},
@@ -68,7 +68,7 @@ const PRICING = {
       ]},
     { name:'BUILDER', who:'For a product that needs verdicts inside its own workflow.',
       monthly:99, annual:82, per:'per month', sub:'',
-      cta:'Get a key', feat:false, inherits:null,
+      cta:'Get a key', href:'mailto:contact@snappyfeet.org?subject=Observatory%20Builder', feat:false, inherits:null,
       items:[
         {t:'Real time verdicts, no delay', key:true},
         {t:'25,000 requests per month'},
@@ -77,7 +77,7 @@ const PRICING = {
       ]},
     { name:'COMMERCIAL', who:'For a security team feeding its own detections.',
       monthly:999, annual:832, per:'per month', sub:'',
-      cta:'Talk to us', feat:true, inherits:'Everything in Builder, plus',
+      cta:'Talk to us', href:'mailto:contact@snappyfeet.org?subject=Observatory%20Commercial', feat:true, inherits:'Everything in Builder, plus',
       items:[
         {t:'Full IOC export: C2, hashes, artifacts', key:true},
         {t:'Complete historical archive', key:true},
@@ -88,7 +88,7 @@ const PRICING = {
     { name:'OEM',
       who:'For redistributing Observatory verdicts inside your own product.',
       monthly:null, annual:null, per:'', sub:'redistribution licence',
-      cta:'Talk to us', feat:false, inherits:null,
+      cta:'Talk to us', href:'mailto:contact@snappyfeet.org?subject=Observatory%20OEM', feat:false, inherits:null,
       items:[
         {t:'Redistribution rights', key:true},
         {t:'White label verdicts'},
@@ -119,6 +119,19 @@ const nav=document.getElementById('nav'),burger=document.getElementById('burger'
 addEventListener('scroll',()=>nav.classList.toggle('solid',scrollY>40),{passive:true});
 burger.addEventListener('click',()=>burger.setAttribute('aria-expanded',links.classList.toggle('open')));
 links.addEventListener('click',e=>{if(e.target.tagName==='A'){links.classList.remove('open');burger.setAttribute('aria-expanded','false')}});
+
+/* ── signed in hint ──
+   The console sets cohen_signed_in=1 on .snappyfeet.org at login. Not a
+   credential: it holds one character, identifies nobody and grants nothing.
+   It exists so a page served by GitHub Pages can pick the right label with
+   no API call and no CORS. */
+(function(){
+  if(document.cookie.split('; ').indexOf('cohen_signed_in=1') === -1) return;
+  document.querySelectorAll('a.nav-cta').forEach(a=>{
+    a.textContent='Dashboard';
+    a.href='https://console.snappyfeet.org/keys';
+  });
+})();
 
 /* ── product dropdown ──
    mouseleave gets a grace timer so a fast diagonal toward the panel
@@ -152,7 +165,7 @@ function renderTiers(target, list){
       <p class="who">${t.who}</p>
       ${priceBlock}
       <p class="price-sub">${sub}</p>
-      <a class="cta" href="index.html">${t.cta}</a>
+      <a class="cta" href="${t.href || 'https://console.snappyfeet.org/'}">${t.cta}</a>
       ${t.inherits?`<p class="inh">${t.inherits}</p>`:''}
       <ul>${t.items.map(i=>`<li class="${i.key?'key':''}">${i.t}</li>`).join('')}</ul>
     </div>`;
