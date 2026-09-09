@@ -120,7 +120,13 @@ code{font-family:var(--mono);font-size:.9em}
 .prod .eyebrow{color:var(--alarm)}
 .prod .eyebrow::after{background:rgba(255,45,31,.28)}
 .plock{display:flex;align-items:center;gap:13px;margin:0 0 26px}
+/* 30px is above the 24px threshold, so the full-weight symbols are correct
+   here. Anywhere a mark renders below 24px, use #mantis-sm / #observatory-sm
+   instead of scaling these down. */
 .plock svg{width:30px;height:30px;flex:none;color:var(--white)}
+/* Guard: the marks are drawn with butt caps and miter joins on purpose.
+   An inherited round linecap from an icon library would break them. */
+.plock svg,.mark svg{stroke-linecap:butt;stroke-linejoin:miter}
 .plock .pn{font-family:var(--mono);font-size:23px;font-weight:600;letter-spacing:-.02em;line-height:1}
 .plock .by{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--ash3);
   padding-left:13px;border-left:1px solid var(--hair);align-self:stretch;display:flex;align-items:center}
@@ -492,11 +498,16 @@ main.sub > section:first-of-type{border-top:0;padding-top:30px}
 
 /* ══════════════════════════════════════════════════════════════
    WORDMARK
-   Typographic only. The square is the same live indicator used by
-   .ann, .hud and .status, so the mark needs no separate asset.
+   Typographic only — Cohen has no mark of its own yet, and this
+   placeholder square is not one. It was --alarm, which made it
+   visually identical to the blip in .ann, .hud and .status that
+   means the sandbox is observing: a brand mark in the same red as
+   a verdict reads as a warning about the brand. Red is reserved
+   for verdicts, so the square is ash, and square — the site's
+   marks carry no corner radius.
    ══════════════════════════════════════════════════════════════ */
-.mark i{width:.44em;height:.44em;border-radius:1.5px;background:var(--alarm);
-  margin-right:.44em;flex:none;display:block}
+.mark i{width:.44em;height:.44em;border-radius:0;background:var(--ash);
+  margin-right:.44em;flex:none;display:block;transition:background .28s}
 .mark:hover i{background:var(--white)}
 
 /* ── API reference ── */
