@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Talk to us · Cohen</title>
+<meta name="description" content="Talk to the Cohen team about Team and Enterprise plans, self hosted deployment, Mantis and Observatory threat intelligence.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%2032%2032%27%3E%3Crect%20width=%2732%27%20height=%2732%27%20fill=%27%23000%27/%3E%3Crect%20x=%2711%27%20y=%2711%27%20width=%2710%27%20height=%2710%27%20fill=%27%23fff%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+<div class="grid" aria-hidden="true"><div class="grid-in"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <!-- Product marks. One filled point per mark; currentColor only; no radius.
+       Use the -sm variants below 24px rendered; they are separate symbols,
+       not scaled copies. See MARKS.md. -->
+  <symbol id="mantis" viewBox="0 0 32 32">
+    <path d="M12 6 H6 V26 H12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="miter" stroke-linecap="butt"/>
+    <path d="M20 6 H26 V26 H20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="miter" stroke-linecap="butt"/>
+    <circle cx="16" cy="16" r="2.6" fill="currentColor"/>
+  </symbol>
+
+  <symbol id="mantis-sm" viewBox="0 0 32 32">
+    <path d="M12.5 5.6 H5.6 V26.4 H12.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linejoin="miter" stroke-linecap="butt"/>
+    <path d="M19.5 5.6 H26.4 V26.4 H19.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linejoin="miter" stroke-linecap="butt"/>
+    <circle cx="16" cy="16" r="3.2" fill="currentColor"/>
+  </symbol>
+
+  <symbol id="observatory" viewBox="0 0 32 32">
+    <path d="M2 11 H24.89" stroke="currentColor" fill="none" stroke-width="1.6" stroke-linecap="butt" opacity=".45"/>
+    <path d="M26.10 14.57 A10.2 10.2 0 1 1 22.47 8.11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="butt"/>
+    <circle cx="24.89" cy="11" r="2.8" fill="currentColor"/>
+  </symbol>
+
+  <symbol id="observatory-sm" viewBox="0 0 32 32">
+    <path d="M26.17 15.21 A10.2 10.2 0 1 1 21.95 7.72" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="butt"/>
+    <circle cx="24.89" cy="11" r="3.4" fill="currentColor"/>
+  </symbol>
+</svg>
+
+<div class="nav" id="nav">
+  <div class="w">
+    <a class="mark" href="index.html" aria-label="Cohen, home"><i aria-hidden="true"></i>Cohen</a>
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="navlinks" aria-label="Menu"><i></i><i></i><i></i></button>
+    <div class="nav-links" id="navlinks">
+      <a href="index.html">Engine</a>
+
+      <div class="drop" id="dropW">
+        <button class="drop-t" id="dropT" type="button" aria-expanded="false" aria-controls="dropM">Product</button>
+        <div class="drop-m" id="dropM">
+          <div class="drop-card">
+            <p class="drop-h">THREE PRODUCTS, ONE SANDBOX</p>
+            <div class="row">
+              <a class="api" href="api.html#packages">API</a>
+              <a class="rmain" href="mantis.html">
+                <span class="dn">Mantis</span>
+                <span class="dd">Reads a project and resolves its full dependency tree.</span>
+              </a>
+            </div>
+            <div class="row">
+              <a class="api" href="api.html#observatory">API</a>
+              <a class="rmain" href="observatory.html">
+                <span class="dn">Observatory</span>
+                <span class="dd">The complete threat-intelligence record, delivered as data.</span>
+              </a>
+            </div>
+            <div class="row">
+              <a class="rmain" href="api.html#observatory">
+                <span class="dn">Feed API</span>
+                <span class="dd">Verdicts and indicators, piped directly into your workflow.</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a href="pricing.html">Pricing</a>
+      <a class="nav-cta" href="https://console.snappyfeet.org/">Start free</a>
+    </div>
+  </div>
+</div>
+
+<main id="main" class="sub">
+<section class="contact">
+  <div class="w">
+    <div class="contact-grid">
+
+      <div class="contact-intro">
+        <p class="contact-k">Contact us</p>
+        <h1 class="contact-h">Talk to the Cohen team</h1>
+        <p class="contact-l">Team and Enterprise plans, self hosted deployment, or Observatory data for your own detections. Tell us what you need and the people who build the sandbox will reply.</p>
+        <p class="contact-alt">Prefer email? <a class="ext" href="mailto:contact@snappyfeet.org">contact@snappyfeet.org</a></p>
+      </div>
+
+      <form class="cform" id="contactForm" novalidate>
+        <div class="crow">
+          <div class="field">
+            <label for="cfFirst">First name <span class="req" aria-hidden="true">*</span></label>
+            <input id="cfFirst" name="first" type="text" autocomplete="given-name" required>
+          </div>
+          <div class="field">
+            <label for="cfLast">Last name <span class="req" aria-hidden="true">*</span></label>
+            <input id="cfLast" name="last" type="text" autocomplete="family-name" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="cfEmail">Work email <span class="req" aria-hidden="true">*</span></label>
+          <input id="cfEmail" name="email" type="email" autocomplete="email" required>
+        </div>
+
+        <div class="field">
+          <label for="cfCompany">Company <span class="req" aria-hidden="true">*</span></label>
+          <input id="cfCompany" name="company" type="text" autocomplete="organization" required>
+        </div>
+
+        <div class="crow">
+          <div class="field">
+            <label for="cfSize">Company size <span class="req" aria-hidden="true">*</span></label>
+            <select id="cfSize" name="size" required>
+              <option value="" selected disabled>Select size</option>
+              <option>1 to 10</option>
+              <option>11 to 50</option>
+              <option>51 to 200</option>
+              <option>201 to 1,000</option>
+              <option>1,000+</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="cfRole">Job title <span class="req" aria-hidden="true">*</span></label>
+            <input id="cfRole" name="role" type="text" autocomplete="organization-title" required>
+          </div>
+        </div>
+
+        <fieldset class="field opts" id="cfTopics">
+          <legend>What are you interested in? <span class="req" aria-hidden="true">*</span></legend>
+          <label class="opt"><input type="checkbox" name="topic" value="Team plan"><span>Team plan</span></label>
+          <label class="opt"><input type="checkbox" name="topic" value="Enterprise or self hosted sandbox"><span>Enterprise or self hosted sandbox</span></label>
+          <label class="opt"><input type="checkbox" name="topic" value="Mantis"><span>Mantis</span></label>
+          <label class="opt"><input type="checkbox" name="topic" value="Observatory threat intel"><span>Observatory threat intel</span></label>
+          <label class="opt"><input type="checkbox" name="topic" value="Feed API"><span>Feed API</span></label>
+          <label class="opt"><input type="checkbox" name="topic" value="Something else"><span>Something else</span></label>
+        </fieldset>
+
+        <div class="field">
+          <label for="cfMsg">What do you need? <span class="req" aria-hidden="true">*</span></label>
+          <textarea id="cfMsg" name="message" rows="5" required placeholder="Volume, deployment requirements, timelines, anything that helps us prepare."></textarea>
+        </div>
+
+        <p class="cform-err" id="cfErr" role="alert" hidden>Please complete the highlighted fields.</p>
+
+        <div class="cform-foot">
+          <button class="b f cform-send" type="submit">Send message</button>
+          <p class="cform-note">This opens your email client with the message ready to send. See our <a href="privacy.html">privacy policy</a>.</p>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</section>
+</main>
+
+
+<footer class="foot">
+  <div class="w">
+    <div class="fgrid">
+      <div>
+        <a class="mark" href="index.html" style="font-size:16px" aria-label="Cohen, home"><i aria-hidden="true"></i>Cohen</a>
+        <p style="color:var(--ash2);font-size:13.5px;margin:16px 0 0;max-width:32ch">Behavioural package analysis. Named for Fred Cohen, who defined the problem in 1983 and proved it unsolvable in 1984.</p>
+      </div>
+      <div>
+        <h5>PRODUCTS</h5>
+        <ul>
+          <li><a href="index.html#evidence">Cohen scanner</a></li>
+          <li><a href="mantis.html">Mantis collector</a></li>
+          <li><a href="api.html">Scanner API</a></li>
+          <li><a href="pricing.html">Scanner pricing</a></li>
+          <li><a href="observatory.html">Observatory</a></li>
+          <li><a href="observatory.html#observatory-pricing">Observatory pricing</a></li>
+          <li><a href="https://trail.snappyfeet.org">Live feed &#8599;</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>ACCOUNT</h5>
+        <ul>
+          <li><a href="https://console.snappyfeet.org/">Console</a></li>
+          <li><a href="https://console.snappyfeet.org/">Get an API key</a></li>
+          <li><a href="https://console.snappyfeet.org/demo">Redeem a demo code</a></li>
+          <li><a href="https://console.snappyfeet.org/download">Download Mantis</a></li>
+          <li><a href="api.html#quickstart">Quickstart</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>MORE</h5>
+        <ul>
+          <li><a href="method.html">How it works</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="pricing.html#faq">FAQ</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="mailto:contact@snappyfeet.org">contact@snappyfeet.org</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="fbar">
+      <span>COHEN · BEHAVIOURAL PACKAGE ANALYSIS</span>
+      <span>OBSERVATORY · THREAT INTEL</span>
+      <span>SB V1.3</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>

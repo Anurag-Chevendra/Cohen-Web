@@ -12,7 +12,7 @@
 }
 :root{
   --black:#000; --deep:#08090B; --panel:#0B0D10; --panel2:#101318;
-  --hair:rgba(255,255,255,.08); --hair2:rgba(255,255,255,.16); --grid:rgba(255,255,255,.030);
+  --hair:rgba(255,255,255,.08); --hair2:rgba(255,255,255,.16); --grid:rgba(255,255,255,.045); --grid-size:44px;
   --white:#fff; --ash:#99A0A9; --ash2:#5C626A; --ash3:#3A3F45;
   --alarm:#FF2D1F; --alarm-dim:rgba(255,45,31,.10);
 }
@@ -30,12 +30,18 @@ canvas,svg{display:block;max-width:100%}
 .skip:focus{left:12px;top:12px}
 code{font-family:var(--mono);font-size:.9em}
 
-/* hairline column grid */
-.grid{position:fixed;inset:0;z-index:4;pointer-events:none}
-.grid-in{max-width:1220px;height:100%;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:repeat(12,1fr)}
-.grid-in i{border-left:1px solid var(--grid)}
-.grid-in i:last-child{border-right:1px solid var(--grid)}
-@media(max-width:900px){.grid-in{grid-template-columns:repeat(4,1fr);padding:0 20px}}
+/* hairline square grid, the same texture as the email header.
+   Sits behind content (z-index 1), so panels with a background cover it
+   and the lines only show in open space. Brightness is --grid, cell is --grid-size. */
+.grid{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:var(--grid-size) var(--grid-size);
+  background-position:center top;
+  -webkit-mask-image:radial-gradient(ellipse 85% 75% at 50% 40%,#000 35%,rgba(0,0,0,.35) 100%);
+          mask-image:radial-gradient(ellipse 85% 75% at 50% 40%,#000 35%,rgba(0,0,0,.35) 100%)}
+.grid-in{display:none}
+@media(max-width:640px){:root{--grid-size:32px}}
 
 /* ── announcement + nav ── */
 @keyframes blip{0%,100%{opacity:1}50%{opacity:.2}}
@@ -71,16 +77,65 @@ code{font-family:var(--mono);font-size:.9em}
 
 /* ── hero ── */
 .hero{position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden}
-#radar{position:absolute;inset:0;width:100%;height:100%;opacity:.72}
+
+/* the horizon: the email header's arc, sight line and point, drawn at hero
+   scale. It is the Observatory construction (see MARKS.md): the sight line
+   runs bright up to the point and goes quiet past it. */
+.horizon{position:absolute;inset:0;width:100%;height:100%;max-width:none;z-index:1;pointer-events:none;
+  -webkit-mask-image:linear-gradient(180deg,#000 62%,transparent 100%);
+          mask-image:linear-gradient(180deg,#000 62%,transparent 100%)}
+.horizon canvas,.horizon svg{position:absolute;inset:0;width:100%;height:100%;max-width:none}
+.hz-svg *{fill:none;stroke-linecap:butt}
+.hz-sight{stroke:rgba(255,255,255,.30);stroke-width:1.5}
+.hz-rest{stroke:rgba(255,255,255,.10);stroke-width:1.5}
+.hz-inner{stroke:rgba(255,255,255,.16);stroke-width:3.5}
+.hz-arc{stroke:#EDEDED;stroke-width:7}
+.hz-dot{fill:#fff;stroke:none;filter:drop-shadow(0 0 14px rgba(255,255,255,.45))}
+/* one quiet entrance: the horizon fades up as a whole, nothing moves */
+.horizon{animation:hzfade 1.4s ease-out both}
+@keyframes hzfade{from{opacity:0}}
+/* keep the copy clean: wherever the arc, ring or line passes behind the
+   text it drops to about 10%, with a soft edge. --hzmask is a cutout of the
+   real text lines, drawn by app.js on load and resize, so the fade follows
+   the copy exactly and the point stays bright whenever it is clear of it. */
+@media(min-width:901px){
+  .horizon{
+    -webkit-mask-image:linear-gradient(180deg,#000 62%,transparent 100%),var(--hzmask,linear-gradient(#000,#000));
+    -webkit-mask-size:100% 100%;-webkit-mask-repeat:no-repeat;
+    -webkit-mask-composite:source-in;
+    mask-image:linear-gradient(180deg,#000 62%,transparent 100%),var(--hzmask,linear-gradient(#000,#000));
+    mask-size:100% 100%;mask-repeat:no-repeat;
+    mask-composite:intersect;
+  }
+}
+
+/* soft light behind the arc, and a fade under the nav. The arc fades out
+   through its own mask, so the page grid runs on unbroken below the hero */
+.hero::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 50% 60% at 78% 70%,rgba(255,255,255,.05),transparent 70%)}
 .hero::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;
-  background:radial-gradient(ellipse 66% 56% at 50% 42%,transparent 10%,rgba(0,0,0,.8) 76%),
-             linear-gradient(180deg,#000 0%,transparent 24%,rgba(0,0,0,.6) 78%,#000 100%)}
-.hero .w{z-index:3;text-align:center;padding:124px 32px 104px}
+  background:linear-gradient(180deg,#000 0%,transparent 18%),
+             linear-gradient(90deg,rgba(0,0,0,.55) 0%,transparent 45%)}
+.hero .w{z-index:3;text-align:left;padding:124px 32px 104px;width:100%}
 .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.3em;color:var(--ash2);margin:0 0 30px}
-.title{font-size:clamp(38px,7.4vw,92px);line-height:.97;font-weight:600;letter-spacing:-.045em;
-  margin:0 auto 26px;max-width:14ch;text-wrap:balance}
-.dek{font-size:clamp(16px,1.55vw,19px);color:var(--ash);max-width:56ch;margin:0 auto 38px;line-height:1.55}
+.title{font-size:clamp(40px,6.2vw,84px);line-height:.98;font-weight:600;letter-spacing:-.045em;
+  margin:0 0 26px -.055em;max-width:13ch;text-wrap:balance}
+.dek{font-size:clamp(16px,1.45vw,18.5px);color:var(--ash);max-width:46ch;margin:0 0 38px;line-height:1.55}
 .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.hero .btns{justify-content:flex-start}
+/* below 900px the text takes the full width, so the horizon moves under
+   the buttons instead of behind the copy */
+@media(max-width:900px){
+  .horizon{top:auto;bottom:0;height:360px}
+  .hero .w{padding-bottom:150px}
+  .hero::after{background:linear-gradient(180deg,#000 0%,transparent 18%)}
+  .hero::before{background:radial-gradient(ellipse 80% 30% at 70% 90%,rgba(255,255,255,.05),transparent 70%)}
+}
+@media(max-width:640px){
+  .horizon{height:300px}
+  .hero .w{padding-bottom:130px}
+  .hud{flex-direction:column;gap:6px}
+}
 .b{font-family:var(--mono);font-size:13px;padding:14px 26px;text-decoration:none;border-radius:999px;
   border:1px solid #fff;transition:.18s;white-space:nowrap}
 .b.f{background:#fff;color:#000;font-weight:600}
@@ -572,14 +627,14 @@ main.sub > section:first-of-type{border-top:0;padding-top:30px}
 .ent .enthead{display:flex;justify-content:space-between;gap:10px;padding:12px 18px;
   border-bottom:1px solid var(--hair);font-family:var(--mono);font-size:10.5px;
   letter-spacing:.16em;color:var(--ash2)}
-.entrow{display:grid;grid-template-columns:1fr 220px 54px;gap:18px;align-items:center;
+.entrow{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) 54px;gap:18px;align-items:center;
   padding:12px 18px;border-bottom:1px solid var(--hair)}
-.entrow .ep{font-family:var(--mono);font-size:12px;color:var(--ash);word-break:break-all}
+.entrow .efile{font-family:var(--mono);font-size:12.5px;color:var(--ash);overflow-wrap:anywhere}
 .entrow .ebar{display:block;height:6px;background:rgba(255,255,255,.06);border-radius:999px;
   overflow:hidden}
 .entrow .ebar i{display:block;height:100%;background:var(--ash3);border-radius:999px}
 .entrow .ev{font-family:var(--mono);font-size:12px;color:var(--ash2);text-align:right}
-.entrow.hi .ep,.entrow.hi .ev{color:var(--alarm)}
+.entrow.hi .efile,.entrow.hi .ev{color:var(--alarm)}
 .entrow.hi .ebar i{background:var(--alarm)}
 .ent .entfoot{padding:14px 18px;color:var(--ash2);font-size:13px;line-height:1.6}
 .ent .entfoot code{color:var(--ash)}
@@ -590,3 +645,153 @@ main.sub > section:first-of-type{border-top:0;padding-top:30px}
   .entrow .ev{text-align:left}
   .frow.wide{grid-template-columns:1fr;gap:8px}
 }
+
+/* ══════════════════════════════════════════════════════════════
+   CONTACT PAGE
+   Two columns: a quiet introduction on the left that stays put, the
+   form on the right. Fields are calm until touched; errors only show
+   after a send attempt, never while someone is still typing.
+   ══════════════════════════════════════════════════════════════ */
+.contact{padding:92px 0 110px;position:relative;z-index:2}
+.contact-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,600px);gap:72px;align-items:start}
+@media(max-width:960px){.contact-grid{grid-template-columns:1fr;gap:44px}}
+.contact-intro{position:sticky;top:120px}
+@media(max-width:960px){.contact-intro{position:static}}
+.contact-k{margin:0 0 18px;font-size:14px;color:var(--ash2)}
+.contact-h{margin:0 0 20px;font-size:clamp(34px,4.4vw,52px);line-height:1.04;font-weight:600;
+  letter-spacing:-.04em;max-width:12ch;text-wrap:balance}
+.contact-l{margin:0;color:var(--ash);font-size:16.5px;line-height:1.6;max-width:42ch}
+.contact-alt{margin:26px 0 0;color:var(--ash2);font-size:14px}
+
+.cform{display:flex;flex-direction:column;gap:24px}
+.crow{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:560px){.crow{grid-template-columns:1fr;gap:24px}}
+.field{display:flex;flex-direction:column;gap:9px;min-width:0}
+.field > label:not(.opt),.opts legend{font-size:14.5px;font-weight:500;color:var(--white);letter-spacing:-.005em}
+.req{color:var(--ash2);font-weight:400}
+
+.field input,.field select,.field textarea{width:100%;font-family:var(--font);font-size:15px;color:var(--white);
+  background:var(--deep);border:1px solid var(--hair2);border-radius:10px;padding:12px 14px;
+  min-height:46px;transition:border-color .16s,background .16s;-webkit-appearance:none;appearance:none}
+.field textarea{resize:vertical;min-height:132px;line-height:1.55}
+.field ::placeholder{color:var(--ash3)}
+.field input:hover,.field select:hover,.field textarea:hover{border-color:rgba(255,255,255,.26)}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--white);background:var(--panel)}
+.field select{cursor:pointer;padding-right:40px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 4.5 6 7.5 9 4.5' fill='none' stroke='%2399A0A9' stroke-width='1.4'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center}
+.field select:invalid{color:var(--ash2)}
+.field select option{color:#fff;background:var(--panel)}
+
+/* checkbox rows */
+.opts{border:0;margin:0;padding:0;gap:8px}
+.opts legend{padding:0;margin-bottom:9px}
+.opt{display:flex;align-items:center;gap:13px;padding:13px 16px;border-radius:10px;cursor:pointer;
+  background:var(--panel);border:1px solid transparent;font-size:14.5px;color:var(--ash);
+  transition:background .15s,border-color .15s,color .15s}
+.opt:hover{background:var(--panel2);color:var(--white)}
+.field .opt input{min-height:0;padding:0;width:16px;height:16px;margin:0;flex:none;cursor:pointer;-webkit-appearance:none;appearance:none;
+  border:1px solid var(--ash3);border-radius:4px;background:transparent;display:grid;place-content:center;
+  transition:background .15s,border-color .15s}
+.opt input::after{content:"";width:8px;height:4.5px;border-left:1.6px solid #000;border-bottom:1.6px solid #000;
+  transform:rotate(-45deg) translate(1px,-1px);opacity:0}
+.field .opt input:checked{background:var(--white);border-color:var(--white)}
+.opt input:checked::after{opacity:1}
+.opt:has(input:checked){border-color:var(--hair2);color:var(--white);background:var(--panel2)}
+.field .opt input:focus-visible{outline:2px solid var(--alarm);outline-offset:3px}
+
+/* errors appear only after a send attempt */
+.cform.tried .field :is(input,select,textarea):invalid{border-color:rgba(255,45,31,.7)}
+.cform.tried .opts.bad .opt{border-color:rgba(255,45,31,.45)}
+.cform-err{margin:0;color:#FF8A80;font-size:14px}
+
+.cform-foot{display:flex;flex-direction:column;gap:14px;margin-top:4px}
+.cform-send{align-self:stretch;cursor:pointer;font-size:13.5px;padding:15px 26px;text-align:center}
+.cform-note{margin:0;color:var(--ash2);font-size:13px;line-height:1.55}
+.cform-note a{color:var(--ash);text-decoration:underline;text-underline-offset:3px}
+.cform-done{padding:28px;border:1px solid var(--hair2);border-radius:12px;background:var(--panel)}
+.cform-done h2{margin:0 0 10px;font-size:22px;font-weight:600;letter-spacing:-.02em}
+.cform-done p{margin:0;color:var(--ash);font-size:15px;line-height:1.6}
+
+
+
+/* ══════════════════════════════════════════════════════════════
+   SPLIT HEADER + FACT GRID
+   A heading and its lede side by side on the container, so a section
+   opens across the full width instead of hugging the left edge.
+   ══════════════════════════════════════════════════════════════ */
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:end}
+.split .h2{margin:0}
+.split .lede{max-width:none}
+@media(max-width:900px){.split{grid-template-columns:1fr;gap:18px}}
+
+/* recorded evidence, shown the way Trail shows it: a label on the left,
+   the values as tokens on the right, no hairlines between rows */
+.trows{background:var(--panel);border:1px solid var(--hair);border-radius:3px;
+  padding:10px 22px 14px;margin-top:16px}
+.trows .r{display:flex;gap:20px;padding:9px 0;align-items:flex-start}
+.trows .rl{width:190px;flex:none;color:var(--ash);font-size:14px;padding-top:3px}
+.trows .rv{flex:1;display:flex;flex-wrap:wrap;gap:7px;min-width:0}
+.trows .t,.phases .t,.pairs .t,.endrow .t{font-family:var(--mono);font-size:12.5px;padding:4px 10px;border-radius:7px;
+  background:#171C24;border:1px solid #262D38;color:var(--ash);word-break:break-all;line-height:1.45}
+.trows .t.hot,.pairs .t.hot,.phases .t.hot,.endrow .t.hot{background:rgba(255,45,31,.09);border-color:rgba(255,45,31,.32);color:#FF6B5E}
+@media(max-width:640px){.trows .r{flex-direction:column;gap:7px}.trows .rl{width:100%;padding-top:0}}
+
+.split-close{margin-top:40px;align-items:start}
+.close-k{margin:0;font-size:clamp(19px,1.8vw,23px);font-weight:600;letter-spacing:-.02em;
+  line-height:1.3;color:var(--white);max-width:34ch;text-wrap:balance}
+
+/* instrumentation: two phases in one panel, then the pairs */
+.phases{display:grid;grid-template-columns:1fr 1fr;background:var(--panel);border:1px solid var(--hair);
+  border-radius:3px;margin-top:38px}
+.phase{padding:26px 28px 24px}
+.phase + .phase{border-left:1px solid var(--hair)}
+@media(max-width:760px){.phases{grid-template-columns:1fr}.phase + .phase{border-left:0;border-top:1px solid var(--hair)}}
+.phase .phase-k{margin:0 0 14px;font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--ash2)}
+.phase h3{margin:0 0 8px;font-size:22px;font-weight:600;letter-spacing:-.025em}
+.phase p{margin:0;color:var(--ash);font-size:15px;line-height:1.55;max-width:40ch}
+.phase-t{display:flex;flex-wrap:wrap;gap:7px;margin-top:20px}
+.pairs{display:flex;flex-direction:column;gap:10px;align-self:center}
+.pair{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.pair .arr{color:var(--ash3);font-family:var(--mono);font-size:13px}
+
+#evidence{padding-top:112px}
+@media(max-width:760px){#evidence{padding-top:72px}}
+
+/* breathing room between sections, set once for the whole site */
+.s{padding:104px 0}
+@media(max-width:760px){.s{padding:68px 0}}
+#evidence{padding-top:120px}
+@media(max-width:760px){#evidence{padding-top:76px}}
+.cta{padding:112px 0 96px}
+@media(max-width:760px){.cta{padding:76px 0 64px}}
+
+/* three-up variant of the phase panel, and the read-more link */
+.phases.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:960px){.phases.three{grid-template-columns:1fr}
+  .phases.three .phase + .phase{border-left:0;border-top:1px solid var(--hair)}}
+.pairs .more{align-self:flex-start;margin-top:12px}
+
+/* closing row: statement and evidence on the left, the action on the
+   container's right edge, both centred on one line */
+.endrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:center;margin-top:40px}
+.endrow-l{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.endrow-p{margin:0;color:var(--ash);font-size:15.5px;line-height:1.55;max-width:56ch}
+@media(max-width:700px){.endrow{grid-template-columns:1fr;gap:22px}.endrow .b{justify-self:start}}
+.entry{margin-top:20px}
+.ent{margin-top:20px}
+.h3-split{margin:0}
+
+/* verdict pills, as on the Trail feed: review keeps Cohen red,
+   clean takes Trail's green */
+:root{--clean:#3FCF8E;--clean-bg:rgba(63,207,142,.09);--clean-bd:rgba(63,207,142,.28)}
+.pill{display:inline-flex;align-items:center;gap:7px;font-family:var(--font);font-size:12px;font-weight:600;
+  letter-spacing:.05em;padding:6px 13px;border-radius:8px;border:1px solid;line-height:1.2}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.pill.review{color:#FF6B5E;background:rgba(255,45,31,.09);border-color:rgba(255,45,31,.32)}
+.pill.clean{color:var(--clean);background:var(--clean-bg);border-color:var(--clean-bd)}
+.pill.sm{font-size:11px;padding:4px 10px}
+.phase .pill{margin-bottom:18px}
+
+/* chart captions inside the engine cards keep their small caption size */
+.eng .chartcap{font-size:10px;letter-spacing:.16em;color:var(--ash3);margin:22px 0 8px;max-width:none;line-height:1.5}

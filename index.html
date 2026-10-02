@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cohen · behavioural package analysis</title>
-<meta name="description" content="Cohen installs npm packages in a disposable sandbox and records what they actually do: every file, connection and process, attributed to the code that caused it.">
+<title>Cohen · Behavioural analysis for npm packages</title>
+<meta name="description" content="Cohen installs npm packages in an isolated, disposable sandbox and records what they actually do: file access, network connections and spawned processes, each traced to the code responsible.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%2032%2032%27%3E%3Crect%20width=%2732%27%20height=%2732%27%20fill=%27%23000%27/%3E%3Crect%20x=%2711%27%20y=%2711%27%20width=%2710%27%20height=%2710%27%20fill=%27%23fff%27/%3E%3C/svg%3E">
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -15,7 +15,7 @@
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <!-- Product marks. One filled point per mark; currentColor only; no radius.
-       Use the -sm variants below 24px rendered — they are separate symbols,
+       Use the -sm variants below 24px rendered; they are separate symbols,
        not scaled copies. See MARKS.md. -->
   <symbol id="mantis" viewBox="0 0 32 32">
     <path d="M12 6 H6 V26 H12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="miter" stroke-linecap="butt"/>
@@ -57,20 +57,20 @@
               <a class="api" href="api.html#packages">API</a>
               <a class="rmain" href="mantis.html">
                 <span class="dn">Mantis</span>
-                <span class="dd">Reads a project and resolves the whole dependency tree.</span>
+                <span class="dd">Reads a project and resolves its full dependency tree.</span>
               </a>
             </div>
             <div class="row">
               <a class="api" href="api.html#observatory">API</a>
               <a class="rmain" href="observatory.html">
                 <span class="dn">Observatory</span>
-                <span class="dd">The threat intel record, sold as data.</span>
+                <span class="dd">The complete threat-intelligence record, delivered as data.</span>
               </a>
             </div>
             <div class="row">
               <a class="rmain" href="api.html#observatory">
                 <span class="dn">Feed API</span>
-                <span class="dd">Verdicts and indicators, straight into your workflow.</span>
+                <span class="dd">Verdicts and indicators, piped directly into your workflow.</span>
               </a>
             </div>
           </div>
@@ -84,22 +84,27 @@
 </div>
 
 <header class="hero">
-  <canvas id="radar" aria-hidden="true"></canvas>
+  <div class="horizon" aria-hidden="true">
+    <canvas id="radar"></canvas>
+    <svg class="hz-svg" viewBox="0 0 1440 900" preserveAspectRatio="xMaxYMid slice" focusable="false">
+      <line class="hz-sight" x1="0" y1="560" x2="880.5" y2="560"/>
+      <line class="hz-rest" x1="880.5" y1="560" x2="1440" y2="560"/>
+      <path class="hz-inner" d="M 824 1014 A 556 556 0 0 1 1936 1014"/>
+      <path class="hz-arc" d="M 705 1014 A 675 675 0 0 1 2055 1014"/>
+      <circle class="hz-dot" cx="880.5" cy="560" r="15"/>
+    </svg>
+  </div>
   <div class="w">
-    <p class="kicker">BEHAVIOURAL PACKAGE ANALYSIS</p>
-    <h1 class="title">Every package, watched while it runs</h1>
-    <p class="dek">Cohen installs npm packages in a disposable sandbox and records what they actually do: every file, connection and process, attributed to the code that caused it.</p>
+    <p class="kicker">NPM SUPPLY CHAIN SECURITY</p>
+    <h1 class="title">Know what a package does before it reaches production.</h1>
+    <p class="dek">Cohen installs every npm package in an isolated, disposable sandbox and records what it actually does: file access, network connections and spawned processes, each traced to the code responsible.</p>
     <div class="btns">
-      <a class="b f" href="https://trail.snappyfeet.org">Read the live feed</a>
+      <a class="b f" href="https://trail.snappyfeet.org">View the live feed</a>
       <a class="b g" href="pricing.html">Start free</a>
-      <a class="b g" href="api.html">Read the API docs</a>
+      <a class="b g" href="api.html">API docs</a>
     </div>
-   
   </div>
-  <div class="hud">
-    <span class="live"><b></b>SANDBOX ONLINE · SB V1.3</span>
-    <span id="hudpkg">OBSERVING</span>
-  </div>
+  
 </header>
 
 
@@ -108,19 +113,45 @@
 <!-- EVIDENCE -->
 <section class="s" id="evidence">
   <div class="w">
-    <p class="eyebrow">ONE FINDING, PLOTTED</p>
-    <h2 class="h2">Read one row at a time, nothing here is unusual.</h2>
-    <p class="lede">Packages read files. Build tools run gzip. Installers write to temporary directories. What makes this a finding is the order the actions happened in, visible only while the code is running.</p>
+    <p class="eyebrow">ANATOMY OF A FINDING</p>
+    <div class="split">
+      <h2 class="h2">Every step is ordinary. The sequence is not.</h2>
+      <p class="lede"><code>polymarket-stake-mathss@3.5.2</code> is two kilobytes of readable JavaScript with a single <code>postinstall</code> hook. No obfuscation, no packing, nothing a reviewer would catch by opening the tarball. This is what the sandbox recorded while it ran.</p>
+    </div>
     <div class="plotwrap">
       <div class="plothead">
         <span>polymarket-stake-mathss@3.5.2 · 2 KB · ONE POSTINSTALL HOOK</span>
         <span class="rv">REVIEW</span>
       </div>
       <div class="plotscroll"><svg id="plot" viewBox="0 0 1000 186" role="img" aria-label="Timeline of file, process and network activity over 10.5 seconds"></svg></div>
-      <div class="pfoot">Nothing was taken. The container holds nothing real and is destroyed moments later, so what the package collected was a set of files that exist nowhere else.</div>
+      <div class="pfoot">Nothing was taken. The container holds nothing real and is destroyed moments later; everything the package collected exists nowhere else.</div>
     </div>
-    <p class="undercap">Two kilobytes of readable JavaScript. No obfuscation, no packing, nothing a
-      reviewer would catch by opening the tarball. The sequence is the signal.</p>
+    <div class="trows" aria-label="What the sandbox recorded">
+      <div class="r">
+        <div class="rl">Accessed by package</div>
+        <div class="rv">
+          <span class="t hot">/root/.ssh/id_rsa</span>
+          <span class="t hot">/root/.aws/credentials</span>
+          <span class="t hot">/root/.config/gh/hosts.yml</span>
+          <span class="t hot">/root/.docker/config.json</span>
+          <span class="t hot">/root/.electrum/wallets/default_wallet</span>
+        </div>
+      </div>
+      <div class="r">
+        <div class="rl">Archives written</div>
+        <div class="rv"><span class="t hot">ssh.gz</span><span class="t hot">aws.gz</span><span class="t hot">token.gz</span></div>
+      </div>
+      <div class="r">
+        <div class="rl">Executed by package</div>
+        <div class="rv"><span class="t hot">/usr/bin/tar</span><span class="t hot">/usr/bin/gzip</span></div>
+      </div>
+      <div class="r">
+        <div class="rl">Package connections</div>
+        <div class="rv"><span class="t hot">216.198.79.1:443</span><span class="t hot">64.29.17.1:443</span></div>
+      </div>
+    </div>
+
+    
   </div>
 </section>
 
@@ -128,37 +159,33 @@
 <section class="s rule" id="instrumentation">
   <div class="w">
     <p class="eyebrow">INSTRUMENTATION</p>
-    <h2 class="h2">Two phases, traced apart, then merged</h2>
-    <p class="lede">A payload that only fires on <code>require()</code> is invisible to anything that
-      watches the install alone. So the run is split: the install is traced, then the package is loaded
-      the way a consumer would load it and traced again, as a separate record.</p>
-    <div class="two">
-      <div class="eng">
-        <p class="cap">PHASE 01 · INSTALL</p>
-        <h3>Scripts enabled, on purpose</h3>
-        <p><code>preinstall</code>, <code>install</code> and <code>postinstall</code> all run, under full
-          system call tracing, inside a container that starts from an identical pristine image every time.</p>
-        <p>Disabling lifecycle scripts is the safe way to install a package and the useless way to
-          study one. The hook is where most of them put the payload.</p>
-        <div class="seal">Emits the install-phase record</div>
+    <div class="split">
+      <h2 class="h2">Some payloads wait to be called.</h2>
+      <p class="lede">So every package runs twice: once as it installs, once as it is imported. Two records, weighed equally.</p>
+    </div>
+
+    <div class="phases">
+      <div class="phase">
+        <p class="phase-k">01 · INSTALL</p>
+        <h3>Scripts left on.</h3>
+        <p>Every lifecycle hook runs, traced. It is where most payloads live.</p>
+        <div class="phase-t"><span class="t">install_phase</span></div>
       </div>
-      <div class="eng">
-        <p class="cap">PHASE 02 · IMPORT</p>
-        <h3>Loaded, not just unpacked</h3>
-        <p>The entry point is resolved and imported under the same tracing. Where a package declares no
-          JavaScript entry, the run is marked <code>no_js_entry</code> rather than silently scored as quiet.</p>
-        <p>Import-phase findings are unioned with install-phase findings, not ranked below them. A
-          credential file opened during install is no less interesting than one opened on import.</p>
-        <div class="seal">Emits the import-phase record</div>
+      <div class="phase">
+        <p class="phase-k">02 · IMPORT</p>
+        <h3>Then loaded.</h3>
+        <p>Loaded the way your code would load it. Nothing to load is still a result.</p>
+        <div class="phase-t"><span class="t">import_phase</span></div>
       </div>
     </div>
-    <div class="pairwrap">
-      <p class="chartcap">CORRELATED EVENT PAIRS · ONE RUN</p>
-      <svg id="pairs" viewBox="0 0 420 66" role="img" aria-label="Diagram of paired events joined into findings"></svg>
+
+    <div class="split split-close">
+      <p class="close-k">One event is noise.<br>Two, in order, is a finding.</p>
+      <div class="pairs">
+        <div class="pair"><span class="t">secret read</span><span class="arr">→</span><span class="t hot">archive named after it</span></div>
+        <div class="pair"><span class="t">chmod +x</span><span class="arr">→</span><span class="t hot">execve, same path</span></div>
+      </div>
     </div>
-    <p class="lede" style="margin-top:8px">Events are correlated as well as counted. A file made
-      executable and then run, or a secret read and then compressed into an archive named after it,
-      means something neither event means alone. Those joins are what a finding is made of.</p>
   </div>
 </section>
 
@@ -166,8 +193,10 @@
 <section class="s rule" id="attribution">
   <div class="w">
     <p class="eyebrow">ATTRIBUTION</p>
-    <h2 class="h2">An install is noisy. Only some of the noise is the package.</h2>
-    <p class="lede">Every recorded action is tied back to the process that produced it. npm reads your <code>.npmrc</code> on every install; that is npm doing its job, not a finding.</p>
+    <div class="split">
+      <h2 class="h2">Every action has an author.</h2>
+      <p class="lede">npm reading your <code>.npmrc</code> is npm. A <code>postinstall</code> reading your SSH key is not.</p>
+    </div>
     <div class="tree">
       <div class="th"><span>PROCESS TREE · SINGLE RUN</span><span>PID</span></div>
 <pre><span class="n">npm install                                            <span class="tag">1</span>
@@ -185,67 +214,55 @@
     ├── write     /tmp/.x/ssh.gz
     └── <span class="h">connect   216.198.79.1:443</span></span></pre>
       <div class="legend">
-        <span><i></i>npm and build tooling, expected, discarded</span>
-        <span><i class="a"></i>package code, kept, then correlated</span>
+        <span><i></i>npm and build tooling: expected, discarded</span>
+        <span><i class="a"></i>package code: kept, then correlated</span>
       </div>
     </div>
-    <p class="undercap">Attribution is what makes the difference between a feed of indicators and a
-      feed of facts. The IP above is not reported as "seen during install of X". It is reported with
-      the PID, the binary and the phase that opened it.</p>
+    <div class="split split-close">
+      <p class="close-k">An indicator says what was seen.<br>Attribution says who.</p>
+      <div class="pairs">
+        <div class="pair"><span class="t hot">216.198.79.1:443</span><span class="arr">←</span><span class="t">PID 31</span><span class="t">postinstall → node</span><span class="t">install_phase</span></div>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- DYNAMIC SIGNALS -->
 <section class="s rule" id="signals">
   <div class="w">
-    <p class="eyebrow">DYNAMIC ENGINE · OUTPUT</p>
-    <h2 class="h2 wide">Three groups of signal, every one attributed</h2>
-    <p class="lede">The dynamic engine sets the verdict. What it emits per phase is a flat record under
-      three headings. Empty is a result: a field with nothing in it is published as an empty list, not
-      omitted, so absence of a signal is a fact you can query on.</p>
+    <p class="eyebrow">DYNAMIC ENGINE</p>
+    <div class="split">
+      <h2 class="h2">Three questions, every run.</h2>
+      <p class="lede">Where did it call? What did it reach for? What did it leave behind? The answers set the verdict.</p>
+    </div>
 
-    <div class="term" style="margin-top:34px">
-      <div class="th"><span>dynamic · install_phase ∪ import_phase</span><span>REVIEW</span></div>
-<pre>{
-  <span class="k">"network"</span>: {
-    <span class="k">"package_connections"</span>:      [ <span class="hot">"216.198.79.1:443"</span>, <span class="hot">"64.29.17.1:443"</span> ],
-    <span class="k">"dns_lookups_non_npm"</span>:      [ <span class="hot">"a1b2c3.dnslog.cn"</span> ],
-    <span class="k">"exfil_services_contacted"</span>: [ <span class="hot">"webhook.site"</span> ]
-  },
-  <span class="k">"canaries"</span>: {
-    <span class="k">"canary_tokens_leaked"</span>:     [ <span class="hot">"AKIA…SEEDED"</span> ],
-    <span class="k">"accessed_by_package"</span>:      [ <span class="hot">"/root/.ssh/id_rsa"</span>, <span class="hot">"/root/.aws/credentials"</span> ],
-    <span class="k">"probed_but_absent"</span>:        [ <span class="hot">"/root/.config/gh/hosts.yml"</span> ],
-    <span class="k">"sensitive_file_access"</span>:    [ <span class="v">"/root/.npmrc"</span>, <span class="v">"/test/.npmrc"</span> ]
-  },
-  <span class="k">"filesystem"</span>: {
-    <span class="k">"dropped_and_executed"</span>:     [ <span class="hot">"…/dist/internal/calc-mapping.bin"</span> ],
-    <span class="k">"executed_by_package"</span>:      [ <span class="v">"/usr/bin/tar"</span>, <span class="v">"/usr/bin/gzip"</span> ],
-    <span class="k">"archives_written"</span>:         [ <span class="hot">"/tmp/.x/ssh.gz"</span>, <span class="hot">"/tmp/.x/aws.gz"</span> ],
-    <span class="k">"tmp_snooped"</span>:              [ ],
-    <span class="k">"recon_dirs_enumerated"</span>:    [ <span class="hot">"/root"</span>, <span class="hot">"/home"</span> ],
-    <span class="k">"package_files_read"</span>:       [ <span class="v">"/etc/ld.so.cache"</span>, <span class="v">"/usr/local/bin/node"</span> ]
-  },
-  <span class="k">"no_js_entry"</span>: <span class="v">false</span>
-}
-<span class="cm">// install_phase and import_phase are recorded separately, then unioned for display</span></pre>
-      <div class="legend">
-        <span><i class="a"></i>the value is itself the concern</span>
-        <span><i></i>context, kept for the baseline</span>
+    <div class="phases three">
+      <div class="phase">
+        <p class="phase-k">NETWORK</p>
+        <h3>Where it called.</h3>
+        <p>A hostname can be the payload.</p>
+        <div class="phase-t"><span class="t hot">216.198.79.1:443</span><span class="t hot">a1b2c3.dnslog.cn</span><span class="t hot">webhook.site</span></div>
+      </div>
+      <div class="phase">
+        <p class="phase-k">CANARIES</p>
+        <h3>What it reached for.</h3>
+        <p>The secrets are planted. If one leaves, it was sent.</p>
+        <div class="phase-t"><span class="t hot">AKIA…SEEDED</span><span class="t hot">/root/.ssh/id_rsa</span><span class="t">/root/.config/gh/hosts.yml</span></div>
+      </div>
+      <div class="phase">
+        <p class="phase-k">FILESYSTEM</p>
+        <h3>What it left behind.</h3>
+        <p>Written, then run. Neither half matters alone.</p>
+        <div class="phase-t"><span class="t hot">…/calc-mapping.bin</span><span class="t hot">/tmp/.x/ssh.gz</span><span class="t">/usr/bin/tar</span></div>
       </div>
     </div>
 
-    <div class="flags">
-      <div class="frow wide"><code>network.package_connections</code><p>Every socket the <b>package's own processes</b> opened, as <code>ip:port</code>. Connections made by npm to the registry are attributed to npm and never appear here.</p></div>
-      <div class="frow wide"><code>network.dns_lookups_non_npm</code><p>Resolutions to anything other than the registry. Held separately because exfiltration over DNS never opens a socket you would otherwise notice &mdash; the hostname <i>is</i> the payload.</p></div>
-      <div class="frow wide"><code>network.exfil_services_contacted</code><p>A matched set of out-of-band callback and paste services. A hit here is close to conclusive on its own, which is why it is not folded into the general connection list.</p></div>
-      <div class="frow wide"><code>canaries.canary_tokens_leaked</code><p>The container is seeded with fake credentials that exist nowhere else. If one leaves the sandbox, the package did not merely <i>read</i> a secret, it <b>sent</b> one. Nothing real is ever present to take.</p></div>
-      <div class="frow wide"><code>canaries.accessed_by_package</code><p>Credential paths the package opened: SSH keys, cloud credentials, wallet files, CI tokens. Separated from ordinary reads because the target set is deliberate.</p></div>
-      <div class="frow wide"><code>canaries.probed_but_absent</code><p>Paths it <b>looked for</b> and did not find. A package that stats a wallet directory it has no use for has told you its intent whether or not the file was there.</p></div>
-      <div class="frow wide"><code>filesystem.dropped_and_executed</code><p>A path written or made executable during the run and then passed to <code>execve</code>. The single highest-value correlation the engine produces: neither half is remarkable alone.</p></div>
-      <div class="frow wide"><code>filesystem.archives_written</code><p>Compressed output the package created. Named archives are recorded with the name intact, because attackers label their loot &mdash; <code>ssh.gz</code>, <code>aws.gz</code>, <code>token.gz</code>.</p></div>
-      <div class="frow wide"><code>filesystem.recon_dirs_enumerated</code><p>Directory walks over home and root that no build step needs. Set alongside <code>recon_dir_scan</code>, which flags the pattern rather than the paths.</p></div>
-      <div class="frow wide"><code>no_js_entry</code><p>True when there was no JavaScript entry point to import. Published explicitly so that "nothing ran" is never confused with "nothing happened".</p></div>
+    <div class="endrow">
+      <div class="endrow-l">
+        <p class="close-k">Silence is recorded too.</p>
+        <div class="pair"><span class="t">tmp_snooped: [ ]</span><span class="arr">→</span><span class="t">watched, nothing happened</span></div>
+      </div>
+      <a class="b g" href="method.html#record">Every field, explained</a>
     </div>
   </div>
 </section>
@@ -253,37 +270,38 @@
 <!-- STATIC -->
 <section class="s rule" id="static">
   <div class="w">
-    <p class="eyebrow">STATIC ENGINE · OUTPUT</p>
-    <h2 class="h2">Reads the tarball, sets nothing</h2>
-    <p class="lede">The published archive is examined without being run. Matches are split into two
-      populations that are deliberately never mixed: <b>threats</b>, which carry a severity and a
-      tactic, and <b>capabilities</b>, which carry neither because holding a capability is not an
-      accusation. Almost every real package spawns a process or reads a file.</p>
+    <p class="eyebrow">STATIC ENGINE</p>
+    <div class="split">
+      <h2 class="h2">Reads what shipped. Never decides.</h2>
+      <p class="lede">The tarball is examined without running a line. It adds context to the verdict, never the verdict itself.</p>
+    </div>
 
-    <div class="intel three">
-      <div class="icard">
-        <div class="n">T</div>
-        <h4><code>threat-*</code></h4>
-        <p>Severity <code>low</code> / <code>medium</code> / <code>high</code>, plus MITRE tactics. Reported with the file, the line and the matched substring.</p>
+    <div class="phases three">
+      <div class="phase">
+        <p class="phase-k">THREATS</p>
+        <h3>Scored.</h3>
+        <p>A severity, a tactic and the exact line.</p>
+        <div class="phase-t"><span class="t hot">threat-*</span><span class="t">high</span><span class="t">execution</span></div>
       </div>
-      <div class="icard">
-        <div class="n">C</div>
-        <h4><code>capability-*</code></h4>
-        <p>What the code is able to do: outbound network, process spawn, filesystem write-executable, delete. Context only, never scored.</p>
+      <div class="phase">
+        <p class="phase-k">CAPABILITIES</p>
+        <h3>Noted, never scored.</h3>
+        <p>Holding a capability is not an accusation.</p>
+        <div class="phase-t"><span class="t">capability-*</span><span class="t">network</span><span class="t">process spawn</span></div>
       </div>
-      <div class="icard">
-        <div class="n">H</div>
-        <h4>Per-file measures</h4>
-        <p>SHA-256 for every file in the archive, and a normalised Shannon entropy score for every file under the size cap.</p>
+      <div class="phase">
+        <p class="phase-k">EVERY FILE</p>
+        <h3>Measured.</h3>
+        <p>A hash and an entropy score, file by file.</p>
+        <div class="phase-t"><span class="t">SHA 256</span><span class="t">entropy</span></div>
       </div>
     </div>
 
-    <p class="undercap">Rule names are hierarchical, and families collapse only when two or more rules
-      share a stem. <code>threat-runtime-obfuscation-{general,base64exec,steganography}</code> gathers
-      into one node; <code>threat-runtime-environment-read</code>, which shares its stem with nothing,
-      stays at the top level rather than being dragged under a vaguer heading.</p>
-
-    <div class="entry" style="margin-top:30px">
+    <div class="split split-close">
+      <p class="close-k">A rule that cannot show its work is worth nothing.</p>
+      <p class="lede">So every match comes with the file, the line and the source around it. This one is a false positive, shown on purpose. It takes seconds to dismiss.</p>
+    </div>
+    <div class="entry">
       <div class="etop">
         <span class="ename">threat-process-download-exec</span>
         <span class="sev high">high</span>
@@ -296,52 +314,48 @@
 );</div>
       <div class="ematch">match <code>curl -L https://foundry.paradigm.xyz | bash</code></div>
     </div>
-    <p class="undercap">That one is a false positive, and it is shown here on purpose. The engine reports
-      the match, the file, the line and the surrounding source, so you can dismiss it in two seconds
-      instead of trusting a score you cannot inspect. A static rule that fires without showing its work
-      is worth nothing.</p>
 
-    <h3 class="h3">Entropy</h3>
-    <p class="lede">Shannon entropy over the 256 byte values, divided by eight, so the scale runs 0 to 1.
-      Source and text sit around 0.52 to 0.65. Compressed, encrypted or packed data sits near 1.
-      Anything at or above <b>0.94</b> is flagged &mdash; high-entropy content inside an otherwise
-      readable package is the shape a bundled binary makes.</p>
-
+    <div class="split split-close">
+      <h3 class="h3 h3-split">Entropy</h3>
+      <p class="lede">Text sits near 0.6. Packed or encrypted data sits near 1. Anything at or above <b>0.94</b> is flagged.</p>
+    </div>
     <div class="ent">
       <div class="enthead"><span>FILE</span><span>NORMALISED ENTROPY · 0 → 1</span></div>
       <div class="entrow hi">
-        <span class="ep">dist/internal/calc-mapping.bin</span>
+        <span class="efile">dist/internal/calc-mapping.bin</span>
         <span class="ebar"><i style="width:99.5%"></i></span>
         <span class="ev">0.995</span>
       </div>
       <div class="entrow">
-        <span class="ep">dist/index.mjs</span>
+        <span class="efile">dist/index.mjs</span>
         <span class="ebar"><i style="width:64.2%"></i></span>
         <span class="ev">0.642</span>
       </div>
       <div class="entrow">
-        <span class="ep">types/index.d.ts</span>
+        <span class="efile">types/index.d.ts</span>
         <span class="ebar"><i style="width:55.2%"></i></span>
         <span class="ev">0.552</span>
       </div>
       <div class="entrow">
-        <span class="ep">package.json</span>
+        <span class="efile">package.json</span>
         <span class="ebar"><i style="width:54.7%"></i></span>
         <span class="ev">0.547</span>
       </div>
       <div class="entrow">
-        <span class="ep">README.md</span>
+        <span class="efile">README.md</span>
         <span class="ebar"><i style="width:52.4%"></i></span>
         <span class="ev">0.524</span>
       </div>
-      <div class="entfoot">Files above the size cap are hashed but not measured. Those rows are published
-        with entropy <code>null</code> and rendered as <i>not measured</i>, because a missing measurement
-        and a low one are not the same claim.</div>
+      <div class="entfoot">Over the size cap means <i>not measured</i>. Missing is not the same as low.</div>
     </div>
-    <p class="undercap">The package above ships a 19 KB ELF binary at 0.995, loads it with
-      <code>fs.readFileSync</code>, <code>chmod 0755</code>s it and spawns it &mdash; and the dynamic
-      engine independently recorded that same path under <code>dropped_and_executed</code>. Two engines,
-      one story. That agreement is what a REVIEW is built on.</p>
+
+    <div class="endrow">
+      <div class="endrow-l">
+        <p class="close-k">Two engines, one story.</p>
+        <p class="endrow-p">That 0.995 file is a 19 KB binary. The dynamic engine watched it get dropped, made executable and run.</p>
+      </div>
+      <a class="b g" href="method.html#static-engine">How the static engine works</a>
+    </div>
   </div>
 </section>
 
@@ -349,31 +363,44 @@
 <section class="s rule" id="verdicts">
   <div class="w">
     <p class="eyebrow">READING THE FEED</p>
-    <h2 class="h2">Two verdicts, deliberately</h2>
-    <p class="lede">A third tier invites arguments about which shade something is instead of whether to look at it. Where a run was cut short, the result is review, because no coverage is not the same as nothing found.</p>
-    <div class="verd">
-      <div class="r"><div class="lab">REVIEW</div><p>Behaviour a human should look at. A lead, not a conviction.</p></div>
-      <div class="c"><div class="lab">CLEAN</div><p>Nothing notable observed. Behaviour outside the observation window is out of scope.</p></div>
+    <div class="split">
+      <h2 class="h2">Two verdicts. By design.</h2>
+      <p class="lede">A third would start arguments about shades. Two leaves one question: look, or move on.</p>
     </div>
-    <div class="flags">
-      <div class="frow"><code>Truncated runs</code><p>A run that times out or dies mid-trace resolves to <b>review</b>. The alternative is publishing a clean verdict backed by no observation, which is worse than publishing nothing.</p></div>
-      <div class="frow"><code>Delisted packages</code><p>If the registry pulls a version while it is being analysed, it drops off the feed entirely rather than lingering as a record of something nobody can install.</p></div>
-      <div class="frow"><code>Security placeholders</code><p>npm replaces a held version with a <code>0.0.1-security</code> stub. There is nothing left to install and nothing to observe, so these stay, filed under review and marked as placeholders.</p></div>
-      <div class="frow"><code>Clean is published too</code><p>Every analysed version carries a verdict, not only the bad ones. A feed of hits alone tells you nothing about the other 98 percent, and cannot be used as a baseline.</p></div>
+
+    <div class="phases">
+      <div class="phase">
+        <span class="pill review">REVIEW</span>
+        <h3>Worth a human's eyes.</h3>
+        <p>A lead, not a conviction.</p>
+      </div>
+      <div class="phase">
+        <span class="pill clean">CLEAN</span>
+        <h3>Nothing notable observed.</h3>
+        <p>Published too. A feed of only hits has no baseline.</p>
+      </div>
+    </div>
+
+    <div class="endrow">
+      <div class="endrow-l">
+        <p class="close-k">No coverage is not the same as nothing found.</p>
+        <div class="pair"><span class="t">run cut short</span><span class="arr">→</span><span class="pill review sm">REVIEW</span></div>
+      </div>
+      <a class="b g" href="method.html#verdicts">How verdicts are assigned</a>
     </div>
   </div>
 </section>
 
 <section class="cta rule">
   <div class="w">
-    <h2 class="h2" style="max-width:21ch">The feed is open. Read what the registry shipped today.</h2>
-    <p class="lede" style="margin:0 auto 30px;text-align:center">Every verdict on this page is public at
-      <a class="ext" href="https://trail.snappyfeet.org">trail.snappyfeet.org</a> &mdash; live, searchable,
-      and with the full record behind every row.</p>
+    <h2 class="h2" style="max-width:21ch">The feed is public. See what the registry shipped today.</h2>
+    <p class="lede" style="margin:0 auto 30px;text-align:center">Every verdict on this page is published at
+      <a class="ext" href="https://trail.snappyfeet.org">trail.snappyfeet.org</a>. It is live, searchable,
+      and carries the full record behind every row.</p>
     <div class="btns">
-      <a class="b f" href="https://trail.snappyfeet.org">Open the live feed</a>
+      <a class="b f" href="https://trail.snappyfeet.org">View the live feed</a>
       <a class="b g" href="pricing.html">Start free</a>
-      <a class="b g" href="mailto:contact@snappyfeet.org">Talk to us</a>
+      <a class="b g" href="contact.html">Talk to us</a>
     </div>
     <a class="mail" href="mailto:contact@snappyfeet.org">contact@snappyfeet.org</a>
   </div>
@@ -405,7 +432,7 @@
         <h5>ACCOUNT</h5>
         <ul>
           <li><a href="https://console.snappyfeet.org/">Console</a></li>
-          <li><a href="https://console.snappyfeet.org/">Get a key</a></li>
+          <li><a href="https://console.snappyfeet.org/">Get an API key</a></li>
           <li><a href="https://console.snappyfeet.org/demo">Redeem a demo code</a></li>
           <li><a href="https://console.snappyfeet.org/download">Download Mantis</a></li>
           <li><a href="api.html#quickstart">Quickstart</a></li>
@@ -423,11 +450,7 @@
         </ul>
       </div>
     </div>
-    <div class="fbar">
-      <span>COHEN · BEHAVIOURAL PACKAGE ANALYSIS</span>
-      <span>OBSERVATORY · THREAT INTEL</span>
-      <span>SB V1.3</span>
-    </div>
+    
   </div>
 </footer>
 
