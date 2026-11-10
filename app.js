@@ -12,7 +12,7 @@ const PRICING = {
   scanner: [
     { name:'FREE', who:'Gate an install without running anything.',
       monthly:0, annual:0, per:'forever', sub:'no card, no expiry',
-      cta:'Get a key', href:'https://console.snappyfeet.org/', feat:false, inherits:null,
+      cta:'Get a free key', href:'https://console.snappyfeet.org/', plan:'free', feat:false, inherits:null,
       items:[
         {t:'Binary verdicts: review or clean', key:true},
         {t:'Cohen database, OSV and npm security holdings'},
@@ -22,7 +22,7 @@ const PRICING = {
       ]},
     { name:'INDIVIDUAL', who:'For one developer who wants to see the trace, not just the answer.',
       monthly:14, annual:12, per:'per month', sub:'one user',
-      cta:'Start free', href:'https://console.snappyfeet.org/', feat:false, inherits:'Everything in Free, plus',
+      cta:'Choose Individual', href:'https://console.snappyfeet.org/', plan:'individual', feat:false, inherits:'Everything in Free, plus',
       items:[
         {t:'150 deep analyses per month', key:true},
         {t:'Mantis, with unlimited verdict lookups'},
@@ -33,7 +33,7 @@ const PRICING = {
       ]},
     { name:'TEAM', who:'For a team of up to ten, billed flat rather than per head.',
       monthly:349, annual:291, per:'per month', sub:'flat rate, up to 10 users',
-      cta:'Join the waitlist', href:'contact.html?topic=team', feat:true, inherits:'Everything in Individual, plus',
+      cta:'Choose Team', href:'https://console.snappyfeet.org/', plan:'team', feat:true, inherits:'Everything in Individual, plus',
       items:[
         {t:'2,000 deep analyses per month, pooled', key:true},
         {t:'Up to 10 users included', key:true},
@@ -46,7 +46,7 @@ const PRICING = {
       ]},
     { name:'ENTERPRISE', who:'For scale, compliance, or a sandbox that has to run inside your own network.',
       monthly:null, annual:null, per:'', sub:'negotiated volume',
-      cta:'Talk to us', href:'contact.html?topic=enterprise', feat:false, inherits:'Everything in Team, plus',
+      cta:'Choose Enterprise', href:'https://console.snappyfeet.org/', plan:'enterprise', feat:false, inherits:'Everything in Team, plus',
       items:[
         {t:'Self hosted sandbox or VPC deployment', key:true},
         {t:'More than 10 users, negotiated analysis volume', key:true},
@@ -153,6 +153,13 @@ if(dw&&dt&&dm){
 /* ── pricing render ── */
 let period='monthly';
 function money(n){ return '$'+n.toLocaleString('en-US'); }
+/* Scanner plans all go to the console sign in. ?plan= and ?period= tell the
+   console which plan was picked; it can ignore them until checkout exists. */
+function ctaHref(t){
+  const base = t.href || 'https://console.snappyfeet.org/';
+  if(!t.plan) return base;
+  return base + '?plan=' + encodeURIComponent(t.plan) + '&period=' + encodeURIComponent(period);
+}
 function renderTiers(target, list){
   target.innerHTML = list.map(t=>{
     const amount = t[period];
@@ -165,7 +172,7 @@ function renderTiers(target, list){
       <p class="who">${t.who}</p>
       ${priceBlock}
       <p class="price-sub">${sub}</p>
-      <a class="cta" href="${t.href || 'https://console.snappyfeet.org/'}">${t.cta}</a>
+      <a class="cta" href="${ctaHref(t)}">${t.cta}</a>
       ${t.inherits?`<p class="inh">${t.inherits}</p>`:''}
       <ul>${t.items.map(i=>`<li class="${i.key?'key':''}">${i.t}</li>`).join('')}</ul>
     </div>`;
