@@ -553,6 +553,12 @@ main.sub > section:first-of-type{border-top:0;padding-top:30px}
   .drop-card .dd{max-width:46ch}
 }
 
+/* contact form: honeypot off screen, Turnstile spacing, sending state */
+.cf-hp{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
+.cf-turnstile{margin:4px 0 2px}
+.cform-send[disabled]{opacity:.55;cursor:progress}
+.cform-err a.ext{color:#fff}
+
 .frow b{color:#fff;font-weight:600}
 /* inline code inside prose, as opposed to the left column of .frow */
 .lede code,.frow p code,.faq p code,.ep .d code,.post p code{color:var(--white);
@@ -802,3 +808,54 @@ main.sub > section:first-of-type{border-top:0;padding-top:30px}
 
 /* chart captions inside the engine cards keep their small caption size */
 .eng .chartcap{font-size:10px;letter-spacing:.16em;color:var(--ash3);margin:22px 0 8px;max-width:none;line-height:1.5}
+/* ── scan a project: GitHub link or Mantis ── */
+.scanopt .kicker{margin-bottom:22px}
+.so-title{margin:0;font-size:clamp(34px,4.6vw,60px);line-height:1.02;font-weight:600;letter-spacing:-.045em}
+.so-title span{color:#8A9099}
+.so-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:96px;margin-top:56px;position:relative}
+.so-card{position:relative;display:flex;flex-direction:column;gap:26px;padding:40px 44px;background:var(--panel);border:1px solid var(--hair);border-radius:36px;box-shadow:0 40px 120px rgba(0,0,0,.6);min-width:0}
+.so-head{display:flex;align-items:center;gap:16px}
+.so-head h3{margin:0;font-size:22px;font-weight:600;letter-spacing:-.02em}
+.so-tile{width:44px;height:44px;flex:none;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:#000;display:flex;align-items:center;justify-content:center;color:#C9CDD2}
+.so-or{position:absolute;left:-69px;top:50%;margin-top:-21px;width:42px;height:42px;border-radius:50%;background:#000;border:1px solid rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:#C9CDD2}
+.so-pill{display:flex;align-items:center;height:64px;padding:0 8px 0 26px;background:#000;border:1px solid rgba(255,255,255,.14);border-radius:999px;margin:0;transition:border-color .15s,box-shadow .15s}
+.so-pill:focus-within{border-color:rgba(255,255,255,.4);box-shadow:0 0 0 4px rgba(255,255,255,.05)}
+.so-pill.ok{border-color:rgba(255,255,255,.3)}
+.so-pill label{font-family:var(--mono);font-size:16px;color:#6E747D;flex:none}
+.so-pill input{flex:1;min-width:0;height:100%;background:transparent;border:0;outline:none;color:#fff;font-family:var(--mono);font-size:16px;padding:0}
+.so-pill input::placeholder{color:#5C626A}
+.so-go{flex:none;width:48px;height:48px;border-radius:50%;border:0;display:flex;align-items:center;justify-content:center;cursor:pointer;background:#fff;color:#000;transition:transform .15s,background-color .15s,color .15s}
+.so-go:hover{transform:translateX(2px)}
+.so-go[disabled]{background:rgba(255,255,255,.08);color:#6E747D;cursor:default;transform:none}
+.so-tries{display:flex;gap:8px;flex-wrap:wrap;margin-top:-12px}
+.so-tries button{font-family:var(--mono);font-size:12px;color:var(--ash);background:transparent;border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:0 12px;min-height:32px;cursor:pointer}
+.so-tries button:hover{color:#fff;border-color:rgba(255,255,255,.3)}
+.so-icons{display:flex;gap:10px;padding-top:24px;border-top:1px solid rgba(255,255,255,.07);margin-top:auto}
+.so-icons span{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:#8A9099}
+.so-icons span:hover{color:#fff;border-color:rgba(255,255,255,.3)}
+.so-cmd{display:flex;align-items:center;gap:12px;min-height:64px;padding:8px 8px 8px 26px;background:#000;border:1px solid rgba(255,255,255,.1);border-radius:999px;font-family:var(--mono);font-size:15px}
+.so-cl{display:flex;align-items:center;gap:12px;flex-wrap:wrap;min-width:0}
+.so-cmd .d{color:var(--alarm)}
+.so-cmd .m{display:none}
+.so-cmd .amp{color:var(--ash3)}
+.so-cpy{margin-left:auto;flex:none;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:transparent;color:var(--ash);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.so-cpy:hover{color:#fff;border-color:rgba(255,255,255,.3)}
+.so-dl{align-self:flex-start;display:inline-flex;align-items:center;gap:10px;height:46px;padding:0 22px;border-radius:999px;border:1px solid rgba(255,255,255,.2);color:#fff;text-decoration:none;font-size:14.5px;font-weight:500}
+.so-dl:hover{border-color:#fff}
+@media(max-width:860px){
+  .so-grid{grid-template-columns:minmax(0,1fr);gap:108px;margin-top:36px}
+  .so-card{padding:24px 20px 26px;border-radius:30px;gap:18px}
+  .so-head h3{font-size:20px}
+  .so-or{left:50%;top:-75px;margin:0 0 0 -21px;width:40px;height:40px}
+  .so-pill{height:58px;padding:0 6px 0 20px}
+  .so-pill label{font-size:15px}
+  .so-go,.so-cpy{width:46px;height:46px}
+  .so-tries{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:-6px -20px 0;padding:0 20px}
+  .so-tries::-webkit-scrollbar{display:none}
+  .so-tries button{flex:none;min-height:36px}
+  .so-cmd{border-radius:26px;padding-left:22px;font-size:14px}
+  .so-cl{flex-direction:column;align-items:flex-start;gap:8px}
+  .so-cmd .amp{display:none}
+  .so-cmd .m{display:inline}
+  .so-dl{align-self:stretch;justify-content:center;height:52px}
+}
