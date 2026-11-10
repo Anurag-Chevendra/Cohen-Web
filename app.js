@@ -414,36 +414,120 @@ if(tM&&tA){
 })();
 
 /* ── contact form ──
-   The site is static, so a send composes the message and opens the
-   visitor's email client, addressed to the team. To post to a form
-   service instead, replace the mailto block in send() with a fetch().
+   Posts to the cohen-contact Worker (source in _worker/contact), which emails
+   the team through Cloudflare Email Routing. If the Worker cannot be reached
+   the visitor gets the old fallback: a ready to send draft in their own mail
+   app, so a message is never lost.
    ?topic=enterprise | team | observatory | mantis | api preselects a box. */
+const CONTACT={
+  endpoint:'https://cohen-contact.REPLACE_WITH_YOUR_SUBDOMAIN.workers.dev/contact',
+  turnstileSiteKey:''   /* public Turnstile site key; empty disables the widget */
+};
 (function(){
   const f=document.getElementById('contactForm');
   if(!f) return;
   const TO='contact@snappyfeet.org';
+  const opened=Date.now();
   const box=f.querySelector('#cfTopics'),err=document.getElementById('cfErr');
+  const btn=f.querySelector('.cform-send');
   const map={team:'Team plan',enterprise:'Enterprise or self hosted sandbox',mantis:'Mantis',
     observatory:'Observatory threat intel',api:'Feed API'};
   const want=new URLSearchParams(location.search).get('topic');
   if(want&&map[want]){const c=f.querySelector(`input[value="${map[want]}"]`);if(c)c.checked=true}
   const topics=()=>[...f.querySelectorAll('input[name=topic]:checked')].map(c=>c.value);
+  const esc=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+  /* Turnstile, only when a site key is configured */
+  const ts=document.getElementById('cfTurnstile');
+  if(CONTACT.turnstileSiteKey&&ts){
+    ts.hidden=false;ts.setAttribute('data-sitekey',CONTACT.turnstileSiteKey);ts.setAttribute('data-theme','dark');
+    const sc=document.createElement('script');
+    sc.src='https://challenges.cloudflare.com/turnstile/v0/api.js';sc.async=true;sc.defer=true;
+    document.head.appendChild(sc);
+  }
+
   f.addEventListener('change',()=>{if(f.classList.contains('tried'))check()});
   function check(){
     const ok=f.checkValidity(),t=topics().length>0;
     box.classList.toggle('bad',!t);err.hidden=ok&&t;return ok&&t;
   }
-  f.addEventListener('submit',e=>{
-    e.preventDefault();f.classList.add('tried');
-    if(!check()){const bad=f.querySelector(':invalid')||box;bad.focus&&bad.focus();
-      if(bad===box)box.querySelector('input').focus();return}
-    const v=n=>f.elements[n].value.trim();
+  function showErr(msg){err.textContent=msg;err.hidden=false}
+  function mailtoHref(v){
     const subject=`${topics()[0]} · ${v('company')}`;
     const body=[`Name: ${v('first')} ${v('last')}`,`Email: ${v('email')}`,`Company: ${v('company')}`,
       `Company size: ${v('size')}`,`Job title: ${v('role')}`,`Interested in: ${topics().join(', ')}`,'',v('message')].join('\n');
-    location.href=`mailto:${TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    f.outerHTML=`<div class="cform-done" role="status"><h2>Your message is ready to send</h2>
-      <p>Your email client should have opened with everything filled in. If it didn't, write to
-      <a class="ext" href="mailto:${TO}">${TO}</a> and we'll pick it up from there.</p></div>`;
+    return `mailto:${TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  }
+  f.addEventListener('submit',async e=>{
+    e.preventDefault();f.classList.add('tried');
+    err.textContent='Please complete the highlighted fields.';
+    if(!check()){const bad=f.querySelector(':invalid')||box;bad.focus&&bad.focus();
+      if(bad===box)box.querySelector('input').focus();return}
+    const v=n=>f.elements[n].value.trim();
+    const payload={first:v('first'),last:v('last'),email:v('email'),company:v('company'),
+      size:v('size'),role:v('role'),topics:topics(),message:v('message'),
+      website:f.elements['website']?f.elements['website'].value:'',elapsed_ms:Date.now()-opened};
+    if(CONTACT.turnstileSiteKey){
+      const tok=f.querySelector('[name="cf-turnstile-response"]');
+      if(!tok||!tok.value){showErr('Please complete the verification check above the button.');return}
+      payload.turnstile=tok.value;
+    }
+    btn.disabled=true;const label=btn.textContent;btn.textContent='Sending…';
+    let res=null,data={};
+    try{
+      res=await fetch(CONTACT.endpoint,{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(payload),mode:'cors',credentials:'omit'});
+      data=await res.json().catch(()=>({}));
+    }catch(_){res=null}
+    if(res&&res.ok&&data.ok){
+      f.outerHTML=`<div class="cform-done" role="status"><h2>Message sent</h2>
+        <p>Thanks, ${esc(v('first'))}. It's with the team now, and we'll reply to
+        ${esc(v('email'))}. For anything urgent, write to <a class="ext" href="mailto:${TO}">${TO}</a>.</p></div>`;
+      return;
+    }
+    btn.disabled=false;btn.textContent=label;
+    if(res&&res.status>=400&&res.status<500&&data.message){
+      showErr(data.message);
+      if(window.turnstile&&CONTACT.turnstileSiteKey) try{window.turnstile.reset()}catch(_){}
+      return;
+    }
+    /* network or server failure: hand over a draft instead of losing it */
+    err.hidden=false;
+    err.innerHTML=`We couldn't send that just now. <a class="ext" href="${mailtoHref(v)}">Open it as an email instead</a>, or write to <a class="ext" href="mailto:${TO}">${TO}</a>.`;
+  });
+})();
+/* ══════════════════════════════════════════════════════════════
+   SCAN A PROJECT: GitHub link → console, Mantis copy button.
+   Nothing here talks to the console; the form is a plain link.
+   ══════════════════════════════════════════════════════════════ */
+(function () {
+  const form = document.getElementById('so-form');
+  if (!form) return;
+  const input = document.getElementById('so-repo'), go = document.getElementById('so-go');
+  const clean = (v) => v.trim()
+    .replace(/^(?:https?:\/\/)?(?:www\.)?github\.com\//i, '')
+    .split(/[?#]/)[0].split('/').slice(0, 2).join('/').replace(/\.git$/i, '');
+  const valid = (v) => /^[A-Za-z0-9][A-Za-z0-9-]{0,38}\/[A-Za-z0-9._-]{1,100}$/.test(clean(v));
+  const sync = () => {
+    const pre = /^\s*(?:https?:\/\/)?(?:www\.)?github\.com\//i;
+    if (pre.test(input.value)) input.value = input.value.replace(pre, '');
+    const ok = valid(input.value); go.disabled = !ok; form.classList.toggle('ok', ok);
+  };
+  input.addEventListener('input', sync); sync();
+  document.querySelectorAll('[data-try]').forEach((b) => b.addEventListener('click', () => {
+    input.value = b.getAttribute('data-try'); sync(); input.focus();
+  }));
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!valid(input.value)) return;
+    location.href = form.action + '?repo=' + encodeURIComponent(clean(input.value)).replace('%2F', '/');
+  });
+  const cpy = document.getElementById('so-cpy');
+  if (cpy) cpy.addEventListener('click', () => {
+    const was = cpy.innerHTML;
+    navigator.clipboard.writeText('mantis login && mantis scan').then(() => {
+      cpy.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+      setTimeout(() => { cpy.innerHTML = was; }, 1600);
+    });
   });
 })();
