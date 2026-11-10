@@ -342,18 +342,18 @@ code{font-family:var(--mono);font-size:.9em}
 .toggle button.on{background:#fff;color:#000;font-weight:600}
 .toggle .save{color:var(--alarm);padding-left:4px}
 
-.tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hair);
-  border:1px solid var(--hair);margin-top:32px;border-radius:3px;overflow:hidden}
+.tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px}
 @media(max-width:1050px){.tiers{grid-template-columns:1fr 1fr}}
 @media(max-width:640px){.tiers{grid-template-columns:1fr}}
-.tier{background:var(--black);padding:26px 24px;display:flex;flex-direction:column;
-  position:relative;transition:background .18s}
+.tier{background:var(--deep);padding:28px 26px;display:flex;flex-direction:column;
+  position:relative;border:1px solid var(--hair);border-radius:24px;overflow:hidden;
+  transition:background .18s,border-color .18s,transform .18s}
 /* the accent rule lives on every card and is only drawn when highlighted */
 .tier::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;background:var(--alarm);
   opacity:0;transition:opacity .2s}
 .tier .tn{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--ash2);margin:0 0 6px}
 /* resting state: the featured tier carries the highlight */
-.tier.feat{background:var(--panel)}
+.tier.feat{background:var(--panel);border-color:rgba(255,45,31,.35)}
 .tier.feat::before{opacity:1}
 .tier.feat .tn{color:var(--alarm)}
 .tier .who{color:var(--ash);font-size:13.5px;margin:0 0 24px;min-height:40px;line-height:1.45}
@@ -383,14 +383,14 @@ code{font-family:var(--mono);font-size:.9em}
    ══════════════════════════════════════════════════════════════ */
 @media (hover:hover) and (pointer:fine){
   /* pointer is somewhere in the group: all cards go neutral */
-  .tiers:hover .tier{background:var(--black)}
+  .tiers:hover .tier{background:var(--deep);border-color:var(--hair)}
   .tiers:hover .tier::before{opacity:0}
   .tiers:hover .tier .tn{color:var(--ash2)}
   .tiers:hover .tier .cta{background:none;color:#fff;font-weight:400;border-color:var(--hair2)}
   .tiers:hover .tier .cta:hover{border-color:#fff}
 
   /* except the one under it, which takes the highlight */
-  .tiers:hover .tier:hover{background:var(--panel)}
+  .tiers:hover .tier:hover{background:var(--panel);border-color:rgba(255,45,31,.35)}
   .tiers:hover .tier:hover::before{opacity:1}
   .tiers:hover .tier:hover .tn{color:var(--alarm)}
   .tiers:hover .tier:hover .cta{background:#fff;color:#000;font-weight:600;border-color:#fff}
