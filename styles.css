@@ -510,24 +510,30 @@ main.sub > section:first-of-type{border-top:0;padding-top:30px}
   transition:opacity .16s,transform .16s}
 .drop-m.open{opacity:1;transform:none;pointer-events:auto}
 
-.drop-card{background:var(--panel);border:1px solid var(--hair2);border-radius:3px;
-  overflow:hidden;box-shadow:0 26px 64px rgba(0,0,0,.72)}
-.drop-h{margin:0;padding:11px 16px;border-bottom:1px solid var(--hair);
+/* card: 10px corners, rows sit inset as 6px tiles so the corners nest.
+   Hairlines, mono eyebrow and the red hover tick stay as the site uses them. */
+.drop-card{background:var(--panel);border:1px solid var(--hair2);border-radius:10px;
+  overflow:hidden;padding:0 6px 6px;
+  box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 26px 64px rgba(0,0,0,.72)}
+.drop-h{margin:0 -6px 6px;padding:12px 18px 11px;border-bottom:1px solid var(--hair);
   font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--ash3)}
-.drop-card .row{position:relative;border-bottom:1px solid var(--hair);
-  transition:background .15s}
-.drop-card .row:last-child{border-bottom:0}
-.drop-card .row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;
-  background:var(--alarm);transform:scaleY(0);transition:transform .18s}
-.drop-card .row:hover{background:var(--panel2)}
+.drop-card .row{position:relative;border:1px solid transparent;border-radius:6px;
+  transition:background .15s,border-color .15s}
+.drop-card .row+.row{margin-top:2px}
+.drop-card .row::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:2px;
+  border-radius:2px;background:var(--alarm);transform:scaleY(0);transition:transform .18s}
+.drop-card .row:hover{background:var(--panel2);border-color:var(--hair)}
 .drop-card .row:hover::before{transform:scaleY(1)}
-.drop-card .rmain{display:block;padding:13px 58px 14px 16px;text-decoration:none}
+.drop-card .rmain{display:block;padding:11px 64px 12px 12px;text-decoration:none;border-radius:6px}
 .drop-card .dn{display:block;font-size:14px;color:var(--white);font-weight:500;letter-spacing:-.01em}
-.drop-card .dd{display:block;font-size:12px;color:var(--ash2);line-height:1.45;margin-top:4px}
-.drop-card .api{float:right;margin:15px 16px 0 0;font-family:var(--mono);
-  font-size:9.5px;letter-spacing:.16em;color:var(--ash3);text-decoration:none;
-  transition:color .15s}
-.drop-card .api:hover{color:var(--white)}
+.drop-card .dd{display:block;font-size:12px;color:var(--ash2);line-height:1.45;margin-top:3px}
+/* API: a small outlined chip on the title line, not a floating label.
+   display and margin reset the page level .api section grid. */
+.drop-card .api{position:absolute;top:11px;right:10px;z-index:1;display:block;margin:0;font-family:var(--mono);
+  font-size:9.5px;line-height:1;letter-spacing:.14em;color:var(--ash2);text-decoration:none;
+  padding:4px 7px 4px 8px;border:1px solid var(--hair2);border-radius:4px;
+  transition:color .15s,border-color .15s,background .15s}
+.drop-card .api:hover{color:var(--white);border-color:rgba(255,255,255,.32);background:rgba(255,255,255,.04)}
 
 @media(max-width:960px){
   .drop{width:100%}
@@ -536,13 +542,14 @@ main.sub > section:first-of-type{border-top:0;padding-top:30px}
   .drop-t::after,.drop-t.here::before{display:none}
   .drop-m{position:static;width:auto;padding:0;opacity:1;transform:none;pointer-events:auto}
   .drop-card{background:var(--deep);border:0;border-bottom:1px solid var(--hair);
-    border-radius:0;box-shadow:none}
-  .drop-h{padding:12px 24px}
+    border-radius:0;box-shadow:none;padding:0 0 6px}
+  .drop-h{padding:12px 24px;margin:0 0 6px}
+  .drop-card .row{margin:0 12px}
   /* the stacked menu styles .nav-links a as a full width row. Undo that
      inside the panel, then restate the panel's own spacing. */
   .drop-m a{padding:0;font-size:inherit;border-bottom:0}
-  .drop-card .rmain{display:block;padding:14px 62px 14px 24px}
-  .drop-card .api{margin:16px 24px 0 0;padding:0;border-bottom:0}
+  .drop-card .rmain{display:block;padding:12px 66px 12px 12px}
+  .drop-card .api{top:12px;right:10px;padding:4px 7px 4px 8px;border:1px solid var(--hair2)}
   .drop-card .dd{max-width:46ch}
 }
 
