@@ -150,11 +150,15 @@
           <textarea id="cfMsg" name="message" rows="5" required placeholder="Volume, deployment requirements, timelines, anything that helps us prepare."></textarea>
         </div>
 
+        <!-- honeypot: hidden from people and screen readers; bots fill it -->
+        <div class="cf-hp" aria-hidden="true"><label for="cfWebsite">Website</label><input id="cfWebsite" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+        <div class="cf-turnstile" id="cfTurnstile" hidden></div>
+
         <p class="cform-err" id="cfErr" role="alert" hidden>Please complete the highlighted fields.</p>
 
         <div class="cform-foot">
           <button class="b f cform-send" type="submit">Send message</button>
-          <p class="cform-note">This opens your email client with the message ready to send. See our <a href="privacy.html">privacy policy</a>.</p>
+          <p class="cform-note">Your message goes straight to the team. We use it only to reply. See our <a href="privacy.html">privacy policy</a>.</p>
         </div>
       </form>
 
@@ -189,7 +193,7 @@
           <li><a href="https://console.snappyfeet.org/">Console</a></li>
           <li><a href="https://console.snappyfeet.org/">Get an API key</a></li>
           <li><a href="https://console.snappyfeet.org/demo">Redeem a demo code</a></li>
-          <li><a href="https://console.snappyfeet.org/download">Download Mantis</a></li>
+          <li><a href="https://github.com/Anurag-Chevendra/Mantis">Download Mantis</a></li>
           <li><a href="api.html#quickstart">Quickstart</a></li>
         </ul>
       </div>
@@ -197,7 +201,6 @@
         <h5>MORE</h5>
         <ul>
           <li><a href="method.html">How it works</a></li>
-          <li><a href="blog.html">Blog</a></li>
           <li><a href="pricing.html#faq">FAQ</a></li>
           <li><a href="privacy.html">Privacy</a></li>
           <li><a href="terms.html">Terms</a></li>

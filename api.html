@@ -316,12 +316,20 @@ Authorization: cohen_live_1WbwMTf2vx0t2NUWuZYSS3oQP26mU4JL...</pre>
 <div class="sig">
   <span class="verb post">POST</span>
   <code>/api/package/npm</code>
-  <span class="tag paid">queue scope</span>
+  <span class="tag free">read scope</span>
+  <span class="tag paid">queue scope to queue</span>
 </div>
 <p>
   Send a whole dependency tree in one call. The response splits it into what is
   already known and what had to be queued, so you can act on the known part
   immediately. This is what Mantis uses.
+</p>
+<p>
+  Any key can check a tree with <code>queue_unknown: false</code>. On Free, each
+  package in the request counts as one lookup, charged all at once and only when
+  the whole tree fits in what is left today; otherwise nothing is charged and the
+  request returns <code>429 daily_cap</code>. Queueing unknown versions needs the
+  <code>queue</code> scope.
 </p>
 
 <div class="term">
@@ -353,7 +361,7 @@ Authorization: cohen_live_1WbwMTf2vx0t2NUWuZYSS3oQP26mU4JL...</pre>
 <thead><tr><th>Field or header</th><th>Effect</th></tr></thead>
 <tbody>
 <tr><td>versions[]</td><td>Up to 5,000 per request, as <code>name@version</code>.</td></tr>
-<tr><td>queue_unknown</td><td><code>false</code> gives a pure read. You are told what is unknown and charged nothing.</td></tr>
+<tr><td>queue_unknown</td><td><code>false</code> gives a pure read. You are told what is unknown and no analysis is charged. Free keys must send <code>false</code>.</td></tr>
 <tr><td>skip_private</td><td>Names that do not resolve on the public registry are counted as skipped and never leave your side of the wire.</td></tr>
 <tr><td>Idempotency&#8209;Key</td><td>A retried request reuses the original reservation instead of charging twice.</td></tr>
 <tr><td>X&#8209;Project</td><td>Labels the run in your console history.</td></tr>
@@ -601,7 +609,7 @@ Authorization: cohen_live_1WbwMTf2vx0t2NUWuZYSS3oQP26mU4JL...</pre>
           <li><a href="https://console.snappyfeet.org/">Console</a></li>
           <li><a href="https://console.snappyfeet.org/">Get a key</a></li>
           <li><a href="https://console.snappyfeet.org/demo">Redeem a demo code</a></li>
-          <li><a href="https://console.snappyfeet.org/download">Download Mantis</a></li>
+          <li><a href="https://github.com/Anurag-Chevendra/Mantis">Download Mantis</a></li>
           <li><a href="api.html#quickstart">Quickstart</a></li>
         </ul>
       </div>
@@ -609,7 +617,6 @@ Authorization: cohen_live_1WbwMTf2vx0t2NUWuZYSS3oQP26mU4JL...</pre>
         <h5>MORE</h5>
         <ul>
           <li><a href="method.html">How it works</a></li>
-          <li><a href="blog.html">Blog</a></li>
           <li><a href="pricing.html#faq">FAQ</a></li>
           <li><a href="privacy.html">Privacy</a></li>
           <li><a href="terms.html">Terms</a></li>
