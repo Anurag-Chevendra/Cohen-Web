@@ -183,7 +183,7 @@ code{font-family:var(--mono);font-size:.9em}
    An inherited round linecap from an icon library would break them. */
 .plock svg,.mark svg{stroke-linecap:butt;stroke-linejoin:miter}
 .plock .pn{font-family:var(--mono);font-size:23px;font-weight:600;letter-spacing:-.02em;line-height:1}
-.plock .by{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--ash3);
+.plock .by{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--ash);
   padding-left:13px;border-left:1px solid var(--hair);align-self:stretch;display:flex;align-items:center}
 @media(max-width:560px){.plock .by{display:none}}
 .deliv{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
