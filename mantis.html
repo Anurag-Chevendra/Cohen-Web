@@ -4,9 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mantis · open source npm dependency collector</title>
-<meta name="description" content="Mantis is an open source binary that reads a project directory, resolves every npm package you actually depend on, and checks each one against the Cohen behavioural database.">
+<meta name="description" content="Mantis is an open source CLI that reads your lockfiles, lists every npm package version you actually install, and checks each one against Cohen. It never installs or runs anything.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%2032%2032%27%3E%3Crect%20width=%2732%27%20height=%2732%27%20fill=%27%23000%27/%3E%3Cg%20fill=%27none%27%20stroke=%27%23fff%27%20stroke-width=%273.2%27%20stroke-linejoin=%27miter%27%20stroke-linecap=%27butt%27%3E%3Cpath%20d=%27M12.5%205.6%20H5.6%20V26.4%20H12.5%27/%3E%3Cpath%20d=%27M19.5%205.6%20H26.4%20V26.4%20H19.5%27/%3E%3C/g%3E%3Ccircle%20cx=%2716%27%20cy=%2716%27%20r=%273.2%27%20fill=%27%23fff%27/%3E%3C/svg%3E">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="mantis.css">
 </head>
 <body>
 
@@ -85,204 +86,151 @@
 
 <main id="main" class="sub">
 
-<!-- 1 · PRODUCT LOCKUP -->
-<section class="s rule" id="mantis">
-  <div class="w">
-   <div class="prod">
-    <p class="eyebrow">OPEN SOURCE COLLECTOR</p>
-    <div class="plock">
-      <svg aria-hidden="true"><use href="#mantis"/></svg>
-      <span class="pn">Mantis</span>
-      <span class="by">BY COHEN</span>
-    </div>
-    <h2 class="h2 wide">The collector, as its own product</h2>
-    <p class="lede">Mantis is a single binary you run inside a project. Give it a path and a
-      manifest and it resolves every package you actually pull in, checks each one against the
-      Cohen database, then hands whatever is unknown to the sandbox.</p>
-    <p class="lede">It reads, and only reads. It never installs, never triggers a lifecycle
-      script, and never runs anything it finds. It is open source, and it ships without a
-      scanner subscription.</p>
-    <div class="intel">
-      <div class="icard">
-        <div class="n">1</div>
-        <h4>One binary</h4>
-        <p>Static, with no Node runtime and nothing to install into the project it inspects.</p>
+<!-- 1 · HERO + DEPENDENCY GRAPH -->
+<section class="s" id="mantis">
+  <div class="w mt-hero">
+    <div class="mt-copy">
+      <div class="plock">
+        <svg aria-hidden="true"><use href="#mantis"/></svg>
+        <span class="pn">Mantis</span>
+        <span class="by">OPEN SOURCE COLLECTOR BY COHEN</span>
       </div>
-      <div class="icard">
-        <div class="n">&Sigma;</div>
-        <h4>The whole tree</h4>
-        <p>Direct, transitive, and every version actually on disk. Read from the lockfile, not the manifest.</p>
+      <h1 class="mt-h1">Every package you installed, not just the ones you declared.</h1>
+      <p class="lede">Mantis reads your lockfiles, lists every npm package version they pin, and checks
+        each one against Cohen. Anything nobody has seen yet goes to the sandbox. It never installs,
+        builds or runs a thing.</p>
+      <div class="mt-legend" aria-label="Graph legend">
+        <span><i style="background:var(--alarm)"></i>review</span>
+        <span><i style="background:#EDEDED"></i>queued</span>
+        <span><i style="background:var(--clean)"></i>clean</span>
+        <span><i style="background:#5A5A60"></i>not checked</span>
       </div>
-      <div class="icard">
-        <div class="n">&rarr;</div>
-        <h4>Names only</h4>
-        <p>It sends name, version and the integrity hash already in your lockfile. No source, no paths, no environment.</p>
-      </div>
-      <div class="icard">
-        <div class="n">&#9166;</div>
-        <h4>Exit codes</h4>
-        <p>A line per package, or the whole tree as JSON. Returns non zero when something needs a human.</p>
+      <div class="btns">
+        <a class="b r" href="https://github.com/Anurag-Chevendra/mantis/releases">Get Mantis on GitHub</a>
+        <a class="b g" href="https://github.com/Anurag-Chevendra/Mantis">Read the source &rarr;</a>
       </div>
     </div>
-    <div class="deliv" aria-label="Platforms and formats">
-      <span>MIT</span><span>RUST</span><span>DARWIN</span><span>LINUX</span>
-      <span>WINDOWS</span><span>JSON OUTPUT</span><span>NO TELEMETRY</span>
-    </div>
-    <div class="prodfoot">
-      <span class="status"><b></b>PRE RELEASE &middot; NOT YET DOWNLOADABLE</span>
-      <a class="b g" href="https://github.com/">Read the source</a>
-      <a class="b g" href="mailto:contact@snappyfeet.org?subject=Mantis">Tell me when it ships</a>
-    </div>
-   </div>
-  </div>
-</section>
 
-<!-- 2 · HOW IT WORKS -->
-<section class="s rule" id="mantis-how">
-  <div class="w">
-    <p class="eyebrow">HOW IT WORKS</p>
-    <h2 class="h2">What is actually installed in here?</h2>
-    <p class="lede">A manifest lists what you asked for. It does not list what arrived. Mantis
-      walks the whole tree, including everything your dependencies brought with them, and gives
-      each package a name, a version and a verdict.</p>
-    <div class="spine">
-      <div class="spine-line"></div>
-      <div class="rail">
-        <div class="node"><div class="i">01</div><h3>Point</h3><p>You give it a project path. It locates the manifest and the lockfile itself.</p></div>
-        <div class="node"><div class="i">02</div><h3>Resolve</h3><p>The declared list is expanded into the real one, down to every transitive version on disk.</p></div>
-        <div class="node"><div class="i">03</div><h3>Query</h3><p>Each name and version goes to the Cohen database, alongside OSV and the npm security holdings.</p></div>
-        <div class="node"><div class="i">04</div><h3>Queue</h3><p>Anything with no verdict yet is submitted for a sandbox run, in dependency order.</p></div>
-        <div class="node"><div class="i">05</div><h3>Report</h3><p>One line per package to the terminal, or the whole tree as JSON for a build gate.</p></div>
+    <div class="mt-graphcol">
+      <div class="mt-graph" id="mtGraph">
+        <div class="mt-glow" aria-hidden="true"></div>
+        <svg id="mtSvg" viewBox="0 0 560 560" role="group" aria-label="Example scan: the dependency tree of a project, one ring per level. Select a package to trace how it got in.">
+          <g class="mt-spin" id="mtSpin"></g>
+          <rect x="265" y="265" width="30" height="30" rx="6" fill="#FF2D1F" class="mt-core"/>
+        </svg>
+      </div>
+      <div class="mt-card" aria-live="polite">
+        <div class="mt-card-top">
+          <span class="mt-name" id="mtName">mime<span>@1.6.0</span></span>
+          <span class="mt-chip" id="mtChip">CLEAN</span>
+        </div>
+        <div class="mt-sub" id="mtSub">Depth 3 · example scan, select any package to trace its chain</div>
+        <div class="mt-chain" id="mtChain"></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 3 · IN PRACTICE -->
-<section class="s rule" id="mantis-practice">
+<!-- 2 · SIGNING IN -->
+<section class="s rule" id="mantis-login">
   <div class="w">
-    <p class="eyebrow">IN PRACTICE</p>
-    <h2 class="h2 wide">Two questions, then it works unattended</h2>
-    <p class="lede">Mantis asks where the project is and which manifest to trust. Everything
-      after that happens without you.</p>
-    <div class="term" style="margin-top:20px">
-      <div class="th"><span>SESSION</span><span>MANTIS 0.1.0</span></div>
-<pre><span class="cmd">mantis</span>
-<span class="cm">  MANTIS 0.1.0 &middot; dependency collector</span>
-
-  <span class="k">? Project path</span>     <span class="v">~/work/checkout-service</span>
-  <span class="k">? Manifest</span>         <span class="v">package.json</span>
-
-  reading lockfile      <span class="v">package-lock.json (v3)</span>
-  resolving tree        <span class="v">1,284 packages</span> <span class="cm">&middot; 61 direct &middot; 1,223 transitive</span>
-  querying database     <span class="v">1,284 lookups</span> <span class="cm">&middot; 0.9s</span>
-
-    clean               <span class="v">1,271</span>
-    review              <span class="hot">2</span>
-    unknown             <span class="v">11</span>
-
-  queued for sandbox    <span class="v">11 packages</span>
-  waiting               <span class="cm">.......... done (3m 41s)</span>
-
-  <span class="hot">REVIEW</span>  polymarket-stake-mathss@3.5.2
-          <span class="cm">5 credential reads, 2 outbound connections, 10.5s</span>
-  <span class="hot">REVIEW</span>  fast-json-parse-native@0.4.1
-          <span class="cm">postinstall spawned curl, wrote outside its own tree</span>
-
-  wrote                 <span class="v">mantis-report.json</span>
-<span class="cm">  exit 1 &middot; 2 packages need a human</span></pre>
-      <div class="legend">
-        <span><i class="a"></i>needs review</span>
-        <span><i></i>clean or informational</span>
+    <p class="eyebrow">SIGNING IN</p>
+    <h2 class="h2 wide">No API key in your shell history.</h2>
+    <p class="lede">Mantis uses the OAuth device flow, the same as <code>gh auth login</code>. Nothing
+      to copy, nothing to leak into a CI log.</p>
+    <div class="mt-steps">
+      <div class="mt-step">
+        <div class="i">01</div>
+        <code class="c hot">$ mantis login</code>
+        <p>Prints a short code and opens the console.</p>
       </div>
-    </div>
-    <div class="flags">
-      <div class="frow"><code>mantis --json</code><p>Skip the terminal report and write the whole tree to stdout, one object per package.</p></div>
-      <div class="frow"><code>mantis --fail-on review</code><p>Return a non zero exit code when any package comes back for review. Enough to gate most builds.</p></div>
-      <div class="frow"><code>mantis --no-wait</code><p>Submit the unknown packages and exit immediately. Collect the finished report later.</p></div>
-      <div class="frow"><code>mantis --public-only</code><p>Never send a private or scoped name to the lookup service. Those packages are reported as skipped.</p></div>
-      <div class="frow"><code>mantis --depth direct</code><p>Only the packages you declared yourself. Faster, and much less honest.</p></div>
+      <div class="mt-step">
+        <div class="i">02</div>
+        <code class="c code">WQ7F K2LD</code>
+        <p>You approve it, signed in with Google, on a page you can check is console.snappyfeet.org.</p>
+      </div>
+      <div class="mt-step">
+        <div class="i">03</div>
+        <code class="c ok">&#10003; credential store</code>
+        <p>The key lives in your OS credential store. <code>mantis logout</code> revokes it on the server.</p>
+      </div>
+      <div class="mt-step">
+        <div class="i">04</div>
+        <code class="c">$ mantis scan --open</code>
+        <p>Your report in the terminal, or as one self contained HTML file in your browser. Exit 1 when anything needs review.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- 4 · PRICING -->
-<section class="s rule" id="mantis-pricing">
-  <div class="w center">
-    <p class="eyebrow">MANTIS PRICING</p>
-    <div class="plock" style="justify-content:center">
-      <svg aria-hidden="true"><use href="#mantis"/></svg>
-      <span class="pn">Mantis</span>
-    </div>
-    <h2 class="h2">The binary is free. The lookups are metered.</h2>
-    <p class="lede">Mantis itself costs nothing and always will. What it queries is the Cohen
-      database, and that is the part any plan meters.</p>
-  </div>
+<!-- 3 · TWO WAYS IN -->
+<section class="s rule" id="mantis-start">
   <div class="w">
-    <div class="unit">
-      <div class="ucell">
-        <div class="t">WHAT THE BINARY COSTS</div>
-        <p><b>Nothing, on every platform.</b> MIT licensed, no account needed to read or build it, and no telemetry to turn off.</p>
+    <p class="eyebrow">TWO WAYS IN</p>
+    <div class="mt-ways">
+      <div class="mt-way">
+        <svg class="ic" aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3l-3 3M12 15h5"/></svg>
+        <h3>Run Mantis</h3>
+        <p>On your laptop or in CI. Private, local and workspace packages are never sent.</p>
+        <div class="term"><pre><span class="cmd">go install github.com/Anurag-Chevendra/mantis/cmd/mantis@latest</span>
+<span class="cmd">mantis login &amp;&amp; mantis scan</span></pre></div>
       </div>
-      <div class="ucell">
-        <div class="t">WHAT NEEDS A KEY</div>
-        <p><b>Verdict lookups.</b> A free key covers 100 a day, which is enough for one project. Lookups are unlimited on every paid plan.</p>
+      <div class="mt-way">
+        <svg class="ic" aria-hidden="true" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.2"/><circle cx="6" cy="18" r="2.2"/><circle cx="18" cy="9" r="2.2"/><path d="M6 8.2v7.6M18 11.2c0 3.5-4 3.8-10 5.6"/></svg>
+        <h3>Scan a public repo</h3>
+        <p>Nothing to install. Paste a GitHub link in the console and get the same report.</p>
+        <div><a class="b g" href="https://console.snappyfeet.org/">Open the console &rarr;</a></div>
       </div>
-      <div class="ucell">
-        <div class="t">WHAT IS METERED</div>
-        <p><b>Sandbox runs, and only for packages nobody has analysed yet.</b> A project built entirely of known packages costs nothing to check.</p>
-      </div>
-    </div>
-    <div class="btns" style="justify-content:center;margin-top:30px">
-      <a class="b f" href="pricing.html">See scanner pricing</a>
-      <a class="b g" href="api.html">The API it talks to</a>
     </div>
   </div>
 </section>
 
-<!-- 5 · QUESTIONS -->
+<!-- 4 · QUESTIONS -->
 <section class="s rule" id="mantis-faq">
-  <div class="w">
-    <p class="eyebrow">QUESTIONS</p>
-    <h2 class="h2">Before you run it</h2>
-    <div class="faq">
-      <details><summary>Does it want the manifest, or the lockfile?</summary>
-        <p>Both, when both exist. The manifest says what you asked for. The lockfile says what you
-          got, which is the list that actually matters. With no lockfile present, Mantis resolves
-          the tree itself and tells you it did.</p></details>
-      <details><summary>Will it install or execute anything?</summary>
-        <p>No. Mantis only reads. It never runs an install, never triggers a lifecycle script, and
-          never touches node_modules except to see what is sitting there. Execution happens in the
-          sandbox, on our hardware, never on yours.</p></details>
-      <details><summary>What actually leaves my machine?</summary>
-        <p>One string per package, of the form <code>name@version</code>, plus the integrity hash
-          already published in your lockfile. No source, no file paths, no environment variables,
-          no manifest, no repository name. The client is open, so you can confirm that rather than
-          take it on trust.</p></details>
-      <details><summary>What happens to a package with no verdict?</summary>
-        <p>It goes into the sandbox queue. Mantis can wait for the result, or exit straight away
-          with <code>--no-wait</code> and let you collect the finished report later.</p></details>
+  <div class="w mt-faqgrid">
+    <div>
+      <p class="eyebrow">QUESTIONS</p>
+      <h2 class="h2">Read only, by design.</h2>
+    </div>
+    <div class="faq" style="margin-top:0">
+      <details open><summary>Will it install or run anything?</summary>
+        <p>No. It never runs a package manager and never installs, builds, executes or downloads
+          anything. It reads lockfiles as text. Execution happens only in Cohen's sandbox.</p></details>
+      <details><summary>What leaves my machine?</summary>
+        <p>Package names and versions, nothing else. No source, file paths, environment variables,
+          hostnames or lockfile contents. <code>mantis scan --dry-run</code> prints the exact request
+          before anything is sent.</p></details>
+      <details><summary>What about private packages?</summary>
+        <p>Local, git, tarball and workspace packages, private scopes and anything from a private
+          registry are never sent. Each one is listed with the reason it was held back.</p></details>
+      <details><summary>Do I need a lockfile?</summary>
+        <p>No. With only a <code>package.json</code> it works out the versions npm would pick from
+          public registry metadata. <code>--offline</code> turns those lookups off.</p></details>
+      <details><summary>Which lockfiles?</summary>
+        <p>npm, pnpm, Yarn classic and Berry, and Bun text lockfiles.</p></details>
       <details><summary>Can it gate a build?</summary>
-        <p>Yes. <code>mantis --fail-on review</code> returns a non zero exit code, which is all most
-          pipelines need. Pair it with <code>--json</code> to keep the artefact.</p></details>
-      <details><summary>Does it handle pnpm and yarn?</summary>
-        <p>npm and pnpm lockfiles at first release, with yarn next. Anything it cannot parse is
-          reported as unresolved rather than quietly dropped.</p></details>
+        <p>Yes. <code>mantis scan</code> exits 1 when anything needs review.</p></details>
+      <details><summary>What does it cost?</summary>
+        <p>The binary is free and Apache 2.0 licensed. Checks need a key: a free one covers 100
+          lookups a day, and paid plans are unlimited. <a href="pricing.html">See pricing</a>.</p></details>
     </div>
   </div>
 </section>
 
-<!-- 6 · CLOSE -->
+<!-- 5 · CLOSE -->
 <section class="s cta rule">
   <div class="w">
-    <h2 class="h2" style="max-width:21ch">Want it the day the first binary is signed?</h2>
+    <h2 class="h2" style="max-width:21ch">Run it on your next project.</h2>
     <div class="btns">
-      <a class="b f" href="mailto:contact@snappyfeet.org?subject=Mantis">Tell me when it ships</a>
-      <a class="b g" href="observatory.html">See Observatory</a>
+      <a class="b r" href="https://github.com/Anurag-Chevendra/mantis/releases">Get Mantis on GitHub</a>
+      <a class="b g" href="https://console.snappyfeet.org/">Open the console</a>
     </div>
     <a class="mail" href="mailto:contact@snappyfeet.org">contact@snappyfeet.org</a>
   </div>
 </section>
+
+</main>
+<script src="mantis.js" defer></script>
 
 </main>
 
