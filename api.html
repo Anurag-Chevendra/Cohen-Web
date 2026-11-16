@@ -11,11 +11,11 @@
 <style>
   .doc{display:grid;grid-template-columns:210px minmax(0,1fr);gap:52px;align-items:start}
   .toc{position:sticky;top:96px;font-size:13.5px;line-height:1.55}
-  .toc h6{font-size:10.5px;letter-spacing:.14em;color:var(--ash2,#63635e);
+  .toc h6{font-size:10.5px;letter-spacing:.14em;color:var(--ash2);
           margin:0 0 10px;font-weight:500}
   .toc a{display:block;padding:5px 0 5px 12px;color:var(--ash,#8b8b85);
          text-decoration:none;border-left:1px solid var(--line,#1f1f1f)}
-  .toc a:hover{color:var(--paper,#edebe7);border-left-color:var(--ash2,#63635e)}
+  .toc a:hover{color:var(--paper,#edebe7);border-left-color:var(--ash2)}
   .toc a.on{color:var(--paper,#edebe7);border-left-color:#FF2D1F}
   .toc .gap{height:14px}
   @media(max-width:900px){.doc{grid-template-columns:1fr;gap:0}.toc{display:none}}
@@ -24,7 +24,7 @@
   .doc h3:first-of-type{margin-top:0}
   .doc h4{font-size:15px;margin:30px 0 8px;font-weight:600;scroll-margin-top:96px}
   .doc p{max-width:70ch}
-  .anchor{color:var(--ash2,#63635e);text-decoration:none;opacity:0;margin-left:8px;font-weight:400}
+  .anchor{color:var(--ash2);text-decoration:none;opacity:0;margin-left:8px;font-weight:400}
   h3:hover .anchor,h4:hover .anchor{opacity:1}
 
   .sig{display:flex;align-items:center;gap:12px;flex-wrap:wrap;
@@ -36,13 +36,13 @@
   .verb.vp{background:rgba(255,45,31,.1);color:#FF6A61;border:1px solid rgba(255,45,31,.3)}
   .sig code{font-size:13.5px;flex:1;min-width:200px;word-break:break-all}
   .tag{font-size:11px;padding:3px 9px;border-radius:20px;flex:none;
-       border:1px solid var(--line,#1f1f1f);color:var(--ash2,#63635e)}
+       border:1px solid var(--line,#1f1f1f);color:var(--ash2)}
   .tag.free{color:#4ADE80;border-color:#1d4331}
   .tag.paid{color:#F5A524;border-color:#5c3a12}
 
   table.ref{width:100%;border-collapse:collapse;font-size:13.5px;margin:16px 0}
   table.ref th{text-align:left;font-weight:500;font-size:11px;letter-spacing:.09em;
-               color:var(--ash2,#63635e);padding:0 16px 9px 0;white-space:nowrap}
+               color:var(--ash2);padding:0 16px 9px 0;white-space:nowrap}
   table.ref td{padding:11px 16px 11px 0;border-top:1px solid var(--line,#1f1f1f);
                vertical-align:top}
   table.ref td:first-child{white-space:nowrap;font-family:var(--mono,monospace);font-size:12.5px}
@@ -98,7 +98,6 @@
         <button class="drop-t" id="dropT" type="button" aria-expanded="false" aria-controls="dropM">Product</button>
         <div class="drop-m" id="dropM">
           <div class="drop-card">
-            <p class="drop-h">TWO PRODUCTS, ONE SANDBOX</p>
             <div class="row">
               <a class="api" href="api.html#packages">API</a>
               <a class="rmain" href="mantis.html">
@@ -112,6 +111,13 @@
                 <span class="dn">Observability</span>
                 <span class="dd">The threat intel record and its feed API.</span>
               </a>
+            </div>
+            <div class="row soon">
+              <span class="api soon-chip">SOON</span>
+              <div class="rmain">
+                <span class="dn">N-Day Research</span>
+                <span class="dd">Research on known, disclosed vulnerabilities.</span>
+              </div>
             </div>
           </div>
         </div>

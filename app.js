@@ -205,22 +205,22 @@ if(tM&&tA){
   svg.appendChild(el('rect',{x:px(IA),y:TOP,width:px(IB)-px(IA),height:BOT-TOP,fill:'rgba(255,255,255,.022)'}));
   [IA,IB].forEach(t=>svg.appendChild(el('line',{x1:px(t),y1:TOP,x2:px(t),y2:BOT,
     stroke:'rgba(255,255,255,.13)','stroke-dasharray':'2 3'})));
-  const il=el('text',{x:(px(IA)+px(IB))/2,y:19,fill:'#5C626A','font-size':9.5,'font-family':mono,
+  const il=el('text',{x:(px(IA)+px(IB))/2,y:19,fill:'#8A9099','font-size':9.5,'font-family':mono,
     'text-anchor':'middle','letter-spacing':'1.1'});
   il.textContent='IDLE 2.5s'; svg.appendChild(il);
 
   for(let t=0;t<=10;t+=2){
     svg.appendChild(el('line',{x1:px(t),y1:TOP,x2:px(t),y2:BOT,stroke:'rgba(255,255,255,.05)'}));
     if(t===10) continue;
-    const lb=el('text',{x:px(t),y:BOT+16,fill:'#3A3F45','font-size':9.5,'font-family':mono,'text-anchor':'middle'});
+    const lb=el('text',{x:px(t),y:BOT+16,fill:'#8A9099','font-size':9.5,'font-family':mono,'text-anchor':'middle'});
     lb.textContent=t+'s'; svg.appendChild(lb);
   }
-  const last=el('text',{x:px(10.5),y:BOT+16,fill:'#3A3F45','font-size':9.5,'font-family':mono,'text-anchor':'end'});
+  const last=el('text',{x:px(10.5),y:BOT+16,fill:'#8A9099','font-size':9.5,'font-family':mono,'text-anchor':'end'});
   last.textContent='10.5s'; svg.appendChild(last);
 
   lanes.forEach(L=>{
     svg.appendChild(el('line',{x1:X0,y1:L.y,x2:X1,y2:L.y,stroke:'rgba(255,255,255,.10)'}));
-    const t=el('text',{x:0,y:L.y+3.5,fill:'#5C626A','font-size':9.5,'font-family':mono,'letter-spacing':'1.1'});
+    const t=el('text',{x:0,y:L.y+3.5,fill:'#8A9099','font-size':9.5,'font-family':mono,'letter-spacing':'1.1'});
     t.textContent=L.l; svg.appendChild(t);
   });
   E.forEach(([a,b,lane,sig],i)=>{
@@ -238,7 +238,7 @@ if(tM&&tA){
     svg.appendChild(el('line',{x1:xa,y1:y,x2:xb,y2:y,stroke:'rgba(255,255,255,.16)'}));
     svg.appendChild(el('line',{x1:xa,y1:y-4,x2:xa,y2:y+4,stroke:'rgba(255,255,255,.16)'}));
     svg.appendChild(el('line',{x1:xb,y1:y-4,x2:xb,y2:y+4,stroke:'rgba(255,255,255,.16)'}));
-    const t=el('text',{x:(xa+xb)/2,y:y+17,fill:'#5C626A','font-size':10,'font-family':mono,'text-anchor':'middle'});
+    const t=el('text',{x:(xa+xb)/2,y:y+17,fill:'#8A9099','font-size':10,'font-family':mono,'text-anchor':'middle'});
     t.textContent=label; svg.appendChild(t);
   });
 })();
@@ -254,7 +254,7 @@ if(tM&&tA){
       fill:'none',stroke:'#FF2D1F','stroke-width':1,opacity:.8}));
     svg.appendChild(el('circle',{cx:LX,cy:y,r:2.8,fill:'#3A3F45'}));
     svg.appendChild(el('circle',{cx:RX,cy:y,r:2.8,fill:'#FF2D1F',opacity:.9}));
-    const a=el('text',{x:LX-10,y:y+3.5,fill:'#5C626A','font-size':10,'font-family':mono,'text-anchor':'end'});
+    const a=el('text',{x:LX-10,y:y+3.5,fill:'#8A9099','font-size':10,'font-family':mono,'text-anchor':'end'});
     a.textContent=p[0];
     const b=el('text',{x:RX+10,y:y+3.5,fill:'#99A0A9','font-size':10,'font-family':mono});
     b.textContent=p[1];
@@ -270,7 +270,7 @@ if(tM&&tA){
   const W=420,H=48,BASE=56,MAX=8.6,mono='ui-monospace,monospace';
   const bw=W/vals.length, yOf=v=>BASE-(v/MAX)*H;
   svg.appendChild(el('line',{x1:0,y1:yOf(7),x2:W,y2:yOf(7),stroke:'rgba(255,255,255,.14)','stroke-dasharray':'2 3'}));
-  const th=el('text',{x:0,y:yOf(7)-5,fill:'#3A3F45','font-size':9,'font-family':mono});
+  const th=el('text',{x:0,y:yOf(7)-5,fill:'#8A9099','font-size':9,'font-family':mono});
   th.textContent='7.0 THRESHOLD'; svg.appendChild(th);
   svg.appendChild(el('line',{x1:0,y1:BASE,x2:W,y2:BASE,stroke:'rgba(255,255,255,.10)'}));
   vals.forEach((v,i)=>{
