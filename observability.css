@@ -1,0 +1,48 @@
+/* Observability page only. Shared tokens and components live in styles.css. */
+
+.ob-hero{display:flex;flex-direction:column;align-items:center;gap:22px}
+.ob-hero .plock{margin:0}
+.ob-h1{font-size:clamp(36px,5.6vw,64px);line-height:1.02;font-weight:600;letter-spacing:-.045em;margin:0;max-width:17ch;text-wrap:balance}
+
+/* one record, drawn */
+.ob-pivot{position:relative;width:100%;max-width:620px;aspect-ratio:620/440;margin:28px auto 8px}
+.ob-pivot svg{position:absolute;inset:0;width:100%;height:100%;max-width:none}
+.ob-pivot .ring{fill:none;stroke:rgba(255,255,255,.07)}
+.ob-pivot .ring.dash{stroke:rgba(255,255,255,.05);stroke-dasharray:2 5}
+.ob-pivot .spokes line{stroke:rgba(255,255,255,.2);stroke-dasharray:3 4}
+.ob-glow{position:absolute;inset:30%;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(255,45,31,.16),rgba(255,45,31,0) 70%)}
+.ob-node{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:6px}
+.ob-node i{width:9px;height:9px;border-radius:50%;background:var(--alarm);box-shadow:0 0 10px rgba(255,45,31,.7)}
+.ob-node.w i{background:#EDEDED;box-shadow:0 0 10px rgba(255,255,255,.3)}
+.ob-node span{font-family:var(--mono);font-size:11.5px;white-space:nowrap;padding:6px 10px;border:1px solid var(--hair);
+  border-radius:4px;background:var(--deep);color:#fff}
+.ob-node b{font-weight:400;color:var(--ash2)}
+.ob-core{position:absolute;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:8px}
+.ob-core i{width:26px;height:26px;border-radius:5px;background:var(--alarm);box-shadow:0 0 22px rgba(255,45,31,.75)}
+.ob-core span{font-family:var(--mono);font-size:12px;background:#160909;border:1px solid #5a1a17;color:#FF6A61;
+  padding:4px 10px;border-radius:4px;white-space:nowrap}
+.ob-cap{display:none;text-align:center;font-family:var(--mono);font-size:12px;color:#FF6A61;margin:0 0 22px}
+@media(max-width:640px){
+  .ob-node span{font-size:9.5px;padding:4px 6px}
+  .ob-node b{display:none}
+  .ob-core span{display:none}
+  .ob-cap{display:block}
+  .ob-lookup pre{font-size:11px}
+}
+
+/* reverse lookup */
+.ob-lookup{max-width:760px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center}
+.ob-lookup .term{width:100%;text-align:left}
+.ob-lookup .th{display:flex;justify-content:space-between}
+.ob-lookup .th .ok{color:var(--clean)}
+.ob-lookup pre{white-space:pre-wrap;overflow-wrap:anywhere}
+.ob-lookup p{margin:0;color:var(--ash2);font-size:14px}
+
+/* feed api */
+.ob-deliv{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:8px}
+@media(max-width:960px){.ob-deliv{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.ob-deliv{grid-template-columns:1fr}}
+.ob-deliv > div{border:1px solid var(--hair);border-radius:4px;background:var(--panel);padding:24px;display:flex;flex-direction:column;gap:10px}
+.ob-deliv code{font-size:14px;color:#fff}
+.ob-deliv p{margin:0;color:var(--ash);font-size:14.5px}

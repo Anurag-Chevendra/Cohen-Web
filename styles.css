@@ -79,7 +79,7 @@ code{font-family:var(--mono);font-size:.9em}
 .hero{position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden}
 
 /* the horizon: the email header's arc, sight line and point, drawn at hero
-   scale. It is the Observatory construction (see MARKS.md): the sight line
+   scale. It is the Observability construction (see MARKS.md): the sight line
    runs bright up to the point and goes quiet past it. */
 .horizon{position:absolute;inset:0;width:100%;height:100%;max-width:none;z-index:1;pointer-events:none;
   -webkit-mask-image:linear-gradient(180deg,#000 62%,transparent 100%);
@@ -167,7 +167,7 @@ code{font-family:var(--mono);font-size:.9em}
 .center .eyebrow::after{display:none}
 
 /* ── timeline plot ── */
-/* ── second product: observatory ── */
+/* ── second product: observability ── */
 .prod{border:1px solid var(--hair2);border-radius:4px;background:
   radial-gradient(ellipse 70% 100% at 50% 0%,rgba(255,45,31,.045),transparent 70%),var(--deep);
   padding:38px 42px}
@@ -176,7 +176,7 @@ code{font-family:var(--mono);font-size:.9em}
 .prod .eyebrow::after{background:rgba(255,45,31,.28)}
 .plock{display:flex;align-items:center;gap:13px;margin:0 0 26px}
 /* 30px is above the 24px threshold, so the full-weight symbols are correct
-   here. Anywhere a mark renders below 24px, use #mantis-sm / #observatory-sm
+   here. Anywhere a mark renders below 24px, use #mantis-sm / #observability-sm
    instead of scaling these down. */
 .plock svg{width:30px;height:30px;flex:none;color:var(--white)}
 /* Guard: the marks are drawn with butt caps and miter joins on purpose.
@@ -464,7 +464,7 @@ main.sub > section:first-of-type{border-top:0;padding-top:30px}
 
 /* ══════════════════════════════════════════════════════════════
    PRODUCT PAGE TEMPLATE
-   mantis.html and observatory.html run the same six sections in the
+   mantis.html and observability.html run the same six sections in the
    same order: lockup, how it works, in practice, pricing, questions,
    close. Keep them in step.
    ══════════════════════════════════════════════════════════════ */
@@ -478,7 +478,7 @@ main.sub > section:first-of-type{border-top:0;padding-top:30px}
 .status b{width:5px;height:5px;border-radius:50%;background:var(--alarm);
   flex:none;animation:blip 2.2s infinite}
 
-/* definition table: the flags on mantis, the record fields on observatory */
+/* definition table: the flags on mantis, the record fields on observability */
 .flags{margin-top:28px;border-top:1px solid var(--hair)}
 .frow{display:grid;grid-template-columns:250px 1fr;gap:28px;padding:15px 0;
   border-bottom:1px solid var(--hair);align-items:baseline}

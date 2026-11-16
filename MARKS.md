@@ -1,4 +1,4 @@
-# Product marks — Mantis and Observatory
+# Product marks — Mantis and Observability
 
 Both products used to render the same `#aperture` glyph, so neither mark
 distinguished anything. This replaces it with two purpose-built marks and
@@ -12,7 +12,7 @@ that product does to the thing at the point.
 | Mark | Form | Relationship to the point |
 | --- | --- | --- |
 | Mantis | Two arms, open | Holds it without contact. Reads the package and lets go. |
-| Observatory | A ring notched by a sight line | Measures it. The point is where the line meets the body. |
+| Observability | A ring notched by a sight line | Measures it. The point is where the line meets the body. |
 | Cohen | — | Not drawn yet. See "Open" below. |
 
 ## Construction
@@ -35,8 +35,8 @@ that product does to the thing at the point.
 
 | Rendered size | Symbol |
 | --- | --- |
-| 24px and up | `#mantis` / `#observatory` |
-| Below 24px | `#mantis-sm` / `#observatory-sm` |
+| 24px and up | `#mantis` / `#observability` |
+| Below 24px | `#mantis-sm` / `#observability-sm` |
 
 The small variants are separate symbols, not scaled copies. Never CSS-scale a
 2.4-weight variant below 24px in place of one.
@@ -45,7 +45,7 @@ In use: 30px in `.plock`, 16px in the favicon.
 
 ## Two things that changed from the original handoff
 
-**Observatory's point was a blister.** It was `r 2.4` sitting centred on a
+**Observability's point was a blister.** It was `r 2.4` sitting centred on a
 `2.4` stroke, so it protruded only 1.2 units past the limb and fused with the
 ring instead of reading as a separate element. Worst below 24px, where it
 looked like a rendering artefact rather than a mark. The ring is now drawn as
@@ -57,9 +57,9 @@ account of why the point sits where it does.
 24.3 units against the bracket form's 22.3 — 9% larger, where a circle wants
 1–3% of overshoot, not nine. The circle is now `r 10.2`, giving 22.9 against
 22.3, and `mantis-sm` was brought in to 23.9 to sit level with
-`observatory-sm`. Measured ink coverage is 17.1% and 16.9%.
+`observability-sm`. Measured ink coverage is 17.1% and 16.9%.
 
-Observatory's point is still a computed position, not a placement: it is the
+Observability's point is still a computed position, not a placement: it is the
 right-hand intersection of the sight line at `y 11` with the circle, which for
 `r 10.2` puts it at `x 24.89`. The arc endpoints are computed from that angle.
 Do not nudge any of them by hand — recompute.
@@ -80,7 +80,7 @@ no corner radius, and neither does this.
 
 ## Favicons
 
-`mantis.html` and `observatory.html` carry their own mark at 16px, using the
+`mantis.html` and `observability.html` carry their own mark at 16px, using the
 small variants. Every other page carries a plain unradiused white square on
 black — the same placeholder as the nav, not a Cohen mark.
 
@@ -91,7 +91,7 @@ black — the same placeholder as the nav, not a Cohen mark.
 1. Whether Cohen is drawn fresh or keeps something like the retired aperture.
    It should be drawn fresh, and it should not be circular. Concentric rings
    and a ring-notched-by-a-line both collapse to "circle" at 16px, and Cohen
-   would sit beside Observatory constantly.
+   would sit beside Observability constantly.
 2. Whether the nav mark carries the wordmark or stands alone.
 3. What replaces red as the brand's own colour, now that red is reserved for
    verdicts.

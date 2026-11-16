@@ -60,7 +60,7 @@ const PRICING = {
   intel: [
     { name:'RESEARCH', who:'For academics, journalists and open source maintainers.',
       monthly:0, annual:0, per:'forever', sub:'noncommercial use only',
-      cta:'Apply', href:'mailto:contact@snappyfeet.org?subject=Research%20access', feat:false, inherits:null,
+      cta:'Apply', href:'https://console.snappyfeet.org/', feat:false, inherits:null,
       items:[
         {t:'Full feed, delayed 30 days', key:true},
         {t:'1,000 requests per month'},
@@ -68,7 +68,7 @@ const PRICING = {
       ]},
     { name:'BUILDER', who:'For a product that needs verdicts inside its own workflow.',
       monthly:99, annual:82, per:'per month', sub:'',
-      cta:'Get a key', href:'mailto:contact@snappyfeet.org?subject=Observatory%20Builder', feat:false, inherits:null,
+      cta:'Get a key', href:'https://console.snappyfeet.org/', feat:false, inherits:null,
       items:[
         {t:'Real time verdicts, no delay', key:true},
         {t:'25,000 requests per month'},
@@ -77,7 +77,7 @@ const PRICING = {
       ]},
     { name:'COMMERCIAL', who:'For a security team feeding its own detections.',
       monthly:999, annual:832, per:'per month', sub:'',
-      cta:'Talk to us', href:'contact.html?topic=observatory', feat:true, inherits:'Everything in Builder, plus',
+      cta:'Talk to us', href:'https://console.snappyfeet.org/', feat:true, inherits:'Everything in Builder, plus',
       items:[
         {t:'Full IOC export: C2, hashes, artifacts', key:true},
         {t:'Complete historical archive', key:true},
@@ -86,9 +86,9 @@ const PRICING = {
         {t:'Bulk and incremental sync'}
       ]},
     { name:'OEM',
-      who:'For redistributing Observatory verdicts inside your own product.',
+      who:'For redistributing Observability verdicts inside your own product.',
       monthly:null, annual:null, per:'', sub:'redistribution licence',
-      cta:'Talk to us', href:'contact.html?topic=observatory', feat:false, inherits:null,
+      cta:'Talk to us', href:'https://console.snappyfeet.org/', feat:false, inherits:null,
       items:[
         {t:'Redistribution rights', key:true},
         {t:'White label verdicts'},
@@ -418,7 +418,7 @@ if(tM&&tA){
    the team through Cloudflare Email Routing. If the Worker cannot be reached
    the visitor gets the old fallback: a ready to send draft in their own mail
    app, so a message is never lost.
-   ?topic=enterprise | team | observatory | mantis | api preselects a box. */
+   ?topic=enterprise | team | observability | mantis | api preselects a box. */
 const CONTACT={
   endpoint:'https://cohen-contact.REPLACE_WITH_YOUR_SUBDOMAIN.workers.dev/contact',
   turnstileSiteKey:''   /* public Turnstile site key; empty disables the widget */
@@ -431,7 +431,7 @@ const CONTACT={
   const box=f.querySelector('#cfTopics'),err=document.getElementById('cfErr');
   const btn=f.querySelector('.cform-send');
   const map={team:'Team plan',enterprise:'Enterprise or self hosted sandbox',mantis:'Mantis',
-    observatory:'Observatory threat intel',api:'Feed API'};
+    observability:'Observability threat intel',api:'Observability threat intel'};
   const want=new URLSearchParams(location.search).get('topic');
   if(want&&map[want]){const c=f.querySelector(`input[value="${map[want]}"]`);if(c)c.checked=true}
   const topics=()=>[...f.querySelectorAll('input[name=topic]:checked')].map(c=>c.value);
