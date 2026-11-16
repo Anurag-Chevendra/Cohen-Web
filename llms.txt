@@ -1,0 +1,19 @@
+# Cohen
+
+> Behavioural package analysis for npm. Cohen installs and imports every package version in a disposable sandbox and records what it actually does: file access, network connections and spawned processes, each traced to the code responsible.
+
+## Docs
+
+- [API reference (Markdown)](https://cohen.snappyfeet.org/api.md): every endpoint, request example, response, error code and limit, as plain text.
+- [API reference](https://cohen.snappyfeet.org/api.html): the same reference as a web page.
+- [How it works](https://cohen.snappyfeet.org/method.html): the sandbox, the dynamic and static engines, and how verdicts are reached.
+
+## Products
+
+- [Mantis](https://cohen.snappyfeet.org/mantis.html): open source CLI that reads a project's lockfiles and checks every npm package version against Cohen.
+- [Observability](https://cohen.snappyfeet.org/observability.html): the threat intel record and its feed API.
+- [Pricing](https://cohen.snappyfeet.org/pricing.html): scanner and Observability plans.
+
+## Optional
+
+- [Live feed](https://trail.snappyfeet.org): what the sandbox is publishing right now.

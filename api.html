@@ -7,6 +7,7 @@
 <meta name="description" content="Cohen API reference. Read verdicts, queue deep analyses, and stream the Observability feed.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%2032%2032%27%3E%3Crect%20width=%2732%27%20height=%2732%27%20fill=%27%23000%27/%3E%3Crect%20x=%2711%27%20y=%2711%27%20width=%2710%27%20height=%2710%27%20fill=%27%23fff%27/%3E%3C/svg%3E">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="api.css">
 <style>
   .doc{display:grid;grid-template-columns:210px minmax(0,1fr);gap:52px;align-items:start}
   .toc{position:sticky;top:96px;font-size:13.5px;line-height:1.55}
@@ -31,8 +32,8 @@
        border-radius:8px;padding:11px 14px;margin:16px 0 12px}
   .verb{font:600 11px/1 var(--mono,ui-monospace,monospace);letter-spacing:.09em;
         padding:5px 8px;border-radius:5px;flex:none}
-  .verb.get{background:#0e2119;color:#4ADE80;border:1px solid #1d4331}
-  .verb.post{background:#2a1c08;color:#F5A524;border:1px solid #5c3a12}
+  .verb.vg{background:rgba(143,182,255,.1);color:#8FB6FF;border:1px solid rgba(143,182,255,.25)}
+  .verb.vp{background:rgba(255,45,31,.1);color:#FF6A61;border:1px solid rgba(255,45,31,.3)}
   .sig code{font-size:13.5px;flex:1;min-width:200px;word-break:break-all}
   .tag{font-size:11px;padding:3px 9px;border-radius:20px;flex:none;
        border:1px solid var(--line,#1f1f1f);color:var(--ash2,#63635e)}
@@ -123,7 +124,7 @@
 
 <main id="main" class="sub">
 
-<section class="s rule">
+<section class="s rule ap-hero">
   <div class="w">
     <p class="eyebrow">API REFERENCE</p>
     <h2 class="h2 wide">One path per package version</h2>
@@ -135,6 +136,16 @@
     <div class="btns" style="margin-top:26px">
       <a class="b f" href="https://console.snappyfeet.org/">Get a key</a>
       <a class="b g" href="#quickstart">Quickstart</a>
+      <div class="cp" id="cp">
+        <button type="button" class="cp-main" id="cpMain"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span>Copy</span></button>
+        <button type="button" class="cp-more" id="cpMore" aria-label="More copy options" aria-expanded="false" aria-controls="cpMenu"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 9l6 6l6-6"/></svg></button>
+        <div class="cp-menu" id="cpMenu" hidden>
+          <button type="button" data-copy="md"><b>Copy page as Markdown</b><span>Every endpoint, example and error. Paste into ChatGPT, Claude or Cursor.</span></button>
+          <button type="button" data-copy="eps"><b>Copy endpoint list</b><span>Method, path and scope for every endpoint.</span></button>
+          <a href="llms.txt"><b>Open llms.txt</b><span>A map of the docs for AI tools that fetch it themselves.</span></a>
+          <a href="api.md"><b>View as Markdown</b><span>The same page as plain text.</span></a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -162,13 +173,17 @@
     </nav>
 
     <div>
-
 <h3 id="quickstart">Quickstart<a class="anchor" href="#quickstart">#</a></h3>
+<div class="ap">
+<div class="ap-l">
 <p class="lede" style="margin-bottom:18px">
   Sign in with Google, create a key, read a verdict. No card, no waiting.
 </p>
 
-<div class="term">
+
+
+</div>
+<div class="ap-r"><div class="term">
 <div class="th"><span>THREE STEPS</span><span>60 SECONDS</span></div>
 <pre><span class="cm"># 1. Get a key at https://console.snappyfeet.org</span>
 <span class="cmd">export COHEN_KEY=cohen_live_...</span>
@@ -180,18 +195,14 @@
 <span class="cm"># 3. Read a verdict.</span>
 <span class="cmd">curl -H "Authorization: Bearer $COHEN_KEY" \
   https://api.snappyfeet.org/api/package/npm/left-pad/1.3.0</span></pre>
+</div></div>
 </div>
-
 <h3 id="auth">Authentication<a class="anchor" href="#auth">#</a></h3>
+<div class="ap">
+<div class="ap-l">
 <p>Every request carries a key. Keys begin <code>cohen_live_</code>.</p>
 
-<div class="term">
-<div class="th"><span>HEADER</span><span>REQUIRED</span></div>
-<pre>Authorization: Bearer cohen_live_1WbwMTf2vx0t2NUWuZYSS3oQP26mU4JL...
 
-<span class="cm"># the scheme is optional, so this also works</span>
-Authorization: cohen_live_1WbwMTf2vx0t2NUWuZYSS3oQP26mU4JL...</pre>
-</div>
 
 <table class="ref">
 <thead><tr><th>Property</th><th>Behaviour</th></tr></thead>
@@ -208,6 +219,15 @@ Authorization: cohen_live_1WbwMTf2vx0t2NUWuZYSS3oQP26mU4JL...</pre>
   code. Give CI its own key so it can be revoked alone.
 </div>
 
+</div>
+<div class="ap-r"><div class="term">
+<div class="th"><span>HEADER</span><span>REQUIRED</span></div>
+<pre>Authorization: Bearer cohen_live_1WbwMTf2vx0t2NUWuZYSS3oQP26mU4JL...
+
+<span class="cm"># the scheme is optional, so this also works</span>
+Authorization: cohen_live_1WbwMTf2vx0t2NUWuZYSS3oQP26mU4JL...</pre>
+</div></div>
+</div>
 <h3 id="conventions">Conventions<a class="anchor" href="#conventions">#</a></h3>
 <table class="ref">
 <thead><tr><th>Item</th><th>Value</th></tr></thead>
@@ -238,15 +258,21 @@ Authorization: cohen_live_1WbwMTf2vx0t2NUWuZYSS3oQP26mU4JL...</pre>
 <h3 id="packages">Packages<a class="anchor" href="#packages">#</a></h3>
 
 <div class="sig">
-  <span class="verb get">GET</span>
+  <span class="verb vg">GET</span>
   <code>/api/package/npm/{name}/{version}</code>
   <span class="tag free">free</span>
+  <span class="st ok">live</span>
 </div>
+<div class="ap">
+<div class="ap-l">
 <p>One verdict. Never costs an analysis.</p>
 
-<div class="term">
-<div class="th"><span>REQUEST</span><span>200 OK</span></div>
-<pre><span class="cmd">curl -H "Authorization: Bearer $COHEN_KEY" \
+
+
+</div>
+<div class="ap-r"><div class="term ap-tabs">
+<div class="th"><span class="langs" role="tablist" aria-label="Language"><button type="button" role="tab" class="on" aria-selected="true" data-lang="curl">curl</button><button type="button" role="tab" aria-selected="false" data-lang="node">Node</button><button type="button" role="tab" aria-selected="false" data-lang="python">Python</button></span><span>200 OK</span></div>
+<pre data-lang="curl"><span class="cmd">curl -H "Authorization: Bearer $COHEN_KEY" \
   https://api.snappyfeet.org/api/package/npm/@agimon-ai/doompi-help/0.0.1-alpha.26</span>
 
 {
@@ -259,19 +285,58 @@ Authorization: cohen_live_1WbwMTf2vx0t2NUWuZYSS3oQP26mU4JL...</pre>
 
 <span class="cm">// 404 when nobody has run it. Yours to decide whether to spend an analysis.</span>
 { <span class="k">"verdict"</span>: <span class="v">"unknown"</span>, <span class="k">"name"</span>: <span class="v">"left-pad"</span>, <span class="k">"version"</span>: <span class="v">"1.3.0"</span> }</pre>
-</div>
+<pre data-lang="node" hidden>const res = await fetch(&quot;https://api.snappyfeet.org/api/package/npm/@agimon-ai/doompi-help/0.0.1-alpha.26&quot;, {
+  headers: {
+    Authorization: `Bearer ${process.env.COHEN_KEY}`
+  }
+});
+console.log(await res.json());
 
+{
+  <span class="k">"ecosystem"</span>: <span class="v">"npm"</span>,
+  <span class="k">"name"</span>: <span class="v">"@agimon-ai/doompi-help"</span>,
+  <span class="k">"version"</span>: <span class="v">"0.0.1-alpha.26"</span>,
+  <span class="k">"verdict"</span>: <span class="v">"clean"</span>,
+  <span class="k">"analyzed_at"</span>: <span class="v">1788180250</span>
+}
+
+<span class="cm">// 404 when nobody has run it. Yours to decide whether to spend an analysis.</span>
+{ <span class="k">"verdict"</span>: <span class="v">"unknown"</span>, <span class="k">"name"</span>: <span class="v">"left-pad"</span>, <span class="k">"version"</span>: <span class="v">"1.3.0"</span> }</pre>
+<pre data-lang="python" hidden>import os, requests
+
+res = requests.get(
+    &quot;https://api.snappyfeet.org/api/package/npm/@agimon-ai/doompi-help/0.0.1-alpha.26&quot;,
+    headers={
+        &quot;Authorization&quot;: f&quot;Bearer {os.environ[&#x27;COHEN_KEY&#x27;]}&quot;
+    },
+)
+print(res.json())
+
+{
+  <span class="k">"ecosystem"</span>: <span class="v">"npm"</span>,
+  <span class="k">"name"</span>: <span class="v">"@agimon-ai/doompi-help"</span>,
+  <span class="k">"version"</span>: <span class="v">"0.0.1-alpha.26"</span>,
+  <span class="k">"verdict"</span>: <span class="v">"clean"</span>,
+  <span class="k">"analyzed_at"</span>: <span class="v">1788180250</span>
+}
+
+<span class="cm">// 404 when nobody has run it. Yours to decide whether to spend an analysis.</span>
+{ <span class="k">"verdict"</span>: <span class="v">"unknown"</span>, <span class="k">"name"</span>: <span class="v">"left-pad"</span>, <span class="k">"version"</span>: <span class="v">"1.3.0"</span> }</pre>
+</div></div>
+</div>
 <div class="sig">
-  <span class="verb get">GET</span>
+  <span class="verb vg">GET</span>
   <code>/api/package/npm/{name}</code>
   <span class="tag free">free</span>
+  <span class="st ok">live</span>
 </div>
 <p>Every analysed version of a package, newest first.</p>
 
 <div class="sig">
-  <span class="verb get">GET</span>
+  <span class="verb vg">GET</span>
   <code>/api/package/npm/{name}/{version}/evidence</code>
   <span class="tag paid">evidence scope</span>
+  <span class="st ">soon</span>
 </div>
 <p>
   The full trace: syscalls, process tree, connections, file hashes, entropy.
@@ -279,10 +344,13 @@ Authorization: cohen_live_1WbwMTf2vx0t2NUWuZYSS3oQP26mU4JL...</pre>
 </p>
 
 <div class="sig">
-  <span class="verb post">POST</span>
+  <span class="verb vp">POST</span>
   <code>/api/package/npm/{name}/{version}</code>
   <span class="tag paid">queue scope</span>
+  <span class="st ">soon</span>
 </div>
+<div class="ap">
+<div class="ap-l">
 <p>
   Queue a deep analysis. Charged only when the version is genuinely unknown.
   Posting something already analysed returns <code>200</code> and the cached
@@ -290,9 +358,12 @@ Authorization: cohen_live_1WbwMTf2vx0t2NUWuZYSS3oQP26mU4JL...</pre>
   pay twice for the same version.
 </p>
 
-<div class="term">
-<div class="th"><span>REQUEST</span><span>202 ACCEPTED</span></div>
-<pre><span class="cmd">curl -X POST -H "Authorization: Bearer $COHEN_KEY" \
+
+
+</div>
+<div class="ap-r"><div class="term ap-tabs">
+<div class="th"><span class="langs" role="tablist" aria-label="Language"><button type="button" role="tab" class="on" aria-selected="true" data-lang="curl">curl</button><button type="button" role="tab" aria-selected="false" data-lang="node">Node</button><button type="button" role="tab" aria-selected="false" data-lang="python">Python</button></span><span>202 ACCEPTED</span></div>
+<pre data-lang="curl"><span class="cmd">curl -X POST -H "Authorization: Bearer $COHEN_KEY" \
   https://api.snappyfeet.org/api/package/npm/tiny-parse/0.2.1</span>
 
 {
@@ -303,16 +374,53 @@ Authorization: cohen_live_1WbwMTf2vx0t2NUWuZYSS3oQP26mU4JL...</pre>
   <span class="k">"poll"</span>: <span class="v">"/api/job/job_01HXY5K9PNQE3"</span>,
   <span class="k">"allowance"</span>: { <span class="k">"used"</span>: <span class="v">137</span>, <span class="k">"limit"</span>: <span class="v">150</span> }
 }</pre>
-</div>
+<pre data-lang="node" hidden>const res = await fetch(&quot;https://api.snappyfeet.org/api/package/npm/tiny-parse/0.2.1&quot;, {
+  method: &quot;POST&quot;,
+  headers: {
+    Authorization: `Bearer ${process.env.COHEN_KEY}`
+  }
+});
+console.log(await res.json());
 
+{
+  <span class="k">"job"</span>: <span class="v">"job_01HXY5K9PNQE3"</span>,
+  <span class="k">"state"</span>: <span class="v">"queued"</span>,
+  <span class="k">"queue_position"</span>: <span class="v">4</span>,
+  <span class="k">"eta_seconds"</span>: <span class="v">180</span>,
+  <span class="k">"poll"</span>: <span class="v">"/api/job/job_01HXY5K9PNQE3"</span>,
+  <span class="k">"allowance"</span>: { <span class="k">"used"</span>: <span class="v">137</span>, <span class="k">"limit"</span>: <span class="v">150</span> }
+}</pre>
+<pre data-lang="python" hidden>import os, requests
+
+res = requests.post(
+    &quot;https://api.snappyfeet.org/api/package/npm/tiny-parse/0.2.1&quot;,
+    headers={
+        &quot;Authorization&quot;: f&quot;Bearer {os.environ[&#x27;COHEN_KEY&#x27;]}&quot;
+    },
+)
+print(res.json())
+
+{
+  <span class="k">"job"</span>: <span class="v">"job_01HXY5K9PNQE3"</span>,
+  <span class="k">"state"</span>: <span class="v">"queued"</span>,
+  <span class="k">"queue_position"</span>: <span class="v">4</span>,
+  <span class="k">"eta_seconds"</span>: <span class="v">180</span>,
+  <span class="k">"poll"</span>: <span class="v">"/api/job/job_01HXY5K9PNQE3"</span>,
+  <span class="k">"allowance"</span>: { <span class="k">"used"</span>: <span class="v">137</span>, <span class="k">"limit"</span>: <span class="v">150</span> }
+}</pre>
+</div></div>
+</div>
 <h3 id="bulk">Bulk submit<a class="anchor" href="#bulk">#</a></h3>
 
 <div class="sig">
-  <span class="verb post">POST</span>
+  <span class="verb vp">POST</span>
   <code>/api/package/npm</code>
   <span class="tag free">read scope</span>
   <span class="tag paid">queue scope to queue</span>
+  <span class="st ok" title="Read only is live, queueing is soon">live</span>
 </div>
+<div class="ap">
+<div class="ap-l">
 <p>
   Send a whole dependency tree in one call. The response splits it into what is
   already known and what had to be queued, so you can act on the known part
@@ -326,9 +434,30 @@ Authorization: cohen_live_1WbwMTf2vx0t2NUWuZYSS3oQP26mU4JL...</pre>
   <code>queue</code> scope.
 </p>
 
-<div class="term">
-<div class="th"><span>REQUEST</span><span>207 MULTI STATUS</span></div>
-<pre><span class="cmd">curl -X POST -H "Authorization: Bearer $COHEN_KEY" \
+
+
+<table class="ref">
+<thead><tr><th>Field or header</th><th>Effect</th></tr></thead>
+<tbody>
+<tr><td>versions[]</td><td>Up to 5,000 per request, as <code>name@version</code>.</td></tr>
+<tr><td>queue_unknown</td><td><code>false</code> gives a pure read. You are told what is unknown and no analysis is charged. Free keys must send <code>false</code>.</td></tr>
+<tr><td>skip_private</td><td>Names that do not resolve on the public registry are counted as skipped and never leave your side of the wire.</td></tr>
+<tr><td>Idempotency&#8209;Key</td><td>A retried request reuses the original reservation instead of charging twice.</td></tr>
+<tr><td>X&#8209;Project</td><td>Labels the run in your console history.</td></tr>
+<tr><td>X&#8209;Client</td><td>Set to <code>mantis</code> to mark the source.</td></tr>
+</tbody>
+</table>
+
+<p style="font-size:14px;color:var(--ash,#8b8b85)">
+  Every bulk submit becomes one scan in
+  <a href="https://console.snappyfeet.org/scans">your history</a>, with its counts
+  and findings kept.
+</p>
+
+</div>
+<div class="ap-r"><div class="term ap-tabs">
+<div class="th"><span class="langs" role="tablist" aria-label="Language"><button type="button" role="tab" class="on" aria-selected="true" data-lang="curl">curl</button><button type="button" role="tab" aria-selected="false" data-lang="node">Node</button><button type="button" role="tab" aria-selected="false" data-lang="python">Python</button></span><span>207 MULTI STATUS</span></div>
+<pre data-lang="curl"><span class="cmd">curl -X POST -H "Authorization: Bearer $COHEN_KEY" \
   -H "Content-Type: application/json" \
   -H "Idempotency-Key: build-4471" \
   -H "X-Project: checkout-api" \
@@ -349,29 +478,72 @@ Authorization: cohen_live_1WbwMTf2vx0t2NUWuZYSS3oQP26mU4JL...</pre>
   <span class="k">"queued"</span>: [ { <span class="k">"name"</span>: <span class="v">"tiny-parse"</span>, <span class="k">"version"</span>: <span class="v">"0.2.1"</span>, <span class="k">"job"</span>: <span class="v">"job_01HXY..."</span> } ],
   <span class="k">"allowance"</span>: { <span class="k">"used"</span>: <span class="v">148</span>, <span class="k">"limit"</span>: <span class="v">150</span> }
 }</pre>
+<pre data-lang="node" hidden>import fs from &quot;node:fs/promises&quot;;
+
+const res = await fetch(&quot;https://api.snappyfeet.org/api/package/npm&quot;, {
+  method: &quot;POST&quot;,
+  headers: {
+    Authorization: `Bearer ${process.env.COHEN_KEY}`,
+    &quot;Content-Type&quot;: &quot;application/json&quot;,
+    &quot;Idempotency-Key&quot;: &quot;build-4471&quot;,
+    &quot;X-Project&quot;: &quot;checkout-api&quot;
+  },
+  body: await fs.readFile(&quot;tree.json&quot;, &quot;utf8&quot;)
+});
+console.log(await res.json());
+
+<span class="cm">// body</span>
+{
+  <span class="k">"versions"</span>: [ <span class="v">"left-pad@1.3.0"</span>, <span class="v">"@types/node@20.11.5"</span> ],
+  <span class="k">"queue_unknown"</span>: <span class="v">true</span>,
+  <span class="k">"skip_private"</span>: <span class="v">true</span>
+}
+
+<span class="cm">// response</span>
+{
+  <span class="k">"scan"</span>: <span class="v">"1f9c0a2e..."</span>,
+  <span class="k">"counts"</span>: { <span class="k">"clean"</span>: <span class="v">1271</span>, <span class="k">"review"</span>: <span class="hot">2</span>, <span class="k">"queued"</span>: <span class="v">11</span>, <span class="k">"skipped"</span>: <span class="v">0</span> },
+  <span class="k">"review"</span>: [ { <span class="k">"name"</span>: <span class="hot">"polymarket-stake-mathss"</span>, <span class="k">"version"</span>: <span class="v">"3.5.2"</span> } ],
+  <span class="k">"queued"</span>: [ { <span class="k">"name"</span>: <span class="v">"tiny-parse"</span>, <span class="k">"version"</span>: <span class="v">"0.2.1"</span>, <span class="k">"job"</span>: <span class="v">"job_01HXY..."</span> } ],
+  <span class="k">"allowance"</span>: { <span class="k">"used"</span>: <span class="v">148</span>, <span class="k">"limit"</span>: <span class="v">150</span> }
+}</pre>
+<pre data-lang="python" hidden>import os, requests
+
+import json
+tree = json.load(open(&quot;tree.json&quot;))
+
+res = requests.post(
+    &quot;https://api.snappyfeet.org/api/package/npm&quot;,
+    headers={
+        &quot;Authorization&quot;: f&quot;Bearer {os.environ[&#x27;COHEN_KEY&#x27;]}&quot;,
+        &quot;Content-Type&quot;: &quot;application/json&quot;,
+        &quot;Idempotency-Key&quot;: &quot;build-4471&quot;,
+        &quot;X-Project&quot;: &quot;checkout-api&quot;
+    },
+    json=tree,
+)
+print(res.json())
+
+<span class="cm">// body</span>
+{
+  <span class="k">"versions"</span>: [ <span class="v">"left-pad@1.3.0"</span>, <span class="v">"@types/node@20.11.5"</span> ],
+  <span class="k">"queue_unknown"</span>: <span class="v">true</span>,
+  <span class="k">"skip_private"</span>: <span class="v">true</span>
+}
+
+<span class="cm">// response</span>
+{
+  <span class="k">"scan"</span>: <span class="v">"1f9c0a2e..."</span>,
+  <span class="k">"counts"</span>: { <span class="k">"clean"</span>: <span class="v">1271</span>, <span class="k">"review"</span>: <span class="hot">2</span>, <span class="k">"queued"</span>: <span class="v">11</span>, <span class="k">"skipped"</span>: <span class="v">0</span> },
+  <span class="k">"review"</span>: [ { <span class="k">"name"</span>: <span class="hot">"polymarket-stake-mathss"</span>, <span class="k">"version"</span>: <span class="v">"3.5.2"</span> } ],
+  <span class="k">"queued"</span>: [ { <span class="k">"name"</span>: <span class="v">"tiny-parse"</span>, <span class="k">"version"</span>: <span class="v">"0.2.1"</span>, <span class="k">"job"</span>: <span class="v">"job_01HXY..."</span> } ],
+  <span class="k">"allowance"</span>: { <span class="k">"used"</span>: <span class="v">148</span>, <span class="k">"limit"</span>: <span class="v">150</span> }
+}</pre>
+</div></div>
 </div>
-
-<table class="ref">
-<thead><tr><th>Field or header</th><th>Effect</th></tr></thead>
-<tbody>
-<tr><td>versions[]</td><td>Up to 5,000 per request, as <code>name@version</code>.</td></tr>
-<tr><td>queue_unknown</td><td><code>false</code> gives a pure read. You are told what is unknown and no analysis is charged. Free keys must send <code>false</code>.</td></tr>
-<tr><td>skip_private</td><td>Names that do not resolve on the public registry are counted as skipped and never leave your side of the wire.</td></tr>
-<tr><td>Idempotency&#8209;Key</td><td>A retried request reuses the original reservation instead of charging twice.</td></tr>
-<tr><td>X&#8209;Project</td><td>Labels the run in your console history.</td></tr>
-<tr><td>X&#8209;Client</td><td>Set to <code>mantis</code> to mark the source.</td></tr>
-</tbody>
-</table>
-
-<p style="font-size:14px;color:var(--ash,#8b8b85)">
-  Every bulk submit becomes one scan in
-  <a href="https://console.snappyfeet.org/scans">your history</a>, with its counts
-  and findings kept.
-</p>
-
 <h3 id="jobs">Jobs<a class="anchor" href="#jobs">#</a></h3>
 <div class="sig">
-  <span class="verb get">GET</span>
+  <span class="verb vg">GET</span>
   <code>/api/job/{job}</code>
   <span class="tag free">free</span>
 </div>
@@ -385,9 +557,10 @@ Authorization: cohen_live_1WbwMTf2vx0t2NUWuZYSS3oQP26mU4JL...</pre>
 </p>
 
 <div class="sig">
-  <span class="verb get">GET</span>
+  <span class="verb vg">GET</span>
   <code>/api/observatory/records</code>
   <span class="tag paid">feed scope</span>
+  <span class="st ">soon</span>
 </div>
 <table class="ref">
 <thead><tr><th>Query</th><th>Meaning</th></tr></thead>
@@ -399,19 +572,25 @@ Authorization: cohen_live_1WbwMTf2vx0t2NUWuZYSS3oQP26mU4JL...</pre>
 </table>
 
 <div class="sig">
-  <span class="verb get">GET</span>
+  <span class="verb vg">GET</span>
   <code>/api/observatory/indicator/{type}/{value}</code>
   <span class="tag paid">feed scope</span>
+  <span class="st ">soon</span>
 </div>
+<div class="ap">
+<div class="ap-l">
 <p>
   Reverse lookup. Give it a C2 host or a file hash, get every package version
   that touched it. Types are <code>host</code>, <code>domain</code>,
   <code>sha256</code> and <code>path</code>.
 </p>
 
-<div class="term">
-<div class="th"><span>REQUEST</span><span>200 OK</span></div>
-<pre><span class="cmd">curl -H "Authorization: Bearer $COHEN_KEY" \
+
+
+</div>
+<div class="ap-r"><div class="term ap-tabs">
+<div class="th"><span class="langs" role="tablist" aria-label="Language"><button type="button" role="tab" class="on" aria-selected="true" data-lang="curl">curl</button><button type="button" role="tab" aria-selected="false" data-lang="node">Node</button><button type="button" role="tab" aria-selected="false" data-lang="python">Python</button></span><span>200 OK</span></div>
+<pre data-lang="curl"><span class="cmd">curl -H "Authorization: Bearer $COHEN_KEY" \
   "https://api.snappyfeet.org/api/observatory/indicator/host/45.61.136.12"</span>
 
 {
@@ -421,22 +600,59 @@ Authorization: cohen_live_1WbwMTf2vx0t2NUWuZYSS3oQP26mU4JL...</pre>
     { <span class="k">"name"</span>: <span class="hot">"polymarket-stake-mathss"</span>, <span class="k">"version"</span>: <span class="v">"3.5.2"</span>, <span class="k">"by"</span>: <span class="v">"node postinstall.js"</span> }
   ]
 }</pre>
-</div>
+<pre data-lang="node" hidden>const res = await fetch(&quot;https://api.snappyfeet.org/api/observatory/indicator/host/45.61.136.12&quot;, {
+  headers: {
+    Authorization: `Bearer ${process.env.COHEN_KEY}`
+  }
+});
+console.log(await res.json());
 
+{
+  <span class="k">"indicator"</span>: { <span class="k">"type"</span>: <span class="v">"host"</span>, <span class="k">"value"</span>: <span class="hot">"45.61.136.12"</span> },
+  <span class="k">"first_seen"</span>: <span class="v">"2026-08-31T09:14:22Z"</span>,
+  <span class="k">"packages"</span>: [
+    { <span class="k">"name"</span>: <span class="hot">"polymarket-stake-mathss"</span>, <span class="k">"version"</span>: <span class="v">"3.5.2"</span>, <span class="k">"by"</span>: <span class="v">"node postinstall.js"</span> }
+  ]
+}</pre>
+<pre data-lang="python" hidden>import os, requests
+
+res = requests.get(
+    &quot;https://api.snappyfeet.org/api/observatory/indicator/host/45.61.136.12&quot;,
+    headers={
+        &quot;Authorization&quot;: f&quot;Bearer {os.environ[&#x27;COHEN_KEY&#x27;]}&quot;
+    },
+)
+print(res.json())
+
+{
+  <span class="k">"indicator"</span>: { <span class="k">"type"</span>: <span class="v">"host"</span>, <span class="k">"value"</span>: <span class="hot">"45.61.136.12"</span> },
+  <span class="k">"first_seen"</span>: <span class="v">"2026-08-31T09:14:22Z"</span>,
+  <span class="k">"packages"</span>: [
+    { <span class="k">"name"</span>: <span class="hot">"polymarket-stake-mathss"</span>, <span class="k">"version"</span>: <span class="v">"3.5.2"</span>, <span class="k">"by"</span>: <span class="v">"node postinstall.js"</span> }
+  ]
+}</pre>
+</div></div>
+</div>
 <h3 id="webhooks">Webhooks<a class="anchor" href="#webhooks">#</a></h3>
 <div class="sig">
-  <span class="verb post">POST</span>
+  <span class="verb vp">POST</span>
   <code>/api/webhook</code>
   <span class="tag paid">queue scope</span>
+  <span class="st ">soon</span>
 </div>
+<div class="ap">
+<div class="ap-l">
 <p>
   Register a callback for when a package you watch flips to review. The response
   carries a signing secret, shown once. HTTPS URLs only.
 </p>
 
-<div class="term">
-<div class="th"><span>REQUEST</span><span>201 CREATED</span></div>
-<pre><span class="cmd">curl -X POST -H "Authorization: Bearer $COHEN_KEY" \
+
+
+</div>
+<div class="ap-r"><div class="term ap-tabs">
+<div class="th"><span class="langs" role="tablist" aria-label="Language"><button type="button" role="tab" class="on" aria-selected="true" data-lang="curl">curl</button><button type="button" role="tab" aria-selected="false" data-lang="node">Node</button><button type="button" role="tab" aria-selected="false" data-lang="python">Python</button></span><span>201 CREATED</span></div>
+<pre data-lang="curl"><span class="cmd">curl -X POST -H "Authorization: Bearer $COHEN_KEY" \
   -H "Content-Type: application/json" \
   -d '{"url":"https://example.com/hooks/cohen"}' \
   https://api.snappyfeet.org/api/webhook</span>
@@ -447,22 +663,62 @@ Authorization: cohen_live_1WbwMTf2vx0t2NUWuZYSS3oQP26mU4JL...</pre>
   <span class="k">"events"</span>: [ <span class="v">"verdict.review"</span> ],
   <span class="k">"secret"</span>: <span class="v">"whsec_..."</span>
 }</pre>
-</div>
+<pre data-lang="node" hidden>const res = await fetch(&quot;https://api.snappyfeet.org/api/webhook&quot;, {
+  method: &quot;POST&quot;,
+  headers: {
+    Authorization: `Bearer ${process.env.COHEN_KEY}`,
+    &quot;Content-Type&quot;: &quot;application/json&quot;
+  },
+  body: JSON.stringify({ url: &quot;https://example.com/hooks/cohen&quot; })
+});
+console.log(await res.json());
 
+{
+  <span class="k">"id"</span>: <span class="v">"9f2c..."</span>,
+  <span class="k">"url"</span>: <span class="v">"https://example.com/hooks/cohen"</span>,
+  <span class="k">"events"</span>: [ <span class="v">"verdict.review"</span> ],
+  <span class="k">"secret"</span>: <span class="v">"whsec_..."</span>
+}</pre>
+<pre data-lang="python" hidden>import os, requests
+
+res = requests.post(
+    &quot;https://api.snappyfeet.org/api/webhook&quot;,
+    headers={
+        &quot;Authorization&quot;: f&quot;Bearer {os.environ[&#x27;COHEN_KEY&#x27;]}&quot;,
+        &quot;Content-Type&quot;: &quot;application/json&quot;
+    },
+    json={&quot;url&quot;: &quot;https://example.com/hooks/cohen&quot;},
+)
+print(res.json())
+
+{
+  <span class="k">"id"</span>: <span class="v">"9f2c..."</span>,
+  <span class="k">"url"</span>: <span class="v">"https://example.com/hooks/cohen"</span>,
+  <span class="k">"events"</span>: [ <span class="v">"verdict.review"</span> ],
+  <span class="k">"secret"</span>: <span class="v">"whsec_..."</span>
+}</pre>
+</div></div>
+</div>
 <h3 id="account">Account<a class="anchor" href="#account">#</a></h3>
 <div class="sig">
-  <span class="verb get">GET</span>
+  <span class="verb vg">GET</span>
   <code>/api/key</code>
   <span class="tag free">free</span>
+  <span class="st ok">live</span>
 </div>
+<div class="ap">
+<div class="ap-l">
 <p>
   Your plan, usage and reset date. Never counted against anything, so it is safe
   as a health check in scripts.
 </p>
 
-<div class="term">
-<div class="th"><span>REQUEST</span><span>200 OK</span></div>
-<pre><span class="cmd">curl -H "Authorization: Bearer $COHEN_KEY" https://api.snappyfeet.org/api/key</span>
+
+
+</div>
+<div class="ap-r"><div class="term ap-tabs">
+<div class="th"><span class="langs" role="tablist" aria-label="Language"><button type="button" role="tab" class="on" aria-selected="true" data-lang="curl">curl</button><button type="button" role="tab" aria-selected="false" data-lang="node">Node</button><button type="button" role="tab" aria-selected="false" data-lang="python">Python</button></span><span>200 OK</span></div>
+<pre data-lang="curl"><span class="cmd">curl -H "Authorization: Bearer $COHEN_KEY" https://api.snappyfeet.org/api/key</span>
 
 {
   <span class="k">"tier"</span>: <span class="v">"individual"</span>,
@@ -470,12 +726,42 @@ Authorization: cohen_live_1WbwMTf2vx0t2NUWuZYSS3oQP26mU4JL...</pre>
   <span class="k">"lookups_today"</span>: { <span class="k">"used"</span>: <span class="v">42</span>, <span class="k">"limit"</span>: <span class="v">null</span> },
   <span class="k">"key"</span>: { <span class="k">"scopes"</span>: [<span class="v">"read"</span>,<span class="v">"queue"</span>,<span class="v">"evidence"</span>], <span class="k">"in_grace"</span>: <span class="v">false</span> }
 }</pre>
-</div>
+<pre data-lang="node" hidden>const res = await fetch(&quot;https://api.snappyfeet.org/api/key&quot;, {
+  headers: {
+    Authorization: `Bearer ${process.env.COHEN_KEY}`
+  }
+});
+console.log(await res.json());
 
+{
+  <span class="k">"tier"</span>: <span class="v">"individual"</span>,
+  <span class="k">"analyses"</span>: { <span class="k">"used"</span>: <span class="v">137</span>, <span class="k">"limit"</span>: <span class="v">150</span>, <span class="k">"resets"</span>: <span class="v">"2026-10-01"</span> },
+  <span class="k">"lookups_today"</span>: { <span class="k">"used"</span>: <span class="v">42</span>, <span class="k">"limit"</span>: <span class="v">null</span> },
+  <span class="k">"key"</span>: { <span class="k">"scopes"</span>: [<span class="v">"read"</span>,<span class="v">"queue"</span>,<span class="v">"evidence"</span>], <span class="k">"in_grace"</span>: <span class="v">false</span> }
+}</pre>
+<pre data-lang="python" hidden>import os, requests
+
+res = requests.get(
+    &quot;https://api.snappyfeet.org/api/key&quot;,
+    headers={
+        &quot;Authorization&quot;: f&quot;Bearer {os.environ[&#x27;COHEN_KEY&#x27;]}&quot;
+    },
+)
+print(res.json())
+
+{
+  <span class="k">"tier"</span>: <span class="v">"individual"</span>,
+  <span class="k">"analyses"</span>: { <span class="k">"used"</span>: <span class="v">137</span>, <span class="k">"limit"</span>: <span class="v">150</span>, <span class="k">"resets"</span>: <span class="v">"2026-10-01"</span> },
+  <span class="k">"lookups_today"</span>: { <span class="k">"used"</span>: <span class="v">42</span>, <span class="k">"limit"</span>: <span class="v">null</span> },
+  <span class="k">"key"</span>: { <span class="k">"scopes"</span>: [<span class="v">"read"</span>,<span class="v">"queue"</span>,<span class="v">"evidence"</span>], <span class="k">"in_grace"</span>: <span class="v">false</span> }
+}</pre>
+</div></div>
+</div>
 <div class="sig">
-  <span class="verb get">GET</span>
+  <span class="verb vg">GET</span>
   <code>/api/plans</code>
   <span class="tag free">no key</span>
+  <span class="st ok">live</span>
 </div>
 <p>The current price list. Unauthenticated, because it is public information.</p>
 
@@ -503,16 +789,14 @@ Authorization: cohen_live_1WbwMTf2vx0t2NUWuZYSS3oQP26mU4JL...</pre>
 </table>
 
 <h3 id="errors">Errors<a class="anchor" href="#errors">#</a></h3>
+<div class="ap">
+<div class="ap-l">
 <p>
   Every error is JSON with a stable <code>error</code> code and a message written
   for a person. Branch on the code, never the message.
 </p>
 
-<div class="term">
-<div class="th"><span>SHAPE</span><span>ALL ERRORS</span></div>
-<pre>{ <span class="k">"error"</span>: <span class="hot">"scope_required"</span>,
-  <span class="k">"message"</span>: <span class="v">"This endpoint needs the 'queue' scope."</span> }</pre>
-</div>
+
 
 <table class="ref">
 <thead><tr><th>Code</th><th>Status</th><th>Meaning</th></tr></thead>
@@ -547,6 +831,13 @@ Authorization: cohen_live_1WbwMTf2vx0t2NUWuZYSS3oQP26mU4JL...</pre>
   Caching it as a pass is the wrong way to fail.
 </div>
 
+</div>
+<div class="ap-r"><div class="term">
+<div class="th"><span>SHAPE</span><span>ALL ERRORS</span></div>
+<pre>{ <span class="k">"error"</span>: <span class="hot">"scope_required"</span>,
+  <span class="k">"message"</span>: <span class="v">"This endpoint needs the 'queue' scope."</span> }</pre>
+</div></div>
+</div>
 <h3 id="status">Status<a class="anchor" href="#status">#</a></h3>
 <table class="ref">
 <thead><tr><th>Surface</th><th>State</th></tr></thead>
@@ -627,6 +918,7 @@ Authorization: cohen_live_1WbwMTf2vx0t2NUWuZYSS3oQP26mU4JL...</pre>
 </footer>
 
 <script src="app.js" defer></script>
+<script src="api.js" defer></script>
 <script>
 // Highlight the section currently in view. Purely decorative, so it degrades
 // to a plain list of links wherever IntersectionObserver is missing.
