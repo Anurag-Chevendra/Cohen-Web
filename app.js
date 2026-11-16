@@ -14,86 +14,67 @@ const PRICING = {
       monthly:0, annual:0, per:'forever', sub:'no card, no expiry',
       cta:'Get a free key', href:'https://console.snappyfeet.org/', plan:'free', feat:false, inherits:null,
       items:[
-        {t:'Binary verdicts: review or clean', key:true},
-        {t:'Cohen database, OSV and npm security holdings'},
-        {t:'Mantis, with 100 lookups per day'},
-        {t:'No deep analyses, no evidence'},
-        {t:'Community support'}
+        {t:'Review or clean verdicts', key:true},
+        {t:'100 lookups a day'},
+        {t:'Cohen, OSV and npm advisories'}
       ]},
-    { name:'INDIVIDUAL', who:'For one developer who wants to see the trace, not just the answer.',
+    { name:'INDIVIDUAL', who:'For one developer who wants the trace.',
       monthly:14, annual:12, per:'per month', sub:'one user',
-      cta:'Choose Individual', href:'https://console.snappyfeet.org/', plan:'individual', feat:false, inherits:'Everything in Free, plus',
+      cta:'Choose Individual', href:'https://console.snappyfeet.org/', plan:'individual', feat:false, inherits:null,
       items:[
-        {t:'150 deep analyses per month', key:true},
-        {t:'Mantis, with unlimited verdict lookups'},
-        {t:'Dynamic and static engines'},
-        {t:'Full evidence: trace, process tree, hashes, entropy'},
-        {t:'90 day history'},
-        {t:'Stops at the limit, never bills a surprise'}
+        {t:'150 deep analyses a month', key:true},
+        {t:'Full evidence and both engines'},
+        {t:'90 day history'}
       ]},
-    { name:'TEAM', who:'For a team of up to ten, billed flat rather than per head.',
+    { name:'TEAM', who:'Up to ten people, one flat price.',
       monthly:349, annual:291, per:'per month', sub:'flat rate, up to 10 users',
-      cta:'Choose Team', href:'https://console.snappyfeet.org/', plan:'team', feat:true, inherits:'Everything in Individual, plus',
+      cta:'Choose Team', href:'https://console.snappyfeet.org/', plan:'team', feat:true, inherits:null,
       items:[
-        {t:'2,000 deep analyses per month, pooled', key:true},
-        {t:'Up to 10 users included', key:true},
-        {t:'Mantis on every machine, for package scanning', key:true},
-        {t:'Private and scoped package analysis'},
-        {t:'CI gate, webhooks and policy'},
-        {t:'12 month history and audit trail'},
-        {t:'Priority queue'},
-        {t:'$0.02 per analysis over the limit'}
+        {t:'2,000 deep analyses, pooled', key:true},
+        {t:'Up to 10 users'},
+        {t:'CI gate, webhooks, private packages'}
       ]},
-    { name:'ENTERPRISE', who:'For scale, compliance, or a sandbox that has to run inside your own network.',
+    { name:'ENTERPRISE', who:'Scale, compliance or your own network.',
       monthly:null, annual:null, per:'', sub:'negotiated volume',
-      cta:'Choose Enterprise', href:'https://console.snappyfeet.org/', plan:'enterprise', feat:false, inherits:'Everything in Team, plus',
+      cta:'Choose Enterprise', href:'https://console.snappyfeet.org/', plan:'enterprise', feat:false, inherits:null,
       items:[
-        {t:'Self hosted sandbox or VPC deployment', key:true},
-        {t:'More than 10 users, negotiated analysis volume', key:true},
-        {t:'Dedicated run capacity and SLA'},
-        {t:'SSO and role based access control'},
-        {t:'Custom retention and evidence export'},
-        {t:'SIEM and EDR push'},
-        {t:'Data residency scoped in contract'}
+        {t:'Self hosted sandbox or VPC', key:true},
+        {t:'SSO, SLA, data residency'},
+        {t:'Negotiated volume'}
       ]}
   ],
   intel: [
-    { name:'RESEARCH', who:'For academics, journalists and open source maintainers.',
+    { name:'RESEARCH', who:'Academics, journalists, maintainers.',
       monthly:0, annual:0, per:'forever', sub:'noncommercial use only',
       cta:'Apply', href:'https://console.snappyfeet.org/', feat:false, inherits:null,
       items:[
-        {t:'Full feed, delayed 30 days', key:true},
-        {t:'1,000 requests per month'},
+        {t:'Full feed, 30 days delayed', key:true},
+        {t:'1,000 requests a month'},
         {t:'Attribution required'}
       ]},
-    { name:'BUILDER', who:'For a product that needs verdicts inside its own workflow.',
+    { name:'BUILDER', who:'Verdicts inside your own product.',
       monthly:99, annual:82, per:'per month', sub:'',
       cta:'Get a key', href:'https://console.snappyfeet.org/', feat:false, inherits:null,
       items:[
-        {t:'Real time verdicts, no delay', key:true},
-        {t:'25,000 requests per month'},
-        {t:'Webhook push on new findings'},
-        {t:'Commercial use, single product'}
+        {t:'Real time, no delay', key:true},
+        {t:'25,000 requests a month'},
+        {t:'Webhook push'}
       ]},
-    { name:'COMMERCIAL', who:'For a security team feeding its own detections.',
+    { name:'COMMERCIAL', who:'A security team feeding its detections.',
       monthly:999, annual:832, per:'per month', sub:'',
-      cta:'Talk to us', href:'https://console.snappyfeet.org/', feat:true, inherits:'Everything in Builder, plus',
+      cta:'Talk to us', href:'https://console.snappyfeet.org/', feat:true, inherits:null,
       items:[
-        {t:'Full IOC export: C2, hashes, artifacts', key:true},
-        {t:'Complete historical archive', key:true},
-        {t:'Unlimited queries'},
-        {t:'STIX and TAXII, SIEM connectors'},
-        {t:'Bulk and incremental sync'}
+        {t:'Full IOC export', key:true},
+        {t:'Complete archive, unlimited queries'},
+        {t:'STIX, TAXII, SIEM'}
       ]},
-    { name:'OEM',
-      who:'For redistributing Observability verdicts inside your own product.',
+    { name:'OEM', who:'Redistribute inside your own product.',
       monthly:null, annual:null, per:'', sub:'redistribution licence',
       cta:'Talk to us', href:'https://console.snappyfeet.org/', feat:false, inherits:null,
       items:[
         {t:'Redistribution rights', key:true},
         {t:'White label verdicts'},
-        {t:'Negotiated volume and SLA'},
-        {t:'Direct line to the research team'}
+        {t:'Negotiated volume and SLA'}
       ]}
   ]
 };
@@ -189,6 +170,18 @@ if(tM&&tA){
   tM.addEventListener('click',()=>{period='monthly';tM.classList.add('on');tA.classList.remove('on');renderAll()});
   tA.addEventListener('click',()=>{period='annual';tA.classList.add('on');tM.classList.remove('on');renderAll()});
 }
+
+/* pricing page: one product at a time */
+(function(){
+  const tabs=[...document.querySelectorAll('.ptab')];
+  if(!tabs.length) return;
+  const show=k=>{
+    tabs.forEach(t=>{const on=t.dataset.p===k;t.classList.toggle('on',on);t.setAttribute('aria-selected',on)});
+    document.querySelectorAll('[data-panel]').forEach(p=>{p.hidden=p.dataset.panel!==k});
+  };
+  tabs.forEach(t=>t.addEventListener('click',()=>{show(t.dataset.p);history.replaceState(null,'',t.dataset.p==='intel'?'#observability':'#scanner')}));
+  show(location.hash==='#observability'?'intel':'scanner');
+})();
 
 /* ── timeline plot ── */
 (function(){
